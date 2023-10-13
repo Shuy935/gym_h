@@ -34,7 +34,7 @@ class _LoginWidgetState extends State <LoginWidget> {
     child: Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        SizedBox(height: 15),
+        SizedBox(height: 40),
         Image.asset('assets/image/logo.png'),
         Text(
           'Welcome Back',
@@ -42,6 +42,13 @@ class _LoginWidgetState extends State <LoginWidget> {
           style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
         ),
         SizedBox(height: 40),
+        TextField(
+          controller: passwordController,
+          textInputAction: TextInputAction.done,
+          decoration: InputDecoration(labelText: 'Password'),
+          obscureText: true,
+        ),
+        SizedBox(height: 20),
         TextField(
           controller: emailController,
           cursorColor: Colors.white,
