@@ -40,8 +40,9 @@ class _SignUpWidgetState extends State <SignUpWidget> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          SizedBox(height: 5),
+          SizedBox(height: 100),
           Image.asset('assets/image/logo.png'),
+          SizedBox(height: 75),
           Text(
             'Join Us',
             textAlign: TextAlign.center,

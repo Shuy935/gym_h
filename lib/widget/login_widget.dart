@@ -34,8 +34,9 @@ class _LoginWidgetState extends State <LoginWidget> {
     child: Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        SizedBox(height: 15),
+        SizedBox(height: 100),
         Image.asset('assets/image/logo.png'),
+        SizedBox(height: 75),
         Text(
           'Welcome Back',
           textAlign: TextAlign.center,
