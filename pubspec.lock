@@ -240,6 +240,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.0"
+  password_field_validator:
+    dependency: "direct main"
+    description:
+      name: password_field_validator
+      sha256: d1f727e1cd3cc9fc18522d417e5be5a9079a2b4760067948efd84ce2045f2188
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.1"
   path:
     dependency: transitive
     description:

@@ -1,5 +1,6 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:password_field_validator/password_field_validator.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -23,11 +24,30 @@ class _SignUpWidgetState extends State<SignUpWidget> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
+  final passwordFocusNode = FocusNode();
+  final confirmPasswordFocusNode = FocusNode();
+
+  @override
+  void initState() {
+    super.initState();
+    passwordFocusNode.addListener(_updatePadding);
+    confirmPasswordFocusNode.addListener(_updatePadding);
+  }
+
+  void _updatePadding() {
+    setState(() {});
+  }
 
   @override
   void dispose() {
+    passwordFocusNode.removeListener(_updatePadding);
+    confirmPasswordFocusNode.removeListener(_updatePadding);
+
+    passwordFocusNode.dispose();
+    confirmPasswordFocusNode.dispose();
     emailController.dispose();
     passwordController.dispose();
+    confirmPasswordController.dispose();
 
     super.dispose();
   }
@@ -63,25 +83,63 @@ class _SignUpWidgetState extends State<SignUpWidget> {
               SizedBox(height: 4),
               TextFormField(
                 controller: passwordController,
+                focusNode: passwordFocusNode,
                 textInputAction: TextInputAction.next,
                 decoration: InputDecoration(labelText: 'Password'),
+                maxLength: 24,
                 obscureText: true,
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 validator: (value) => value != null && value.length < 6
                     ? 'Enter a valid password (min. 6 characters)'
                     : null,
               ),
+              Padding(
+                padding: EdgeInsets.all(4),
+                child: Visibility(
+                  visible: passwordFocusNode.hasFocus,
+                  child: PasswordFieldValidator(
+                    minLength: 8,
+                    uppercaseCharCount: 1,
+                    lowercaseCharCount: 1,
+                    numericCharCount: 2,
+                    specialCharCount: 1,
+                    defaultColor: Colors.black,
+                    successColor: Colors.green,
+                    failureColor: Colors.red,
+                    controller: passwordController,
+                  ),
+                ),
+              ),
               SizedBox(height: 4),
               TextFormField(
                   controller: confirmPasswordController,
+                  focusNode: confirmPasswordFocusNode,
                   textInputAction: TextInputAction.next,
                   decoration: InputDecoration(labelText: 'Confirm Password'),
+                  maxLength: 24,
                   obscureText: true,
                   validator: (val) {
                     if (val == null) return 'Empty';
                     if (val != passwordController.text) return 'No match';
                     return null;
                   }),
+              Padding(
+                padding: EdgeInsets.all(4),
+                child: Visibility(
+                  visible: confirmPasswordFocusNode.hasFocus,
+                  child: PasswordFieldValidator(
+                    minLength: 8,
+                    uppercaseCharCount: 1,
+                    lowercaseCharCount: 1,
+                    numericCharCount: 2,
+                    specialCharCount: 1,
+                    defaultColor: Colors.black,
+                    successColor: Colors.green,
+                    failureColor: Colors.red,
+                    controller: confirmPasswordController,
+                  ),
+                ),
+              ),
               SizedBox(height: 20),
               Container(
                 decoration: BoxDecoration(
@@ -142,7 +200,6 @@ class _SignUpWidgetState extends State<SignUpWidget> {
         password: passwordController.text.trim(),
       );
     } on FirebaseAuthException catch (e) {
-      print('Empieza el error:');
       print(e);
 
       Utils.showSnackBar(e.message);
