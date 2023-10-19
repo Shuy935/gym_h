@@ -1,36 +1,26 @@
 {
   "project_info": {
-    "project_number": "45069336997",
-    "project_id": "login-project-ad221",
-    "storage_bucket": "login-project-ad221.appspot.com"
+    "project_number": "462400479446",
+    "project_id": "gym-h-a93dc",
+    "storage_bucket": "gym-h-a93dc.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:45069336997:android:544ffa01ce41fc74bca84c",
+        "mobilesdk_app_id": "1:462400479446:android:f5fe499487b444248e2977",
         "android_client_info": {
           "package_name": "com.example.flutter_login_project"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "45069336997-0ngv1f9vr1059pdqcjf2c8kb6dbaqgpn.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
+      "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyACXAQ63bQGWhYRFtsyZAzMnw1RVM5UoaY"
+          "current_key": "AIzaSyCSS-vYdlMw7HXT06b-ChH27TZ5gvvh2sk"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "45069336997-0ngv1f9vr1059pdqcjf2c8kb6dbaqgpn.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "other_platform_oauth_client": []
         }
       }
     }
