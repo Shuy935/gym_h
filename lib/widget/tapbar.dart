@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gym_h/widget/consejos.dart';
+import 'package:gym_h/widget/Buscador.dart';
 
 class TabBarH extends StatelessWidget {
   @override
@@ -29,8 +29,8 @@ class TabBarH extends StatelessWidget {
         body: TabBarView(
           children: [
             Center(child: Text('Rutina de hoy:')),
-            Center(child: Text('Contenido de Tab 2')),
-            Center(child: Text('Contenido de Tab 2')),
+            Center(child: Text('Musculos')),
+            Center(child: ListaU()),
             Center(child: Text('Historial')),
           ],
         ),

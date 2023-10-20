@@ -11,7 +11,8 @@ class Interfaces extends StatelessWidget {
     return Scaffold(
       body: Stack(
   children: [
-    TabBarH(),ConsejosB(), // Utiliza tu widget personalizado ConsejosB aquí
+    TabBarH(),
+    //ConsejosB(),
   ],
 ),
 
