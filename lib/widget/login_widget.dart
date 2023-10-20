@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:gym_h/main.dart';
 import 'package:gym_h/screens/forgot_password_page.dart';
 import 'package:gym_h/utils/utils.dart';
+import 'package:gym_h/widget/consejos.dart';
 
 class LoginWidget extends StatefulWidget {
   final VoidCallback onClickedSignUp;
