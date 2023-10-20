@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gym_h/widget/Buscador.dart';
+import 'package:gym_h/widget/interfaces/Buscador.dart';
 
 class TabBarH extends StatelessWidget {
   @override
@@ -9,23 +9,25 @@ class TabBarH extends StatelessWidget {
       Tab(text: 'Musculos'),
       Tab(text: 'Lista'),
       Tab(text: 'Historial'),
-
     ];
 
-    final PreferredSizeWidget appBar = PreferredSize(
-      preferredSize: Size.fromHeight(100),
-      child: Container(
-        color: Colors.blue,
-        child: TabBar(
-          tabs: _tabs,
-        ),
-      ),
-    );
+    // final PreferredSizeWidget appBar = PreferredSize(
+    //   preferredSize: Size.fromHeight(100),
+    //   child: Container(
+    //     color: Colors.blue,
+    //     child: TabBar(
+    //       tabs: _tabs,
+    //     ),
+    //   ),
+    // );
 
     return DefaultTabController(
       length: _tabs.length,
       child: Scaffold(
-        appBar: appBar,
+        appBar: AppBar(
+          title: const Text('Inicio'),
+          bottom: TabBar(tabs: _tabs),
+        ),
         body: TabBarView(
           children: [
             Center(child: Text('Rutina de hoy:')),

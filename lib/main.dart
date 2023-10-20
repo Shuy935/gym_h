@@ -2,10 +2,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:gym_h/screens/Interfaces.dart';
-import 'package:gym_h/screens/auth_page.dart';
-import 'package:gym_h/screens/verify_email_page.dart';
+import 'package:gym_h/screens/login/auth_page.dart';
+import 'package:gym_h/screens/login/verify_email_page.dart';
 import 'package:gym_h/utils/utils.dart';
-import 'package:gym_h/widget/consejos.dart';
+import 'package:gym_h/widget/interfaces/consejos.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
@@ -21,59 +21,58 @@ void main() async {
         scaffoldMessengerKey: Utils.messengerKey,
         navigatorKey: navigatorKey,
         debugShowCheckedModeBanner: false,
-        title: MyApp.title,
+        // title: MyApp.title,
         theme: ThemeData.dark().copyWith(),
-        home: Vacio(),
+        home: MainPage(),
       ),
     ),
   );
 }
-final navigatorKey = GlobalKey <NavigatorState>();
 
-class MyApp extends StatelessWidget {
-  static final String title = 'Firebase Auth';
+final navigatorKey = GlobalKey<NavigatorState>();
 
-  @override
-  Widget build(BuildContext context) => MaterialApp(
-    scaffoldMessengerKey: Utils.messengerKey,
-    navigatorKey: navigatorKey,
-    debugShowCheckedModeBanner: false,
-    title: title,
-    theme: ThemeData.dark().copyWith(
-    ),
-    home: Vacio(),
-  );
-}
+// class MyApp extends StatelessWidget {
+//   static final String title = 'Firebase Auth';
+
+//   @override
+//   Widget build(BuildContext context) => MaterialApp(
+//         scaffoldMessengerKey: Utils.messengerKey,
+//         navigatorKey: navigatorKey,
+//         debugShowCheckedModeBanner: false,
+//         title: title,
+//         theme: ThemeData.dark().copyWith(),
+//         home: Vacio(),
+//       );
+// }
 
 class MainPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Scaffold(
-    body: StreamBuilder<User?>(
-      stream: FirebaseAuth.instance.authStateChanges(),
-      builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          return VerifyEmailPage();
-        }else {
-          return AuthPage();
-        }
-      },
-    ),
-  );
+        body: StreamBuilder<User?>(
+          stream: FirebaseAuth.instance.authStateChanges(),
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              return VerifyEmailPage();
+            } else {
+              return AuthPage();
+            }
+          },
+        ),
+      );
 }
 
-class Vacio extends StatelessWidget {
-  const Vacio({super.key});
+// class Vacio extends StatelessWidget {
+//   const Vacio({super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner:
-          false, //quitar la madre del debug pq me estorbaba
-      title: 'Gym H',
-      initialRoute: 'home',
-      theme: ThemeData.dark().copyWith(
-    ),
-      routes: {'home': (_) => Interfaces()},
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//       debugShowCheckedModeBanner:
+//           false, //quitar la madre del debug pq me estorbaba
+//       title: 'Gym H',
+//       initialRoute: 'home',
+//       theme: ThemeData.dark().copyWith(),
+//       routes: {'home': (_) => Interfaces()},
+//     );
+//   }
+// }
