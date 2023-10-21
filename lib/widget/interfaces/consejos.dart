@@ -51,6 +51,7 @@ class _ConsejosBState extends State<ConsejosB> {
 
   @override
   Widget build(BuildContext context) {
+    // Hacer el provider de los consejos
     // final consejosBProvider =
     //     Provider.of<ConsejosBProvider>(context, listen: false);
     // final state = consejosBProvider.state;
