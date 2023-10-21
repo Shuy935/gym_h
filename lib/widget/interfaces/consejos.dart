@@ -9,18 +9,20 @@ class ConsejosBState {
   double left = 200.0;
 }
 
-class ConsejosBProvider extends ChangeNotifier {
-  ConsejosBState _state = ConsejosBState();
+// class ConsejosBProvider extends ChangeNotifier {
+//   ConsejosBState _state = ConsejosBState();
 
-  ConsejosBState get state => _state;
+//   ConsejosBState get state => _state;
 
-  void updateState(ConsejosBState newState) {
-    _state = newState;
-    notifyListeners();
-  }
-}
+//   void updateState(ConsejosBState newState) {
+//     _state = newState;
+//     notifyListeners();
+//   }
+// }
 
 class ConsejosB extends StatefulWidget {
+  const ConsejosB({super.key});
+
   @override
   _ConsejosBState createState() => _ConsejosBState();
 }
@@ -35,11 +37,11 @@ class _ConsejosBState extends State<ConsejosB> {
     showDialog(
       context: context,
       builder: (_) {
-        return SimpleDialog(
-          title: const Text('Consejo:'),
-          children: const <Widget>[
+        return const SimpleDialog(
+          title: Text('Consejo:'),
+          children: <Widget>[
             SimpleDialogOption(
-              child: const Text('Test'),
+              child: Text('Test'),
             ),
           ],
         );
@@ -49,9 +51,9 @@ class _ConsejosBState extends State<ConsejosB> {
 
   @override
   Widget build(BuildContext context) {
-    final consejosBProvider =
-        Provider.of<ConsejosBProvider>(context, listen: false);
-    final state = consejosBProvider.state;
+    // final consejosBProvider =
+    //     Provider.of<ConsejosBProvider>(context, listen: false);
+    // final state = consejosBProvider.state;
     //Obtener tamaño de pantalla para que el botón no se salga
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
@@ -91,7 +93,7 @@ class _ConsejosBState extends State<ConsejosB> {
                   //Despliega el showDialog
                   _showDialog(context);
                   //Tiempo en segundos antes de que el botón vuelva a aparecer
-                  Timer(Duration(seconds: 5), () {
+                  Timer(const Duration(seconds: 5), () {
                     setState(() {
                       isVisible = true;
                     });
@@ -100,7 +102,7 @@ class _ConsejosBState extends State<ConsejosB> {
                 child: Container(
                   width: 60.0,
                   height: 60.0,
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     shape: BoxShape.circle,
                     color: Colors.blue,
                   ),
