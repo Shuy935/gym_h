@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:gym_h/widget/interfaces/Buscador.dart';
-import 'package:gym_h/widget/interfaces/consejo2.dart';
 import 'package:gym_h/widget/interfaces/consejos.dart';
 
 class TabBarH extends StatelessWidget {
@@ -28,7 +27,6 @@ class TabBarH extends StatelessWidget {
             Center(child: Text('Historial')),
           ],
         ),
-        floatingActionButton: ButtomFloating(),
       ),
     );
   }
