@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gym_h/widget/interfaces/Buscador.dart';
+import 'package:gym_h/widget/interfaces/consejo2.dart';
+import 'package:gym_h/widget/interfaces/consejos.dart';
 
 class TabBarH extends StatelessWidget {
   @override
@@ -10,16 +12,6 @@ class TabBarH extends StatelessWidget {
       Tab(text: 'Lista'),
       Tab(text: 'Historial'),
     ];
-
-    // final PreferredSizeWidget appBar = PreferredSize(
-    //   preferredSize: Size.fromHeight(100),
-    //   child: Container(
-    //     color: Colors.blue,
-    //     child: TabBar(
-    //       tabs: _tabs,
-    //     ),
-    //   ),
-    // );
 
     return DefaultTabController(
       length: _tabs.length,
@@ -36,6 +28,7 @@ class TabBarH extends StatelessWidget {
             Center(child: Text('Historial')),
           ],
         ),
+        floatingActionButton: ButtomFloating(),
       ),
     );
   }
