@@ -1,7 +1,6 @@
 import 'dart:async';
-
+import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class ConsejosBState {
   bool isVisible = true;
@@ -31,17 +30,25 @@ class _ConsejosBState extends State<ConsejosB> {
   bool isVisible = true;
   double top = 200.0;
   double left = 200.0;
+  List<String> consejos = [
+    'Come pollito',
+    'Consumir arroz antes de el entrenamiento ayuda al bombeo',
+    'Asegurate de consumir las calorias necesarias segun tus propositos',
+    'Este es otro consejo xd',
+  ];
 
 //Este es el Show Dialog donde van a ir los consejos so... editar aquí
   void _showDialog(BuildContext context) {
+    final random = Random();
+    final consejoAleatorio = consejos[random.nextInt(consejos.length)];
     showDialog(
       context: context,
       builder: (_) {
-        return const SimpleDialog(
+        return SimpleDialog(
           title: Text('Consejo:'),
           children: <Widget>[
             SimpleDialogOption(
-              child: Text('Test'),
+              child: Text(consejoAleatorio),
             ),
           ],
         );
@@ -91,7 +98,7 @@ class _ConsejosBState extends State<ConsejosB> {
 
                 _showDialog(context);
 
-                Timer(const Duration(seconds: 5), () {
+                Timer(const Duration(seconds: 1), () {
                   setState(() {
                     isVisible = true;
                   });

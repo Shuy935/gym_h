@@ -56,7 +56,7 @@ class _SignUpWidgetState extends State <SignUpWidget> {
             decoration: InputDecoration(labelText: 'Email'),
             autovalidateMode: AutovalidateMode.onUserInteraction,
             validator: (email) =>
-              email != null && !EmailValidator.validate(email)
+              email != null && !EmailValidator.validate(email) && email.length >= 60
               ? 'Enter a valid email'
               : null,
           ),
@@ -67,7 +67,7 @@ class _SignUpWidgetState extends State <SignUpWidget> {
             decoration: InputDecoration(labelText: 'Password'),
             obscureText: true,
             autovalidateMode: AutovalidateMode.onUserInteraction,
-            validator: (value) => value != null && value.length < 6
+            validator: (value) => value != null && value.length < 6 && value.length >= 25
               ? 'Enter a valid password (min. 6 characters)'
               : null,
           ),
