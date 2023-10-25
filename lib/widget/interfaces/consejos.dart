@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:gym_h/models/crud.dart';
 import 'package:gym_h/widget/interfaces/tapbar.dart';
 
 class ConsejosBState {
@@ -29,7 +28,6 @@ class ConsejosB extends StatefulWidget {
 }
 
 class _ConsejosBState extends State<ConsejosB> {
-  final Stream<QuerySnapshot> collectionReference = Crud.readAdvices();
   bool isVisible = true;
   double top = 200.0;
   double left = 200.0;
@@ -62,70 +60,6 @@ class _ConsejosBState extends State<ConsejosB> {
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
     double buttonSize = 60.0;
-
-    // return Scaffold(
-    //   body: StreamBuilder(
-    //     stream: collectionReference,
-    //     builder: (BuildContext context, AsyncSnapshot snapshot) {
-    //       if (!snapshot.hasData) return const Text('no found');
-    //       return Stack(
-    //         children: <Widget>[
-    //           snapshot.data.docs(
-    //             (e) {
-    //               Positioned(
-    //                 top: top,
-    //                 left: left,
-    //                 child: Visibility(
-    //                   visible: isVisible,
-    //                   child: GestureDetector(
-    //                     onPanUpdate: (details) {
-    //                       double newTop = top + details.delta.dy;
-    //                       double newLeft = left + details.delta.dx;
-
-    //                       newTop = newTop.clamp(0.0, screenHeight - buttonSize);
-    //                       newLeft =
-    //                           newLeft.clamp(0.0, screenWidth - buttonSize);
-
-    //                       if (newTop > screenHeight - buttonSize - 100.0) {
-    //                         newTop = screenHeight - buttonSize - 100.0;
-    //                       }
-
-    //                       setState(() {
-    //                         top = newTop;
-    //                         left = newLeft;
-    //                       });
-    //                     },
-    //                     onTap: () {
-    //                       setState(() {
-    //                         isVisible = false;
-    //                       });
-
-    //                       _showDialog(context, e);
-
-    //                       Timer(const Duration(seconds: 5), () {
-    //                         setState(() {
-    //                           isVisible = true;
-    //                         });
-    //                       });
-    //                     },
-    //                     child: Container(
-    //                       width: 60.0,
-    //                       height: 60.0,
-    //                       decoration: const BoxDecoration(
-    //                         shape: BoxShape.circle,
-    //                         color: Colors.blue,
-    //                       ),
-    //                     ),
-    //                   ),
-    //                 ),
-    //               );
-    //             },
-    //           )
-    //         ],
-    //       );
-    //     },
-    //   ),
-    // );
 
     return Stack(
       children: <Widget>[
