@@ -1,6 +1,4 @@
-import 'dart:math';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:gym_h/models/response.dart';
 
 class UserService {
   final String fullname;
