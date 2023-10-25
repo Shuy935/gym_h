@@ -1,6 +1,5 @@
 import 'dart:math';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:gym_h/models/response.dart';
 
 class UserService {
@@ -9,7 +8,7 @@ class UserService {
   final String age;
   final String weight;
   final String height;
-  final String id;
+  // final String id;
 
   UserService({
     required this.fullname,
@@ -17,7 +16,7 @@ class UserService {
     required this.age,
     required this.weight,
     required this.height,
-    required this.id,
+    // required this.id,
   });
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
@@ -26,27 +25,22 @@ class UserService {
     data['age'] = age;
     data['weight'] = weight;
     data['height'] = height;
-    data['id'] = id;
+    // data['id'] = id;
 
     return data;
   }
 }
 
-final db = FirebaseFirestore.instance;
-
 userProfileCreate({fullname, sex, age, weight, height}) async {
   try {
-    final docRef = db.collection('users').doc();
-    UserService usr = UserService(
-        fullname: fullname,
-        sex: sex,
-        age: age,
-        weight: weight,
-        height: height,
-        id: docRef.id);
-    await docRef
-        .set(usr.toJson())
-        .then((value) => print('ahhhhh'), onError: (e) => print(e));
+    DatabaseReference db = FirebaseDatabase.instance.ref().child('users');
+    await db.push().set({
+      "fullname": fullname,
+      "sex": sex,
+      "age": age,
+      "weight": weight,
+      "height": height
+    });
   } catch (e) {
     print(e);
   }
