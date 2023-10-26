@@ -18,8 +18,8 @@ class SignUpWidget extends StatefulWidget {
   _SignUpWidgetState createState() => _SignUpWidgetState();
 }
 
-class _SignUpWidgetState extends State <SignUpWidget> {
-  final formKey = GlobalKey <FormState>();
+class _SignUpWidgetState extends State<SignUpWidget> {
+  final formKey = GlobalKey<FormState>();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
@@ -56,7 +56,7 @@ class _SignUpWidgetState extends State <SignUpWidget> {
             decoration: InputDecoration(labelText: 'Email'),
             autovalidateMode: AutovalidateMode.onUserInteraction,
             validator: (email) =>
-              email != null && !EmailValidator.validate(email) && email.length >= 60
+              email != null && !EmailValidator.validate(email)
               ? 'Enter a valid email'
               : null,
           ),
@@ -67,7 +67,7 @@ class _SignUpWidgetState extends State <SignUpWidget> {
             decoration: InputDecoration(labelText: 'Password'),
             obscureText: true,
             autovalidateMode: AutovalidateMode.onUserInteraction,
-            validator: (value) => value != null && value.length < 6 && value.length >= 25
+            validator: (value) => value != null && value.length < 6
               ? 'Enter a valid password (min. 6 characters)'
               : null,
           ),
@@ -140,10 +140,7 @@ class _SignUpWidgetState extends State <SignUpWidget> {
         email: emailController.text.trim(),
         password: passwordController.text.trim(),
       );
-    }
-    on FirebaseAuthException catch(e) {
-      print(e);
-
+    } on FirebaseAuthException catch (e) {
       Utils.showSnackBar(e.message);
     }
     navigatorKey.currentState!.popUntil((route) => route.isFirst);

@@ -5,9 +5,13 @@ import 'package:gym_h/screens/login/auth_page.dart';
 import 'package:gym_h/screens/login/verify_email_page.dart';
 import 'package:gym_h/utils/utils.dart';
 
+import 'firebase_options.dart';
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
 
   runApp(MyApp());
 }
