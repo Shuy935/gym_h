@@ -1,13 +1,8 @@
 import 'dart:async';
-<<<<<<< HEAD
 import 'dart:math';
-import 'package:flutter/material.dart';
-=======
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:gym_h/models/crud.dart';
-import 'package:gym_h/widget/interfaces/tapbar.dart';
->>>>>>> d235c1232fcb13b2c1d94fe619f8637f9cf48119
 
 class ConsejosBState {
   bool isVisible = true;
@@ -155,8 +150,8 @@ class _ConsejosBState extends State<ConsejosB> {
                 newTop = newTop.clamp(0.0, screenHeight - buttonSize);
                 newLeft = newLeft.clamp(0.0, screenWidth - buttonSize);
 
-                if (newTop > screenHeight - buttonSize - 100.0) {
-                  newTop = screenHeight - buttonSize - 100.0;
+                if (newTop > screenHeight - buttonSize - 50.0) {
+                  newTop = screenHeight - buttonSize - 50.0;
                 }
 
                 setState(() {
@@ -171,7 +166,7 @@ class _ConsejosBState extends State<ConsejosB> {
 
                 _showDialog(context);
 
-                Timer(const Duration(seconds: 1), () {
+                Timer(const Duration(seconds: 10), () {
                   setState(() {
                     isVisible = true;
                   });
