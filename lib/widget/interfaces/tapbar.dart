@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gym_h/widget/interfaces/Buscador.dart';
+import 'package:gym_h/widget/interfaces/Musculos.dart';
 import 'package:gym_h/widget/interfaces/consejos.dart';
 
 class TabBarH extends StatelessWidget {
@@ -24,7 +25,7 @@ class TabBarH extends StatelessWidget {
         body: TabBarView(
           children: [
             Center(child: Text('Rutina de hoy:')),
-            Center(child: Text('Musculos')),
+            Center(child: Musculos()),
             Center(child: ListaU()),
             const Center(child: Text('Historial')),
           ],
