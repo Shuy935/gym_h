@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:gym_h/widget/interfaces/tapbar.dart';
@@ -31,18 +32,26 @@ class _ConsejosBState extends State<ConsejosB> {
   bool isVisible = true;
   double top = 200.0;
   double left = 200.0;
+  List<String> consejos = [
+    'Come pollito',
+    'Consumir arroz antes de el entrenamiento ayuda al bombeo',
+    'Asegurate de consumir las calorias necesarias segun tus propositos',
+    'Este es otro consejo xd',
+  ];
 
 //Este es el Show Dialog donde van a ir los consejos so... editar aquí
 // , AsyncSnapshot<QuerySnapshot> e
   void _showDialog(BuildContext context) {
+    final random = Random();
+    final consejoAleatorio = consejos[random.nextInt(consejos.length)];
     showDialog(
       context: context,
       builder: (_) {
-        return const SimpleDialog(
+        return SimpleDialog(
           title: Text('Consejo:'),
           children: <Widget>[
             SimpleDialogOption(
-              child: Text('Test'),
+              child: Text(consejoAleatorio),
             ),
           ],
         );
@@ -76,8 +85,8 @@ class _ConsejosBState extends State<ConsejosB> {
                 newTop = newTop.clamp(0.0, screenHeight - buttonSize);
                 newLeft = newLeft.clamp(0.0, screenWidth - buttonSize);
 
-                if (newTop > screenHeight - buttonSize - 100.0) {
-                  newTop = screenHeight - buttonSize - 100.0;
+                if (newTop > screenHeight - buttonSize - 50.0) {
+                  newTop = screenHeight - buttonSize - 50.0;
                 }
 
                 setState(() {
@@ -92,7 +101,7 @@ class _ConsejosBState extends State<ConsejosB> {
 
                 _showDialog(context);
 
-                Timer(const Duration(seconds: 5), () {
+                Timer(const Duration(seconds: 10), () {
                   setState(() {
                     isVisible = true;
                   });
