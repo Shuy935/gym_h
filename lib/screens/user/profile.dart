@@ -109,7 +109,7 @@ class _ProfileState extends State<Profile> {
                 padding: const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
                 onPressed: () async {
                   if (_formKey.currentState!.validate()) {
-                    await userProfileCreate(
+                    await userProfileUpdate(
                       fullname: _fullnameController.text,
                       age: _ageController.text,
                       sex: _sexController.text,
@@ -129,5 +129,15 @@ class _ProfileState extends State<Profile> {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _ageController.dispose();
+    _fullnameController.dispose();
+    _heightController.dispose();
+    _sexController.dispose();
+    _weightController.dispose();
   }
 }
