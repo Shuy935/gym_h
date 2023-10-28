@@ -8,6 +8,7 @@ class UserService {
   final String? age;
   final String? weight;
   final String? height;
+  final bool? isAdm;
 
   UserService({
     required this.username,
@@ -17,6 +18,7 @@ class UserService {
     this.age,
     this.weight,
     this.height,
+    this.isAdm,
   });
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
@@ -27,27 +29,31 @@ class UserService {
     data['age'] = age;
     data['weight'] = weight;
     data['height'] = height;
-
+    data['isAdm'] = isAdm;
     return data;
   }
 }
 
+DatabaseReference db = FirebaseDatabase.instance.ref().child('users');
 userProfileCreate({username, email}) async {
   try {
-    DatabaseReference db = FirebaseDatabase.instance.ref().child('users');
     await db.push().set({
       "username": username,
       "email": email,
+      "isAdm": false,
     });
   } catch (e) {
     print(e);
   }
 }
 
+userProfileGet() async {
+  try {} catch (e) {}
+}
+
 userProfileUpdate({fullname, sex, age, weight, height}) async {
   try {
-    DatabaseReference db = FirebaseDatabase.instance.ref().child('users');
-    await db.push().set({
+    await db.push().update({
       "fullname": fullname,
       "sex": sex,
       "age": age,
