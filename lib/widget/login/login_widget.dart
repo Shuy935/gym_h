@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:gym_h/main.dart';
@@ -122,10 +125,36 @@ class _LoginWidgetState extends State<LoginWidget> {
       builder: (context) => Center(child: CircularProgressIndicator()),
     );
     try {
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
+      UserCredential userCredential =
+          await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: emailController.text.trim(),
         password: passwordController.text.trim(),
       );
+
+      final DatabaseReference usersRef =
+          FirebaseDatabase.instance.reference().child('users');
+      usersRef
+          .orderByChild('email')
+          .equalTo(userCredential.user!.email)
+          .once()
+          .then((DatabaseEvent event) {
+        DataSnapshot snapshot = event.snapshot;
+
+        if (snapshot.value != null) {
+          Map<String, dynamic> userDataMap =
+              (snapshot.value as Map).cast<String, dynamic>();
+
+          // Considerando que hay una única coincidencia.
+          var firstUserData =
+              (userDataMap.values.first as Map).cast<String, dynamic>();
+
+          String email = firstUserData['email'] ?? '';
+          bool isAdm = firstUserData['isAdm'] ?? false;
+          String username = firstUserData['username'] ?? '';
+
+          print('Email: $email, Is Admin: $isAdm, Username: $username');
+        }
+      });
     } on FirebaseAuthException catch (e) {
       print(e);
 
