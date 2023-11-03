@@ -8,6 +8,8 @@ import 'package:gym_h/main.dart';
 import 'package:gym_h/screens/login/forgot_password_page.dart';
 import 'package:gym_h/utils/utils.dart';
 import 'package:gym_h/widget/interfaces/consejos.dart';
+import 'package:gym_h/models/users_model.dart';
+import 'package:http/http.dart';
 
 class LoginWidget extends StatefulWidget {
   final VoidCallback onClickedSignUp;
@@ -130,37 +132,43 @@ class _LoginWidgetState extends State<LoginWidget> {
         email: emailController.text.trim(),
         password: passwordController.text.trim(),
       );
-
-      final DatabaseReference usersRef =
-          FirebaseDatabase.instance.reference().child('users');
-      usersRef
-          .orderByChild('email')
-          .equalTo(userCredential.user!.email)
-          .once()
-          .then((DatabaseEvent event) {
-        DataSnapshot snapshot = event.snapshot;
-
-        if (snapshot.value != null) {
-          Map<String, dynamic> userDataMap =
-              (snapshot.value as Map).cast<String, dynamic>();
-
-          // Considerando que hay una única coincidencia.
-          var firstUserData =
-              (userDataMap.values.first as Map).cast<String, dynamic>();
-
-          String email = firstUserData['email'] ?? '';
-          bool isAdm = firstUserData['isAdm'] ?? false;
-          String username = firstUserData['username'] ?? '';
-
-          print('Email: $email, Is Admin: $isAdm, Username: $username');
+      final userService = await userProfileGet(userCredential);
+      final isAdm = userService?.isAdm;
+      if (userService != null) {
+        if (isAdm == true) {
+          // final email = userService.email;
+          // final username = userService.username;
+          // print(username);
+          // print(email);
+          // print(isAdm);
+          // print('Eres entrenador');
+          // Usuario con permiso de entrenador
+          // Navigator.of(context).pushReplacement(MaterialPageRoute(
+          //   builder: (context) => TrainerScreen(), // Reemplaza con el nombre de tu pantalla de entrenador
+          // ));
+        } else {
+          // final email = userService.email;
+          // final username = userService.username;
+          // print(username);
+          // print(email);
+          // print(isAdm);
+          // print('Eres usuario');
+          // Usuario normal
+          //  Navigator.of(context).pushReplacement(MaterialPageRoute(
+          //  builder: (context) => UserScreen(), // Reemplaza con el nombre de tu pantalla de usuario
+          //));
         }
-      });
+      } else {
+        print('No se pudieron obtener los datos del usuario.');
+      }
     } on FirebaseAuthException catch (e) {
       print(e);
-
       Utils.showSnackBar(e.message);
     }
-
     navigatorKey.currentState!.popUntil((route) => route.isFirst);
   }
 }
+
+ // final email = userService.email;
+      // final username = userService.username;
+      // final isAdm = userService.isAdm;
