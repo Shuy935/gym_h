@@ -1,5 +1,6 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:gym_h/utils/utils.dart';
 
 class UserService {
   final String username;
@@ -36,16 +37,23 @@ class UserService {
   }
 }
 
+User? usua = FirebaseAuth.instance.currentUser;
 DatabaseReference db = FirebaseDatabase.instance.ref().child('users');
 userProfileCreate({username, email}) async {
   try {
     await db.push().set({
       "username": username,
       "email": email,
+      "fullname": '',
+      "sex": '',
+      "age": '',
+      "weight": '',
+      "height": '',
       "isAdm": false,
     });
   } catch (e) {
     print(e);
+    Utils.showSnackBar(e.toString());
   }
 }
 
@@ -69,6 +77,11 @@ Future<UserService?> userProfileGet(UserCredential userCredential) async {
       return UserService(
         username: firstUserData['username'] ?? '',
         email: firstUserData['email'] ?? '',
+        fullname: firstUserData['fullname'] ?? '',
+        age: firstUserData['age'] ?? '',
+        sex: firstUserData['sex'] ?? '',
+        weight: firstUserData['weight'] ?? '',
+        height: firstUserData['height'] ?? '',
         isAdm: firstUserData['isAdm'] ?? false,
       );
     }

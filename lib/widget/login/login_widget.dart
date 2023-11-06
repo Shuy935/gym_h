@@ -159,10 +159,9 @@ class _LoginWidgetState extends State<LoginWidget> {
           //));
         }
       } else {
-        print('No se pudieron obtener los datos del usuario.');
+        Utils.showSnackBar('No se pudieron obtener los datos del usuario.');
       }
     } on FirebaseAuthException catch (e) {
-      print(e);
       Utils.showSnackBar(e.message);
     }
     navigatorKey.currentState!.popUntil((route) => route.isFirst);

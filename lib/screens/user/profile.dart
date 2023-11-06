@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gym_h/models/users_model.dart';
 
 class TheProfile extends StatelessWidget {
+  const TheProfile({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,60 +36,67 @@ class _ProfileState extends State<Profile> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
+            const SizedBox(height: 20),
             TextFormField(
               controller: _fullnameController,
               textInputAction: TextInputAction.next,
               decoration: const InputDecoration(labelText: 'Nombre Completo'),
               validator: (value) {
                 if (value!.isEmpty || value.length < 5) {
-                  return 'Porfavor de poner un nombre completo';
+                  return 'Porfavor de poner un nombre completo correcto';
                 }
                 return null;
               },
             ),
+            const SizedBox(height: 20),
             TextFormField(
               controller: _ageController,
               textInputAction: TextInputAction.next,
               decoration: const InputDecoration(labelText: 'Edad'),
               keyboardType: TextInputType.number,
-              maxLength: 2,
+              // maxLength: 2,
               validator: (value) {
                 if (value!.isEmpty ||
                     int.parse(value.toString()) < 15 ||
                     int.parse(value.toString()) > 70) {
-                  return 'Porfavor de poner un edad';
+                  return 'Porfavor de poner una edad correcta';
                 }
                 return null;
               },
             ),
+            const SizedBox(height: 20),
             TextFormField(
               controller: _heightController,
               textInputAction: TextInputAction.next,
               decoration: const InputDecoration(labelText: 'Altura (cm)'),
               keyboardType: TextInputType.number,
-              maxLength: 3,
+              // maxLength: 3,
               validator: (value) {
                 if (value!.isEmpty ||
                     int.parse(value.toString()) < 100 ||
                     int.parse(value.toString()) > 300) {
-                  return 'Porfavor de poner un altura';
+                  return 'Porfavor de poner una altura correcta';
                 }
                 return null;
               },
             ),
+            const SizedBox(height: 20),
             TextFormField(
               controller: _weightController,
               textInputAction: TextInputAction.next,
               decoration: const InputDecoration(labelText: 'Peso (kg)'),
               keyboardType: TextInputType.number,
-              maxLength: 3,
+              // maxLength: 3,
               validator: (value) {
-                if (value!.isEmpty || int.parse(value.toString()) < 30) {
-                  return 'Porfavor de poner un peso';
+                if (value!.isEmpty ||
+                    int.parse(value.toString()) < 30 ||
+                    int.parse(value.toString()) > 250) {
+                  return 'Porfavor de poner un peso correcto';
                 }
                 return null;
               },
             ),
+            const SizedBox(height: 20),
             TextFormField(
               controller: _sexController,
               textInputAction: TextInputAction.next,
@@ -100,6 +108,7 @@ class _ProfileState extends State<Profile> {
                 return null;
               },
             ),
+            const SizedBox(height: 50),
             Material(
               elevation: 5.0,
               borderRadius: BorderRadius.circular(30.0),

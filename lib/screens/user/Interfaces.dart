@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gym_h/widget/interfaces/widgets.dart';
+import 'package:gym_h/widget/interfaces/Widgets.dart';
 
 class Interfaces extends StatelessWidget {
   const Interfaces({super.key});

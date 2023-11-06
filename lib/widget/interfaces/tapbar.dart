@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:gym_h/widget/interfaces/Buscador.dart';
-import 'package:gym_h/widget/interfaces/Musculos.dart';
-import 'package:gym_h/widget/interfaces/consejos.dart';
+import 'package:gym_h/widget/interfaces/Widgets.dart';
 
 class TabBarH extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    
     final List<Widget> _tabs = [
       const Tab(text: 'Rutina'),
       const Tab(text: 'Musculos'),
@@ -15,7 +12,6 @@ class TabBarH extends StatelessWidget {
     ];
 
     return DefaultTabController(
-      
       length: _tabs.length,
       child: Scaffold(
         appBar: AppBar(
@@ -30,7 +26,7 @@ class TabBarH extends StatelessWidget {
             const Center(child: Text('Historial')),
           ],
         ),
-        floatingActionButton: ButtonBar(),
+        drawer: DrawerProfile(),
       ),
     );
   }
