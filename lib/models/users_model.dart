@@ -68,10 +68,13 @@ Future<Iterable<UserService>?> readUser() async {
           isAdm: a.get('isAdm') ?? '',
         );
       }).toList();
-    } else {}
+    } else {
+      print(response.error?.message);
+    }
   } catch (e) {
     print(e);
   }
+  return null;
 }
 
 Future<void> updateUser(UserService userService) async {
