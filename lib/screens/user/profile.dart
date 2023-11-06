@@ -118,13 +118,14 @@ class _ProfileState extends State<Profile> {
                 padding: const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
                 onPressed: () async {
                   if (_formKey.currentState!.validate()) {
-                    await userProfileUpdate(
+                    UserService userService = UserService(
                       fullname: _fullnameController.text,
                       age: _ageController.text,
                       sex: _sexController.text,
                       weight: _weightController.text,
                       height: _heightController.text,
                     );
+                    await updateUser(userService);
                   }
                 },
                 child: Text(

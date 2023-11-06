@@ -1,10 +1,10 @@
-import 'package:firebase_database/firebase_database.dart';
+import 'dart:convert';
+import 'package:http/http.dart';
+import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:gym_h/utils/utils.dart';
 
 class UserService {
-  final String username;
-  final String email;
+  final String? email;
   final String? fullname;
   final String? sex;
   final String? age;
@@ -13,8 +13,7 @@ class UserService {
   final bool? isAdm;
 
   UserService({
-    required this.username,
-    required this.email,
+    this.email,
     this.fullname,
     this.sex,
     this.age,
@@ -22,86 +21,83 @@ class UserService {
     this.height,
     this.isAdm,
   });
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['username'] = username;
-    data['email'] = email;
-    data['fullname'] = fullname;
-    data['sex'] = sex;
-    data['age'] = age;
-    data['weight'] = weight;
-    data['height'] = height;
-    data['isAdm'] = isAdm;
-    return data;
-  }
+  Map<String, dynamic> toJson() => {
+        "email": email,
+        "fullname": fullname,
+        "sex": sex,
+        "age": age,
+        "weight": weight,
+        "height": height,
+      };
 }
 
-User? usua = FirebaseAuth.instance.currentUser;
-DatabaseReference db = FirebaseDatabase.instance.ref().child('users');
-userProfileCreate({username, email}) async {
+final currentUser = FirebaseAuth.instance.currentUser;
+ParseObject mapModel(UserService userService) {
+  final objeto = ParseObject('users')
+    ..set('firebaseUserId', currentUser?.uid)
+    ..set('fullname', userService.fullname)
+    ..set('email', userService.email)
+    ..set('sex', userService.sex)
+    ..set('age', userService.age)
+    ..set('weight', userService.weight)
+    ..set('height', userService.height);
+  return objeto;
+}
+
+addUser(UserService userService) async {
+  final object = mapModel(userService);
   try {
-    await db.push().set({
-      "username": username,
-      "email": email,
-      "fullname": '',
-      "sex": '',
-      "age": '',
-      "weight": '',
-      "height": '',
-      "isAdm": false,
-    });
+    await object.save();
   } catch (e) {
     print(e);
-    Utils.showSnackBar(e.toString());
   }
 }
 
-Future<UserService?> userProfileGet(UserCredential userCredential) async {
+Future<Iterable<UserService>?> readUser() async {
   try {
-    final event = await db
-        .orderByChild('email')
-        .equalTo(userCredential.user!.email)
-        .once();
+    final query = QueryBuilder<ParseObject>(ParseObject('users'))
+      ..whereEqualTo('firebaseUserId', currentUser?.uid);
+    final response = await query.query();
+    if (response.success) {
+      return response.results?.map((a) {
+        return UserService(
+          fullname: a.get('fullname') ?? '',
+          age: a.get('age') ?? '',
+          sex: a.get('sex') ?? '',
+          weight: a.get('weight') ?? '',
+          height: a.get('height') ?? '',
+        );
+      }).toList();
+    } else {}
+  } catch (e) {
+    print(e);
+  }
+}
 
-    DataSnapshot snapshot = event.snapshot;
+Future<void> updateUser(UserService userService) async {
+  final query = QueryBuilder<ParseObject>(ParseObject('users'))
+    ..whereEqualTo('firebaseUserId', currentUser?.uid);
 
-    if (snapshot.value != null) {
-      Map<String, dynamic> userDataMap =
-          (snapshot.value as Map).cast<String, dynamic>();
+  final response = await query.query();
 
-      // Considerando que hay una única coincidencia.
-      var firstUserData =
-          (userDataMap.values.first as Map).cast<String, dynamic>();
+  if (response.success && response.results != null) {
+    // Supongamos que solo se espera un resultado, si hay más, debes manejarlo adecuadamente
+    final objetoAActualizar = response.results?.first;
 
-      return UserService(
-        username: firstUserData['username'] ?? '',
-        email: firstUserData['email'] ?? '',
-        fullname: firstUserData['fullname'] ?? '',
-        age: firstUserData['age'] ?? '',
-        sex: firstUserData['sex'] ?? '',
-        weight: firstUserData['weight'] ?? '',
-        height: firstUserData['height'] ?? '',
-        isAdm: firstUserData['isAdm'] ?? false,
-      );
+    // Modifica los campos que desees actualizar
+    objetoAActualizar.set('fullname', userService.fullname);
+    objetoAActualizar.set('age', userService.age);
+    objetoAActualizar.set('sex', userService.sex);
+    objetoAActualizar.set('weight', userService.weight);
+    objetoAActualizar.set('height', userService.height);
+
+    // Realiza la operación de actualización
+    final updateResponse = await objetoAActualizar.save();
+
+    if (updateResponse.success) {
+      print('Objeto actualizado con éxito');
+    } else {
+      print('Error al actualizar el objeto: ${updateResponse.error.message}');
     }
-  } catch (e) {
-    print(e);
-  }
-
-  return null;
-}
-
-userProfileUpdate({fullname, sex, age, weight, height}) async {
-  try {
-    await db.push().update({
-      "fullname": fullname,
-      "sex": sex,
-      "age": age,
-      "weight": weight,
-      "height": height
-    });
-  } catch (e) {
-    print(e);
-  }
-}
+  } else {
+    print('No se encontró un objeto para actualizar.');

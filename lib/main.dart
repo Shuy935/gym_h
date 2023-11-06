@@ -9,6 +9,13 @@ import 'firebase_options.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  final keyApplicationId = 'zJz6TnWQlErwD7qxTyvCOcCSDSX8YXrVtV2pACVG';
+  final keyClientKey = 'zU1RDMBoSjHi2qiyMJzGG5YoJYPL7t6b3OMs6Pmc';
+  final keyParseServerUrl = 'https://parseapi.back4app.com';
+
+  await Parse().initialize(keyApplicationId, keyParseServerUrl,
+      clientKey: keyClientKey, autoSendSessionId: true);
+
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
