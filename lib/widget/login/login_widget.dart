@@ -1,15 +1,9 @@
-import 'dart:async';
-
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:gym_h/main.dart';
 import 'package:gym_h/screens/login/forgot_password_page.dart';
 import 'package:gym_h/utils/utils.dart';
-import 'package:gym_h/widget/interfaces/consejos.dart';
-import 'package:gym_h/models/users_model.dart';
-import 'package:http/http.dart';
 
 class LoginWidget extends StatefulWidget {
   final VoidCallback onClickedSignUp;
@@ -127,47 +121,16 @@ class _LoginWidgetState extends State<LoginWidget> {
       builder: (context) => Center(child: CircularProgressIndicator()),
     );
     try {
-      UserCredential userCredential =
-          await FirebaseAuth.instance.signInWithEmailAndPassword(
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: emailController.text.trim(),
         password: passwordController.text.trim(),
       );
-      final userService = await userProfileGet(userCredential);
-      final isAdm = userService?.isAdm;
-      if (userService != null) {
-        if (isAdm == true) {
-          // final email = userService.email;
-          // final username = userService.username;
-          // print(username);
-          // print(email);
-          // print(isAdm);
-          // print('Eres entrenador');
-          // Usuario con permiso de entrenador
-          // Navigator.of(context).pushReplacement(MaterialPageRoute(
-          //   builder: (context) => TrainerScreen(), // Reemplaza con el nombre de tu pantalla de entrenador
-          // ));
-        } else {
-          // final email = userService.email;
-          // final username = userService.username;
-          // print(username);
-          // print(email);
-          // print(isAdm);
-          // print('Eres usuario');
-          // Usuario normal
-          //  Navigator.of(context).pushReplacement(MaterialPageRoute(
-          //  builder: (context) => UserScreen(), // Reemplaza con el nombre de tu pantalla de usuario
-          //));
-        }
-      } else {
-        Utils.showSnackBar('No se pudieron obtener los datos del usuario.');
-      }
     } on FirebaseAuthException catch (e) {
+      print(e);
+
       Utils.showSnackBar(e.message);
     }
+
     navigatorKey.currentState!.popUntil((route) => route.isFirst);
   }
 }
-
- // final email = userService.email;
-      // final username = userService.username;
-      // final isAdm = userService.isAdm;

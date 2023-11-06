@@ -144,6 +144,7 @@ class _SignUpWidgetState extends State<SignUpWidget> {
   Future signUp() async {
     final isValid = formKey.currentState!.validate();
     if (!isValid) return;
+    UserService userService = UserService(email: emailController.text);
 
     showDialog(
       context: context,
@@ -155,8 +156,7 @@ class _SignUpWidgetState extends State<SignUpWidget> {
         email: emailController.text.trim(),
         password: passwordController.text.trim(),
       );
-      userProfileCreate(
-          email: emailController.text, username: usernameController.text);
+      addUser(userService);
     } on FirebaseAuthException catch (e) {
       Utils.showSnackBar(e.message);
     }
