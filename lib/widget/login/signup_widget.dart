@@ -144,7 +144,8 @@ class _SignUpWidgetState extends State<SignUpWidget> {
   Future signUp() async {
     final isValid = formKey.currentState!.validate();
     if (!isValid) return;
-    UserService userService = UserService(email: emailController.text);
+    UserService userService =
+        UserService(email: emailController.text, isAdm: false);
 
     showDialog(
       context: context,

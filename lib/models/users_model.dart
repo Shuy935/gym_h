@@ -1,5 +1,3 @@
-import 'dart:convert';
-import 'package:http/http.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -40,7 +38,8 @@ ParseObject mapModel(UserService userService) {
     ..set('sex', userService.sex)
     ..set('age', userService.age)
     ..set('weight', userService.weight)
-    ..set('height', userService.height);
+    ..set('height', userService.height)
+    ..set('isAdm', userService.isAdm);
   return objeto;
 }
 
@@ -66,6 +65,7 @@ Future<Iterable<UserService>?> readUser() async {
           sex: a.get('sex') ?? '',
           weight: a.get('weight') ?? '',
           height: a.get('height') ?? '',
+          isAdm: a.get('isAdm') ?? '',
         );
       }).toList();
     } else {}
