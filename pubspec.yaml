@@ -41,6 +41,7 @@ dependencies:
   card_swiper: ^3.0.1
   firebase_core: ^2.19.0
   firebase_database: ^10.3.2
+  mockito: ^5.4.2
 
 dev_dependencies:
   flutter_test:
