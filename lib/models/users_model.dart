@@ -1,3 +1,4 @@
+import 'package:gym_h/utils/utils.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -48,7 +49,7 @@ addUser(UserService userService) async {
   try {
     await object.save();
   } catch (e) {
-    print(e);
+    Utils.showSnackBar(e.toString());
   }
 }
 
@@ -69,10 +70,10 @@ Future<List<UserService>?> readUser() async {
         );
       }).toList();
     } else {
-      print(response.error?.message);
+      Utils.showSnackBar(response.error?.message);
     }
   } catch (e) {
-    print(e);
+    Utils.showSnackBar(e.toString());
   }
   return null;
 }
@@ -98,12 +99,13 @@ Future<void> updateUser(UserService userService) async {
     final updateResponse = await objetoAActualizar.save();
 
     if (updateResponse.success) {
-      print('Objeto actualizado con éxito');
+      Utils.showSusSnackBar('Perfil actualizado con éxito');
     } else {
-      print('Error al actualizar el objeto: ${updateResponse.error.message}');
+      Utils.showSnackBar(
+          'Error al actualizar el perfil: ${updateResponse.error.message}');
     }
   } else {
-    print('No se encontró un objeto para actualizar.');
+    Utils.showSnackBar('Error: No se encontró un perfil para actualizar.');
   }
 }
 
