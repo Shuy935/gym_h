@@ -52,17 +52,6 @@ class _SignUpWidgetState extends State<SignUpWidget> {
               ),
               const SizedBox(height: 20),
               TextFormField(
-                controller: usernameController,
-                cursorColor: Colors.white,
-                textInputAction: TextInputAction.next,
-                decoration: const InputDecoration(labelText: 'Username'),
-                autovalidateMode: AutovalidateMode.onUserInteraction,
-                validator: (user) => user != null && user.length < 6
-                    ? 'Enter a valid username (min. 6 characters)'
-                    : null,
-              ),
-              const SizedBox(height: 4),
-              TextFormField(
                 controller: emailController,
                 cursorColor: Colors.white,
                 textInputAction: TextInputAction.next,

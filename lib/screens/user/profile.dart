@@ -22,6 +22,28 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
+  @override
+  void initState() {
+    super.initState();
+
+    // Llama a la función para recuperar los datos del usuario
+    getUserData();
+  }
+
+  Future<void> getUserData() async {
+    final userData = await readUser();
+    if (userData != null && userData.isNotEmpty) {
+      final user = userData[0]; // Suponemos que solo hay un usuario
+      setState(() {
+        _fullnameController.text = user.fullname!;
+        _ageController.text = user.age!;
+        _sexController.text = user.sex!;
+        _weightController.text = user.weight!;
+        _heightController.text = user.height!;
+      });
+    }
+  }
+
   final _formKey = GlobalKey<FormState>();
   final _fullnameController = TextEditingController();
   final _ageController = TextEditingController();
