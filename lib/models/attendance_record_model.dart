@@ -82,3 +82,24 @@ Future<void> updateAsistencia(AsistenciaService asistenciaService) async {
     print('No se encontró un objeto para actualizar.');
   }
 }
+
+Future<void> deleteAsistencia(DateTime fecha, String email) async {
+  final query = QueryBuilder<ParseObject>(ParseObject('Asistencia'))
+    ..whereEqualTo('email', email)
+    ..whereEqualTo('fecha', fecha.toUtc());
+
+  final response = await query.query();
+
+  if (response.success && response.results != null) {
+    final objetoAEliminar = response.results!.first;
+    final deleteResponse = await objetoAEliminar.delete();
+
+    if (deleteResponse.success) {
+      print('Asistencia eliminada con éxito');
+    } else {
+      print('Error al eliminar la asistencia: ${deleteResponse.error.message}');
+    }
+  } else {
+    print('No se encontró un objeto para eliminar.');
+  }
+}

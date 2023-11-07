@@ -106,3 +106,30 @@ Future<void> updateUser(UserService userService) async {
     print('No se encontró un objeto para actualizar.');
   }
 }
+
+Future<List<Map<String, dynamic>>?> readUsers() async {
+  try {
+    final query = QueryBuilder<ParseObject>(ParseObject('users'))
+      ..whereEqualTo('isAdm', false); // Filtrar por isAdm igual a false
+    final response = await query.query();
+    if (response.success) {
+      final userList = response.results?.map((a) {
+        final fullname = a.get<String>('fullname') ?? '';
+        final email = a.get<String>('email');
+        final isAdm = a.get<bool>('isAdm');
+        return {
+          'email': email,
+          'fullname': fullname,
+          'isAdm': isAdm, // Establecer isAdm como false
+        };
+      }).toList();
+      print(userList);
+      return userList;
+    } else {
+      print(response.error?.message);
+    }
+  } catch (e) {
+    print(e);
+  }
+  return null;
+}
