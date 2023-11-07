@@ -52,7 +52,7 @@ addUser(UserService userService) async {
   }
 }
 
-Future<Iterable<UserService>?> readUser() async {
+Future<List<UserService>?> readUser() async {
   try {
     final query = QueryBuilder<ParseObject>(ParseObject('users'))
       ..whereEqualTo('firebaseUserId', currentUser?.uid);
