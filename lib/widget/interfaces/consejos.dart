@@ -68,7 +68,7 @@ class _ConsejosBState extends State<ConsejosB> {
     //Obtener tamaño de pantalla para que el botón no se salga
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
-    double buttonSize = 30.0;
+    double buttonSize = 60.0;
 
     return Stack(
       children: <Widget>[

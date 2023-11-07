@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gym_h/widget/interfaces/Ejercicios.dart';
 
 const List<String> list = <String>[
   'Bíceps',
@@ -10,23 +11,17 @@ const List<String> list = <String>[
   'Glúteo',
   'Cuádriceps',
   'Femoral',
-  'Pantorrilla'
+  'Pantorrilla',
 ];
-
-void main() => runApp(const Musculos());
 
 class Musculos extends StatelessWidget {
   const Musculos({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(title: const Text('Musculos')),
-        body: const Center(
-          child: MusculosN(),
-        ),
-      ),
+    return Scaffold(
+      backgroundColor: Colors.transparent,
+      body: MusculosN(),
     );
   }
 }
@@ -43,27 +38,33 @@ class _MusculosNState extends State<MusculosN> {
 
   @override
   Widget build(BuildContext context) {
-    return DropdownButton<String>(
-      value: dropdownValue,
-      icon: const Icon(Icons.arrow_downward),
-      elevation: 16,
-      style: const TextStyle(color: Colors.deepPurple),
-      underline: Container(
-        height: 2,
-        color: Colors.deepPurpleAccent,
+    return Scaffold(
+      appBar: AppBar(),
+      body: Center(
+        child: DropdownButton<String>(
+          value: dropdownValue,
+          icon: const Icon(Icons.arrow_downward),
+          elevation: 16,
+          style: const TextStyle(color: Color.fromARGB(255, 255, 255, 255)),
+          underline: Container(
+            height: 2,
+            color: const Color.fromARGB(255, 255, 255, 255),
+          ),
+          onChanged: (String? value) {
+            Ejercicios(value);
+            setState(() {
+              dropdownValue = value!;
+              print(value);
+            });
+          },
+          items: list.map<DropdownMenuItem<String>>((String value) {
+            return DropdownMenuItem<String>(
+              value: value,
+              child: Text(value),
+            );
+          }).toList(),
+        ),
       ),
-      onChanged: (String? value) {
-        // ejercicios
-        setState(() {
-          dropdownValue = value!;
-        });
-      },
-      items: list.map<DropdownMenuItem<String>>((String value) {
-        return DropdownMenuItem<String>(
-          value: value,
-          child: Text(value),
-        );
-      }).toList(),
     );
   }
 }
