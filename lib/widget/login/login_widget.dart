@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:gym_h/main.dart';
 import 'package:gym_h/screens/login/forgot_password_page.dart';
 import 'package:gym_h/utils/utils.dart';
+import 'package:gym_h/models/users_model.dart';
 
 class LoginWidget extends StatefulWidget {
   final VoidCallback onClickedSignUp;
@@ -121,16 +122,34 @@ class _LoginWidgetState extends State<LoginWidget> {
       builder: (context) => Center(child: CircularProgressIndicator()),
     );
     try {
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
+      UserCredential userCredential =
+          await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: emailController.text.trim(),
         password: passwordController.text.trim(),
       );
-    } on FirebaseAuthException catch (e) {
-      print(e);
 
+      final userServices =
+          await readUser(); // Utiliza la función readUser para obtener los datos del usuario.
+
+      if (userServices != null && userServices.isNotEmpty) {
+        final userService = userServices.first;
+        if (userService.isAdm == true) {
+          // El usuario es un entrenador, navega a la pantalla de entrenador.
+          // Navigator.of(context).pushReplacement(MaterialPageRoute(
+          //   builder: (context) => TrainerScreen(), // Reemplaza con el nombre de tu pantalla de entrenador
+          // ));
+        } else {
+          // El usuario no es un entrenador, navega a la pantalla de usuario.
+          // Navigator.of(context).pushReplacement(MaterialPageRoute(
+          //   builder: (context) => UserScreen(), // Reemplaza con el nombre de tu pantalla de usuario
+          // ));
+        }
+      } else {
+        Utils.showSnackBar('No se pudieron obtener los datos del usuario.');
+      }
+    } on FirebaseAuthException catch (e) {
       Utils.showSnackBar(e.message);
     }
-
     navigatorKey.currentState!.popUntil((route) => route.isFirst);
   }
 }
