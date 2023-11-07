@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:gym_h/models/users_model.dart';
 import 'package:gym_h/screens/user/profile.dart';
 
 class DrawerProfile extends StatelessWidget {
