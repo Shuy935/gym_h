@@ -1,20 +1,21 @@
 import 'package:easy_search_bar/easy_search_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:gym_h/widget/interfaces/RegistrosH.dart';
 
-class ListaU extends StatefulWidget {
-  ListaU({Key? key}) : super(key: key);
+class Lista extends StatefulWidget {
+  Lista({Key? key}) : super(key: key);
 
   @override
-  _ListaUState createState() => _ListaUState();
+  _ListaState createState() => _ListaState();
 }
 
-class _ListaUState extends State<ListaU> {
+class _ListaState extends State<Lista> {
   final List<String> _suggestions = [
-    'Puto programa de cagada',
-    'Ya me tiene hasta la madre',
-    'Aqui ira el get de los usuarios',
+    'Hana song',
+    'Gabriel reyes',
+    'Ana amari',
   ];
-  String Usuario = '';
+  String Usuario = ''; //get del seleccionado
   String searchValue = '';
 
   @override
@@ -32,26 +33,74 @@ class _ListaUState extends State<ListaU> {
           Usuario = searchValue;
         },
       ),
-      body: Column(
+      body: Stack(
         children: [
-          Container(height: 10),
-          Text(
-            'Usuario a registrar:\n$Usuario',
-            style: TextStyle(fontSize: 25),
+          Column(
+            children: [
+              Container(height: 10),
+              Text(
+                'Usuario a registrar:\n$Usuario',
+                style: TextStyle(fontSize: 25),
+              ),
+              ElevatedButton.icon(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.transparent,
+                    minimumSize: Size.fromHeight(50),
+                  ),
+                  icon: Icon(Icons.app_registration, size: 32),
+                  label: Text(
+                    'Registrar',
+                    style: TextStyle(fontSize: 24),
+                  ),
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: Text('Confirmación de Registro'),
+                          content: Text(
+                              '¿Estás seguro de que deseas registrar a $Usuario?'),
+                          actions: <Widget>[
+                            TextButton(
+                              child: Text('Cancelar'),
+                              onPressed: () {
+                                Navigator.of(context)
+                                    .pop(); // Cierra el AlertDialog
+                              },
+                            ),
+                            TextButton(
+                              child: Text('Aceptar'),
+                              onPressed: () {
+                                // Realiza la lógica de registro aquí
+                                // Puedes agregar código para manejar el registro
+                                Navigator.of(context)
+                                    .pop(); // Cierra el AlertDialog
+                              },
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  } //recordar registrar bajo el nombre de
+                  ),
+            ],
           ),
-          ElevatedButton.icon(
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.transparent,
-              minimumSize: Size.fromHeight(50),
+          Positioned(
+            left: 16,
+            bottom: 16,
+            child: FloatingActionButton(
+              foregroundColor: Colors.black,
+              elevation: 20,
+              backgroundColor: Colors.amber,
+              shape: const CircleBorder(),
+              splashColor: Colors.white,
+              onPressed: () {
+                final route =
+                    MaterialPageRoute(builder: (context) => RegistroH());
+                Navigator.push(context, route);
+              },
+              child: const Icon(Icons.history),
             ),
-            icon: Icon(Icons.app_registration, size: 32),
-            label: Text(
-              'Registrar',
-              style: TextStyle(fontSize: 24),
-            ),
-            onPressed: null
-            //se supone que aqui ira el get con el valor de Usuario
-            ,
           ),
         ],
       ),
