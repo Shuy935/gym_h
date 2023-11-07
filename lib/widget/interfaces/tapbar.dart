@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:gym_h/widget/interfaces/Buscador.dart';
 import 'package:gym_h/widget/interfaces/BuscadorU.dart';
 import 'package:gym_h/widget/interfaces/Musculos.dart';
-import 'package:gym_h/widget/interfaces/consejos.dart';
 
 class TabBarH extends StatelessWidget {
   @override

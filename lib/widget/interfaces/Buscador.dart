@@ -71,10 +71,10 @@ class _ListaState extends State<Lista> {
                             TextButton(
                               child: Text('Aceptar'),
                               onPressed: () {
+                                
                                 // Realiza la lógica de registro aquí
                                 // Puedes agregar código para manejar el registro
-                                Navigator.of(context)
-                                    .pop(); // Cierra el AlertDialog
+                                Navigator.of(context).pop(); // Cierra el AlertDialog
                               },
                             ),
                           ],

@@ -10,10 +10,10 @@ class RegistroH extends StatefulWidget {
 
 class _RegistroHState extends State<RegistroH> {
   final List<Registro> registros = [
+    //get de id, nombre y fecha
     Registro('Manolo', DateTime(2023, 1, 15)),
     Registro('Sofia', DateTime(2023, 2, 10)),
     Registro('Canela', DateTime(2023, 3, 5)),
-    
   ];
 
   final TextEditingController nombreController = TextEditingController();
@@ -78,7 +78,8 @@ class _RegistroHState extends State<RegistroH> {
                       ),
                       TextField(
                         controller: fechaController,
-                        decoration: InputDecoration(labelText: 'Fecha (yyyy-MM-dd)'),
+                        decoration:
+                            InputDecoration(labelText: 'Fecha (yyyy-MM-dd)'),
                       ),
                     ],
                   ),
@@ -94,9 +95,10 @@ class _RegistroHState extends State<RegistroH> {
                       onPressed: () {
                         final nombre = nombreController.text;
                         final fechaStr = fechaController.text;
-                        final fecha = DateFormat('yyyy-MM-dd').parse(fechaStr, true);
+                        final fecha =
+                            DateFormat('yyyy-MM-dd').parse(fechaStr, true);
 
-                        if (nombre!='' && fecha != null) {
+                        if (nombre != '' && fecha != null) {
                           setState(() {
                             registros.insert(0, Registro(nombre, fecha));
                             nombreController.clear();
