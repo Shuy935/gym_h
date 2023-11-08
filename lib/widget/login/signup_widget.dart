@@ -2,7 +2,6 @@ import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:gym_h/main.dart';
 import 'package:gym_h/utils/utils.dart';
 import 'package:gym_h/models/users_model.dart';
@@ -16,7 +15,7 @@ class SignUpWidget extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _SignUpWidgetState createState() => _SignUpWidgetState();
+  State<SignUpWidget> createState() => _SignUpWidgetState();
 }
 
 class _SignUpWidgetState extends State<SignUpWidget> {

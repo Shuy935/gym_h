@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 
 class Musculos extends StatefulWidget {
+  const Musculos({super.key});
+
   @override
-  _MusculosState createState() => _MusculosState();
+  State<Musculos> createState() => _MusculosState();
 }
-  List<String> rutinaActual = [];
+
+List<String> rutinaActual = [];
+
 class _MusculosState extends State<Musculos> {
   final List<String> musculos = [
     //get de musculos
@@ -20,19 +24,35 @@ class _MusculosState extends State<Musculos> {
     "Pantorrilla",
   ];
 
-final Map<String, List<String>> ejerciciosPorMusculo = {
-  //get de ejercicios
-  "Bíceps": ["Curl de bíceps", "Martillo", "Flexiones de brazos"],
-  "Tríceps": ["Press de tríceps", "Fondos en paralelas", "Patada de tríceps"],
-  "Hombro": ["Press militar", "Elevaciones laterales", "Elevaciones frontales"],
-  "Espalda": ["Pull-ups", "Dominadas", "Peso muerto"],
-  "Pecho": ["Press de banca", "Flexiones de pecho", "Pull-over"],
-  "Abdomen": ["Plancha", "Crunches", "Elevación de piernas"],
-  "Glúteo": ["Sentadillas", "Prensa de piernas", "Zancadas"],
-  "Cuádriceps": ["Sentadillas", "Extensiones de cuádriceps", "Prensa de piernas"],
-  "Femoral": ["Prensa femoral", "Flexión de cadera", "Elevación de piernas tumbado"],
-  "Pantorrilla": ["Elevación de talones", "Sentadillas con salto", "Prensa de pantorrillas"],
-};
+  final Map<String, List<String>> ejerciciosPorMusculo = {
+    //get de ejercicios
+    "Bíceps": ["Curl de bíceps", "Martillo", "Flexiones de brazos"],
+    "Tríceps": ["Press de tríceps", "Fondos en paralelas", "Patada de tríceps"],
+    "Hombro": [
+      "Press militar",
+      "Elevaciones laterales",
+      "Elevaciones frontales"
+    ],
+    "Espalda": ["Pull-ups", "Dominadas", "Peso muerto"],
+    "Pecho": ["Press de banca", "Flexiones de pecho", "Pull-over"],
+    "Abdomen": ["Plancha", "Crunches", "Elevación de piernas"],
+    "Glúteo": ["Sentadillas", "Prensa de piernas", "Zancadas"],
+    "Cuádriceps": [
+      "Sentadillas",
+      "Extensiones de cuádriceps",
+      "Prensa de piernas"
+    ],
+    "Femoral": [
+      "Prensa femoral",
+      "Flexión de cadera",
+      "Elevación de piernas tumbado"
+    ],
+    "Pantorrilla": [
+      "Elevación de talones",
+      "Sentadillas con salto",
+      "Prensa de pantorrillas"
+    ],
+  };
   final int maxEjerciciosPorMusculo = 4;
   final int maxMusculosSeleccionados = 3;
 
@@ -40,7 +60,7 @@ final Map<String, List<String>> ejerciciosPorMusculo = {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Rutina'),
+        title: const Text('Rutina'),
       ),
       body: ListView.builder(
         itemCount: musculos.length,
@@ -51,7 +71,7 @@ final Map<String, List<String>> ejerciciosPorMusculo = {
             onTap: () {
               if (rutinaActual.length >= maxMusculosSeleccionados) {
                 ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
+                  const SnackBar(
                     content: Text("Ya has seleccionado el máximo de músculos."),
                   ),
                 );
@@ -66,30 +86,35 @@ final Map<String, List<String>> ejerciciosPorMusculo = {
   }
 
   void seleccionarMusculo(String musculo) {
-    if (rutinaActual.where((ejercicio) => ejercicio == musculo).length >= maxEjerciciosPorMusculo) {
+    if (rutinaActual.where((ejercicio) => ejercicio == musculo).length >=
+        maxEjerciciosPorMusculo) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text("Ya has seleccionado el máximo de ejercicios para $musculo."),
+          content: Text(
+              "Ya has seleccionado el máximo de ejercicios para $musculo."),
         ),
       );
     } else {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => SeleccionarEjercicios(musculo, ejerciciosPorMusculo[musculo]!),
+          builder: (context) =>
+              SeleccionarEjercicios(musculo, ejerciciosPorMusculo[musculo]!),
         ),
       );
     }
   }
 }
+
 class SeleccionarEjercicios extends StatefulWidget {
   final String musculo;
   final List<String> ejerciciosDisponibles;
 
-  SeleccionarEjercicios(this.musculo, this.ejerciciosDisponibles);
+  const SeleccionarEjercicios(this.musculo, this.ejerciciosDisponibles,
+      {super.key});
 
   @override
-  _SeleccionarEjerciciosState createState() => _SeleccionarEjerciciosState();
+  State<SeleccionarEjercicios> createState() => _SeleccionarEjerciciosState();
 }
 
 class _SeleccionarEjerciciosState extends State<SeleccionarEjercicios> {
@@ -117,7 +142,7 @@ class _SeleccionarEjerciciosState extends State<SeleccionarEjercicios> {
               if (ejerciciosSeleccionados.length < maxEjerciciosPorMusculo) {
                 if (ejercicioYaSeleccionado(ejercicio)) {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
+                    const SnackBar(
                       content: Text("Este ejercicio ya ha sido seleccionado."),
                     ),
                   );
@@ -129,7 +154,8 @@ class _SeleccionarEjerciciosState extends State<SeleccionarEjercicios> {
               } else {
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
-                    content: Text("Ya has seleccionado el máximo de ejercicios para ${widget.musculo}."),
+                    content: Text(
+                        "Ya has seleccionado el máximo de ejercicios para ${widget.musculo}."),
                   ),
                 );
               }

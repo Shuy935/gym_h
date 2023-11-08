@@ -126,13 +126,13 @@ Future<List<Map<String, dynamic>>?> readUsers() async {
           'isAdm': isAdm, // Establecer isAdm como false
         };
       }).toList();
-      print(userList);
+      // print(userList);
       return userList;
     } else {
-      print(response.error?.message);
+      Utils.showSnackBar(response.error?.message);
     }
   } catch (e) {
-    print(e);
+    Utils.showSnackBar(e.toString());
   }
   return null;
 }

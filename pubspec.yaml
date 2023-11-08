@@ -41,18 +41,18 @@ dependencies:
   card_swiper: ^3.0.1
   firebase_core: ^2.19.0
   firebase_database: ^10.3.2
+  firebase_auth: ^4.6.2
+  email_validator: ^2.1.17
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
     # Firesabe
-  firebase_auth: ^4.6.2
 
   # Firebase Database
   cloud_firestore: ^4.8.0
 
   # Validate Email
-  email_validator: ^2.1.17
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is

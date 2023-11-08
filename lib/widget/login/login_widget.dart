@@ -15,7 +15,7 @@ class LoginWidget extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _LoginWidgetState createState() => _LoginWidgetState();
+  State<LoginWidget> createState() => _LoginWidgetState();
 }
 
 class _LoginWidgetState extends State<LoginWidget> {
@@ -31,33 +31,33 @@ class _LoginWidgetState extends State<LoginWidget> {
 
   @override
   Widget build(BuildContext context) => SingleChildScrollView(
-        padding: EdgeInsets.all(16),
+        padding: const EdgeInsets.all(16),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            SizedBox(height: 100),
+            const SizedBox(height: 100),
             Image.asset('assets/image/logo.png'),
-            SizedBox(height: 75),
-            Text(
+            const SizedBox(height: 75),
+            const Text(
               'Welcome Back',
               textAlign: TextAlign.center,
               style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
             ),
-            SizedBox(height: 40),
+            const SizedBox(height: 40),
             TextField(
               controller: emailController,
               cursorColor: Colors.white,
               textInputAction: TextInputAction.next,
-              decoration: InputDecoration(labelText: 'Email'),
+              decoration: const InputDecoration(labelText: 'Email'),
             ),
-            SizedBox(height: 4),
+            const SizedBox(height: 4),
             TextField(
               controller: passwordController,
               textInputAction: TextInputAction.done,
-              decoration: InputDecoration(labelText: 'Password'),
+              decoration: const InputDecoration(labelText: 'Password'),
               obscureText: true,
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Container(
               decoration: BoxDecoration(
                 gradient: LinearGradient(colors: [
@@ -69,17 +69,17 @@ class _LoginWidgetState extends State<LoginWidget> {
               child: ElevatedButton.icon(
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.transparent,
-                  minimumSize: Size.fromHeight(50),
+                  minimumSize: const Size.fromHeight(50),
                 ),
-                icon: Icon(Icons.lock_open, size: 32),
-                label: Text(
+                icon: const Icon(Icons.lock_open, size: 32),
+                label: const Text(
                   'Sign In',
                   style: TextStyle(fontSize: 24),
                 ),
                 onPressed: signIn,
               ),
             ),
-            SizedBox(height: 24),
+            const SizedBox(height: 24),
             GestureDetector(
               child: Text(
                 'Forgot Password?',
@@ -90,13 +90,13 @@ class _LoginWidgetState extends State<LoginWidget> {
                 ),
               ),
               onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => ForgotPasswordPage(),
+                builder: (context) => const ForgotPasswordPage(),
               )),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             RichText(
               text: TextSpan(
-                style: TextStyle(color: Colors.white, fontSize: 15),
+                style: const TextStyle(color: Colors.white, fontSize: 15),
                 text: 'No account?  ',
                 children: [
                   TextSpan(
@@ -119,11 +119,10 @@ class _LoginWidgetState extends State<LoginWidget> {
     showDialog(
       context: context,
       barrierDismissible: false,
-      builder: (context) => Center(child: CircularProgressIndicator()),
+      builder: (context) => const Center(child: CircularProgressIndicator()),
     );
     try {
-      UserCredential userCredential =
-          await FirebaseAuth.instance.signInWithEmailAndPassword(
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: emailController.text.trim(),
         password: passwordController.text.trim(),
       );

@@ -1,8 +1,6 @@
 import 'dart:async';
 import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:gym_h/widget/interfaces/tapbar.dart';
 
 class ConsejosBState {
   bool isVisible = true;
@@ -25,7 +23,7 @@ class ConsejosB extends StatefulWidget {
   const ConsejosB({super.key});
 
   @override
-  _ConsejosBState createState() => _ConsejosBState();
+  State<ConsejosB> createState() => _ConsejosBState();
 }
 
 class _ConsejosBState extends State<ConsejosB> {
@@ -48,7 +46,7 @@ class _ConsejosBState extends State<ConsejosB> {
       context: context,
       builder: (_) {
         return SimpleDialog(
-          title: Text('Consejo:'),
+          title: const Text('Consejo:'),
           children: <Widget>[
             SimpleDialogOption(
               child: Text(consejoAleatorio),

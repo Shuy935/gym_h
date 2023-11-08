@@ -9,7 +9,7 @@ class TheProfile extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Profile'),
       ),
-      body: Profile(),
+      body: const Profile(),
     );
   }
 }

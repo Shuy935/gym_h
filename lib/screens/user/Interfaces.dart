@@ -10,7 +10,7 @@ class Interfaces extends StatelessWidget {
       body: Stack(
         children: [
           TabBarH(),
-          ConsejosB(),
+          const ConsejosB(),
         ],
       ),
     );
