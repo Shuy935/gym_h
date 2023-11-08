@@ -93,9 +93,37 @@ class _RegistroHState extends State<RegistroH> {
                       ),
                       TextField(
                         controller: fechaController,
-                        decoration: InputDecoration(labelText: fechaActual),
+                        decoration: InputDecoration(
+                            labelText: 'Fecha',
+                            icon: Icon(Icons.calendar_today)),
+                        readOnly:
+                            true, //set it true, so that user will not able to edit text
+                        onTap: () async {
+                          DateTime? pickedDate = await showDatePicker(
+                              context: context,
+                              initialDate: DateTime.now(),
+                              firstDate: DateTime(
+                                  2000), //DateTime.now() - not to allow to choose before today.
+                              lastDate: DateTime(2101));
+                          if (pickedDate != null) {
+                            print(
+                                pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
+                            String formattedDate =
+                                DateFormat('yyyy-MM-dd').format(pickedDate);
+                            print(
+                                formattedDate); //formatted date output using intl package =>  2021-03-16
+                            //you can implement different kind of Date Format here according to your requirement
+
+                            setState(() {
+                              //TextEditingController dateinput =TextEditingController();
+                              fechaController.text =
+                                  formattedDate; //set output date to TextField value.
+                            });
+                          } else {
+                            print("Date is not selected");
+                          }
+                        },
                         //InputDecoration(labelText: 'Fecha (yyyy-MM-dd)'),
-                        //TODO no me va a vencer una fecha
                       ),
                       Container(
                         // color: Color.fromARGB(255, 128, 123, 155),
