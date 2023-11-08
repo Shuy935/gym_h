@@ -62,6 +62,7 @@ Future<List<UserService>?> readUser() async {
       return response.results?.map((a) {
         return UserService(
           fullname: a.get('fullname') ?? '',
+          email: a.get('email') ?? '',
           age: a.get('age') ?? '',
           sex: a.get('sex') ?? '',
           weight: a.get('weight') ?? '',
