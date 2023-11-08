@@ -3,7 +3,7 @@
 import 'package:firebase_core/firebase_core.dart' show FirebaseOptions;
 import 'package:flutter/foundation.dart'
     show defaultTargetPlatform, kIsWeb, TargetPlatform;
-
+//holki
 /// Default [FirebaseOptions] for use with your Firebase apps.
 ///
 /// Example:
@@ -65,6 +65,6 @@ class DefaultFirebaseOptions {
     projectId: 'ahhhhhhh-c76c1',
     databaseURL: 'https://ahhhhhhh-c76c1-default-rtdb.firebaseio.com',
     storageBucket: 'ahhhhhhh-c76c1.appspot.com',
-    iosBundleId: 'com.example.gymh',
+    iosBundleId: 'com.example.gymh', 
   );
 }
