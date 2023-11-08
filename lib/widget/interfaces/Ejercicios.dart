@@ -89,6 +89,9 @@ class CardE extends StatelessWidget {
                         image: AssetImage('assets/image/logo.png'),
                       ),
                     ),
+                    Container(
+                          width: 25,
+                        ),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
