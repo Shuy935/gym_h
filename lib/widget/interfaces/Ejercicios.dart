@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
 class Ejercicios extends StatelessWidget {
-  const Ejercicios(String? value, {super.key});
+  const Ejercicios({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        appBar: AppBar(title: const Text('Card Sample')),
+        appBar: AppBar(title: const Text('Card de :')),
         body: const CardE(),
       ),
     );
@@ -20,33 +20,118 @@ class CardE extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Card(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            const ListTile(
-              leading: Icon(Icons.album),
-              title: Text('The Enchanted Nightingale'),
-              subtitle: Text('Music by Julie Gable. Lyrics by Sidney Stein.'),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
+      child: IntrinsicHeight(
+        child: Card(
+          color: Color.fromARGB(255, 22, 147, 209),
+          child: Padding(
+            padding: EdgeInsets.all(8.0),
+            child: Column(
               children: <Widget>[
-                TextButton(
-                  child: const Text('BUY TICKETS'),
-                  onPressed: () {/* ... */},
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Container(
+                          width: 120,
+                          child: Text('Nombre: '),
+                        ),
+                        Expanded(
+                          child: TextFormField(
+                            // se cambiará por un dropdown
+                            decoration: InputDecoration(
+                              hintText: 'Nombre del ejercicio',
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Container(
+                          width: 120,
+                          child: Text('Repeticiones: '),
+                        ),
+                        Expanded(
+                          child: TextFormField(
+                            // se cambiará por un dropdown
+                            decoration: InputDecoration(
+                              hintText: 'Repeticiones',
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Container(
+                          width: 120,
+                          child: Text('Series: '),
+                        ),
+                        Expanded(
+                          child: TextFormField(
+                            // se cambiará por un dropdown
+                            decoration: InputDecoration(
+                              hintText: 'Series',
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
-                const SizedBox(width: 8),
-                TextButton(
-                  child: const Text('LISTEN'),
-                  onPressed: () {/* ... */},
-                ),
-                const SizedBox(width: 8),
+                Row(
+                  children: [
+                    Container(
+                      width: 200,
+                      height: 200,
+                      child: Image(
+                        image: AssetImage('assets/image/logo.png'),
+                      ),
+                    ),
+                    Container(
+                          width: 25,
+                        ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('Descanso recomendado:'),
+                        Container(
+                          width: 10,
+                        ),
+                        Text('Get de eso'),
+                        Container(
+                          height: 15,
+                        ),
+                        Row(
+                          children: [
+                            Text('Dificultad:'),
+                            Container(
+                              width: 10,
+                            ),
+                            Text('Get de eso'),
+                          ],
+                        ),
+                        Container(
+                          height: 25,
+                        ),
+                        Text('Musculo'),
+                      ],
+                    ),
+                  ],
+                )
               ],
             ),
-          ],
+          ),
         ),
       ),
     );
   }
 }
+
+/*
+TextButton(
+  child: const Text('LISTEN'),
+  onPressed: () {/* ... */},
+),
+*/
