@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gym_h/main.dart';
 import 'package:gym_h/widget/interfaces/Ejercicios.dart';
 
 const List<String> list = <String>[
@@ -40,29 +41,34 @@ class _MusculosNState extends State<MusculosN> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: Center(
-        child: DropdownButton<String>(
-          value: dropdownValue,
-          icon: const Icon(Icons.arrow_downward),
-          elevation: 16,
-          style: const TextStyle(color: Color.fromARGB(255, 255, 255, 255)),
-          underline: Container(
-            height: 2,
-            color: const Color.fromARGB(255, 255, 255, 255),
+      body: SingleChildScrollView(
+        child: Center(
+          child: Container(
+            alignment: Alignment.topCenter,
+            child: DropdownButton<String>(
+              value: dropdownValue,
+              icon: const Icon(Icons.arrow_downward),
+              elevation: 16,
+              style: const TextStyle(color: Color.fromARGB(255, 255, 255, 255)),
+              underline: Container(
+                height: 2,
+                color: const Color.fromARGB(255, 255, 255, 255),
+              ),
+              onChanged: (String? value) {
+                navigatorKey.currentState!.push(
+                  MaterialPageRoute(
+                    builder: (context) => Ejercicios(),
+                  ),
+                );
+              },
+              items: list.map<DropdownMenuItem<String>>((String value) {
+                return DropdownMenuItem<String>(
+                  value: value,
+                  child: Text(value),
+                );
+              }).toList(),
+            ),
           ),
-          onChanged: (String? value) {
-            Ejercicios(value);
-            setState(() {
-              dropdownValue = value!;
-              print(value);
-            });
-          },
-          items: list.map<DropdownMenuItem<String>>((String value) {
-            return DropdownMenuItem<String>(
-              value: value,
-              child: Text(value),
-            );
-          }).toList(),
         ),
       ),
     );
