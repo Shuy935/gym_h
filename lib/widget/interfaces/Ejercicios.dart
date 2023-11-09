@@ -7,9 +7,24 @@ class Ejercicios extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    int m1 = 0;
+    int m2 = 0;
+    int m3 = 0;
+    if (selectedMusc.length == 1) {
+      m1 = 1;
+    }else if(selectedMusc.length == 2){
+     m1 = 1;
+     m2 = 1;
+    }else{
+     m1 = 1;
+     m2 = 1;
+     m3 = 3;
+    }
+    int cantidad = m1+m2+m3;
+    print(cantidad);
     String miString = selectedMusc.join(" ");
-    print(selectedMusc);
     return MaterialApp(
+      theme: ThemeData.dark().copyWith(),
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
@@ -24,9 +39,7 @@ class Ejercicios extends StatelessWidget {
         body: SingleChildScrollView(
             child: Column(
           children: [
-            CardE(),
-            CardE(),
-            CardE(),
+            CardE(cantidad: cantidad,),
           ],
         )),
       ),
@@ -35,15 +48,16 @@ class Ejercicios extends StatelessWidget {
 }
 
 class CardE extends StatelessWidget {
-  const CardE({super.key});
+  final int cantidad;
+  const CardE({super.key, required this.cantidad});
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Center(
-        child: IntrinsicHeight(
-          child: Card(
-            color: Color.fromARGB(255, 110, 114, 116),
+    print(cantidad);
+    List<Widget> cards = [];
+    for (int index = 0; index < cantidad; index++) {
+      cards.add(Card(
+            color: Color.fromARGB(255, 58, 58, 59),
             child: Padding(
               padding: EdgeInsets.all(8.0),
               child: Column(
@@ -140,9 +154,9 @@ class CardE extends StatelessWidget {
                 ],
               ),
             ),
-          ),
-        ),
-      ),
+          ));
+      }
+    return Column(children: cards,
     );
   }
 }
