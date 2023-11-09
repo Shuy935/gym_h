@@ -79,8 +79,6 @@ class _RegistroHState extends State<RegistroH> {
             showDialog(
               context: context,
               builder: (BuildContext context) {
-                String fechaActual =
-                    DateFormat("yyyy-MM-dd").format(DateTime.now());
                 return AlertDialog(
                   title: Text('Agregar Registro'),
                   content: Column(
@@ -103,8 +101,9 @@ class _RegistroHState extends State<RegistroH> {
                               context: context,
                               initialDate: DateTime.now(),
                               firstDate: DateTime(
-                                  2000), //DateTime.now() - not to allow to choose before today.
-                              lastDate: DateTime(2101));
+                                  2023), //DateTime.now() - not to allow to choose before today.
+                              lastDate: DateTime
+                                  .now()); //la ultima fecha que puede escoger es la de hoy
                           if (pickedDate != null) {
                             // print(pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
                             String formattedDate =
@@ -115,6 +114,7 @@ class _RegistroHState extends State<RegistroH> {
                             setState(() {
                               fechaController.text =
                                   formattedDate; //set output date to TextField value.
+                              //Mandarlo a la base de datos
                             });
                           } else {
                             print("Date is not selected");
