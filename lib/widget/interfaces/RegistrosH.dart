@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+//import 'date_picker_widget.dart';
+
 class RegistroH extends StatefulWidget {
   const RegistroH({Key? key}) : super(key: key);
 
@@ -35,32 +37,42 @@ class _RegistroHState extends State<RegistroH> {
           ),
         ),
         body: SingleChildScrollView(
-          child: DataTable(
-            columns: <DataColumn>[
-              DataColumn(
-                label: Text(
-                  'Nombre',
-                  style: TextStyle(fontStyle: FontStyle.italic),
-                ),
-              ),
-              DataColumn(
-                label: Text(
-                  'Fecha',
-                  style: TextStyle(fontStyle: FontStyle.italic),
-                ),
-              ),
-            ],
-            rows: registros.map((registro) {
-              return DataRow(
-                cells: <DataCell>[
-                  DataCell(Text(registro.name)),
-                  DataCell(Text(
-                    DateFormat('yyyy-MM-dd').format(registro.date),
+          child: Center(
+            child: DataTable(
+              columns: const <DataColumn>[
+                DataColumn(
+                  label: Expanded(
+                      child: Text(
+                    'Nombre',
+                    style: TextStyle(fontStyle: FontStyle.italic, fontSize: 25),
                   )),
-                ],
-              );
-            }).toList(),
-          ),
+                ),
+                DataColumn(
+                    label: Expanded(
+                  child: Text(
+                    'Fecha',
+                    style: TextStyle(fontStyle: FontStyle.italic, fontSize: 25),
+                  ),
+                )),
+              ],
+              rows: registros.map((registro) {
+                return DataRow(
+                  cells: <DataCell>[
+                    DataCell(Text(registro.name)),
+                    DataCell(Text(
+                      DateFormat('yyyy-MM-dd').format(registro.date),
+                    )),
+                  ],
+                );
+              }).toList(),
+              columnSpacing: //sin esta cosa se pegan las columnas
+                  200, //espacio entre columnas, creo que hay que ajustarlo porque puede que varíe el tamaño de la pantalla
+              dividerThickness:
+                  2, //este es para que tanto grosor tienen las lineas
+              horizontalMargin:
+                  10, //el espacio entre el borde de la pantalla y la tabla
+            ),
+          ), //para que esté centrada la tabla
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
@@ -75,11 +87,48 @@ class _RegistroHState extends State<RegistroH> {
                       TextField(
                         controller: nombreController,
                         decoration: InputDecoration(labelText: 'Nombre'),
+                        //que solo deje poner los de la base de datos y que haga busquedas que coincidan con lo que se va escribiendo?
                       ),
                       TextField(
                         controller: fechaController,
-                        decoration:
-                            InputDecoration(labelText: 'Fecha (yyyy-MM-dd)'),
+                        decoration: InputDecoration(
+                            labelText: 'Fecha',
+                            icon: Icon(Icons.calendar_today)),
+                        readOnly:
+                            true, //set it true, so that user will not able to edit text
+                        onTap: () async {
+                          DateTime? pickedDate = await showDatePicker(
+                              context: context,
+                              initialDate: DateTime.now(),
+                              firstDate: DateTime(
+                                  2023), //DateTime.now() - not to allow to choose before today.
+                              lastDate: DateTime
+                                  .now()); //la ultima fecha que puede escoger es la de hoy
+                          if (pickedDate != null) {
+                            // print(pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
+                            String formattedDate =
+                                DateFormat('yyyy-MM-dd').format(pickedDate);
+                            // print(formattedDate); //formatted date output using intl package =>  2021-03-16
+                            //you can implement different kind of Date Format here according to your requirement
+
+                            setState(() {
+                              fechaController.text =
+                                  formattedDate; //set output date to TextField value.
+                              //Mandarlo a la base de datos
+                            });
+                          } else {
+                            print("Date is not selected");
+                          }
+                        },
+                        //InputDecoration(labelText: 'Fecha (yyyy-MM-dd)'),
+                      ),
+                      Container(
+                        // color: Color.fromARGB(255, 128, 123, 155),
+                        height: 10,
+                        alignment: Alignment.center,
+
+                        // child: const DatePickerApp(), //No funciona xd hay que modificar el DatePickerApp
+                        //Poner un boton que llame para escoger la fecha y llamar a DatePickerApp()
                       ),
                     ],
                   ),
