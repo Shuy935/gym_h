@@ -13,6 +13,12 @@ class Ejercicios extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
           title: Text('Musculos: $selectedMusc'),
         ),
         body: SingleChildScrollView(
