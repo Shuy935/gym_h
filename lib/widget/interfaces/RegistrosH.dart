@@ -23,6 +23,7 @@ class _RegistroHState extends State<RegistroH> {
 
   @override
   Widget build(BuildContext context) {
+    final Size size = MediaQuery.of(context).size;
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData.dark().copyWith(),
@@ -66,11 +67,12 @@ class _RegistroHState extends State<RegistroH> {
                 );
               }).toList(),
               columnSpacing: //sin esta cosa se pegan las columnas
-                  200, //espacio entre columnas, creo que hay que ajustarlo porque puede que varíe el tamaño de la pantalla
+                  size.width *
+                      0.5, //espacio entre columnas, creo que hay que ajustarlo porque puede que varíe el tamaño de la pantalla
               dividerThickness:
                   2, //este es para que tanto grosor tienen las lineas
               horizontalMargin:
-                  10, //el espacio entre el borde de la pantalla y la tabla
+                  5, //el espacio entre el borde de la pantalla y la tabla
             ),
           ), //para que esté centrada la tabla
         ),
