@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gym_h/widget/interfaces/Ejercicios.dart';
 
 class MuscleScrn extends StatefulWidget {
   @override
@@ -48,7 +49,6 @@ class _MuscleScrnState extends State<MuscleScrn> {
               textAlign: TextAlign.center,
             ),
           ),
-          //buildSearchTextField(),
           Expanded(
             child: buildMuscleList(),
           ),
@@ -128,12 +128,12 @@ class _MuscleScrnState extends State<MuscleScrn> {
   }
 
   void navigateToRoutineScreen() {
-    // Navigator.push(
-    //   context,
-    //   MaterialPageRoute(
-    //     builder: (context) => RoutineScreen(selectedMusc),
-    //   ),
-    // );
+     Navigator.push(
+       context,
+       MaterialPageRoute(
+         builder: (context) => Ejercicios(selectedMusc: selectedMusc),
+       ),
+     );
   }
 
   void showSelectionError(String errorMessage) {

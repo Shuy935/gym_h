@@ -1,20 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:gym_h/widget/interfaces/muscles.dart';
 
 class Ejercicios extends StatelessWidget {
-  const Ejercicios({super.key});
+  final List<String> selectedMusc;
+  Ejercicios({super.key, required this.selectedMusc});
 
   @override
   Widget build(BuildContext context) {
+    String miString = selectedMusc.join(" ");
+    print(selectedMusc);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: SingleChildScrollView(
-          child: Column(
-        children: [
-          CardE(),
-          CardE(),
-          CardE(),
-        ],
-      )),
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text('Musculos: $selectedMusc'),
+        ),
+        body: SingleChildScrollView(
+            child: Column(
+          children: [
+            CardE(),
+            CardE(),
+            CardE(),
+          ],
+        )),
+      ),
     );
   }
 }
@@ -85,8 +94,8 @@ class CardE extends StatelessWidget {
                   Row(
                     children: [
                       Container(
-                        width: 200,
-                        height: 200,
+                        width: 150,
+                        height: 150,
                         child: Image(
                           image: AssetImage('assets/image/logo.png'),
                         ),
