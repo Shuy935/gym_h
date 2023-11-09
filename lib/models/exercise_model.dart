@@ -1,4 +1,5 @@
 import 'package:firebase_database/firebase_database.dart';
+import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
 
 class ExerciseService {
   final String? nombreEjercicio;
@@ -14,15 +15,19 @@ class ExerciseService {
   });
 }
 
-DatabaseReference db = FirebaseDatabase.instance.ref().child('excercise');
-exerciseCreate({nombreEjercicio, nombreMusculo, descanso, dificultad}) async {
+ParseObject mapModel(ExerciseService exerciseService) {
+  final objeto = ParseObject('exercise')
+    ..set('nombre-ejercicio', exerciseService.nombreEjercicio)
+    ..set('nombre-musculo', exerciseService.nombreMusculo)
+    ..set('dificultad', exerciseService.dificuldad)
+    ..set('descanso', exerciseService.descanso);
+  return objeto;
+}
+
+exerciseCreate(ExerciseService exerciseService) async {
+  final objeto = mapModel(exerciseService);
   try {
-    await db.push().set({
-      "nombreEjercicio": nombreEjercicio,
-      "descanso": descanso,
-      "dificultad": dificultad,
-      "nombreMusculo": nombreMusculo,
-    });
+    await objeto.save();
   } catch (e) {
     print(e);
   }
