@@ -6,7 +6,7 @@ class Lista extends StatefulWidget {
   Lista({Key? key}) : super(key: key);
 
   @override
-  _ListaState createState() => _ListaState();
+  State<Lista> createState() => _ListaState();
 }
 
 class _ListaState extends State<Lista> {

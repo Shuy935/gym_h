@@ -6,10 +6,15 @@ class Ejercicios extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(title: const Text('Card de :')),
-        body: const CardE(),
-      ),
+      debugShowCheckedModeBanner: false,
+      home: SingleChildScrollView(
+          child: Column(
+        children: [
+          CardE(),
+          CardE(),
+          CardE(),
+        ],
+      )),
     );
   }
 }
@@ -19,108 +24,106 @@ class CardE extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: IntrinsicHeight(
-        child: Card(
-          color: Color.fromARGB(255, 22, 147, 209),
-          child: Padding(
-            padding: EdgeInsets.all(8.0),
-            child: Column(
-              children: <Widget>[
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Container(
-                          width: 120,
-                          child: Text('Nombre: '),
-                        ),
-                        Expanded(
-                          child: TextFormField(
-                            // se cambiará por un dropdown
-                            decoration: InputDecoration(
-                              hintText: 'Nombre del ejercicio',
-                            ),
+    return SingleChildScrollView(
+      child: Center(
+        child: IntrinsicHeight(
+          child: Card(
+            color: Color.fromARGB(255, 110, 114, 116),
+            child: Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Column(
+                children: <Widget>[
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Container(
+                            width: 120,
+                            child: Text('Nombre: '),
                           ),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Container(
-                          width: 120,
-                          child: Text('Repeticiones: '),
-                        ),
-                        Expanded(
-                          child: TextFormField(
-                            // se cambiará por un dropdown
-                            decoration: InputDecoration(
-                              hintText: 'Repeticiones',
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Container(
-                          width: 120,
-                          child: Text('Series: '),
-                        ),
-                        Expanded(
-                          child: TextFormField(
-                            // se cambiará por un dropdown
-                            decoration: InputDecoration(
-                              hintText: 'Series',
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-                Row(
-                  children: [
-                    Container(
-                      width: 200,
-                      height: 200,
-                      child: Image(
-                        image: AssetImage('assets/image/logo.png'),
+                          Expanded(child: Text('get del ejercicio')),
+                        ],
                       ),
-                    ),
-                    Container(
-                          width: 25,
-                        ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text('Descanso recomendado:'),
-                        Container(
-                          width: 10,
-                        ),
-                        Text('Get de eso'),
-                        Container(
-                          height: 15,
-                        ),
-                        Row(
-                          children: [
-                            Text('Dificultad:'),
-                            Container(
-                              width: 10,
+                      Container(
+                        height: 10,
+                      ),
+                      Row(
+                        children: [
+                          Container(
+                            width: 120,
+                            child: Text('Repeticiones: '),
+                          ),
+                          Expanded(
+                            child: TextFormField(
+                              // se cambiará por un dropdown
+                              decoration: InputDecoration(
+                                hintText: 'Repeticiones',
+                              ),
                             ),
-                            Text('Get de eso'),
-                          ],
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Container(
+                            width: 120,
+                            child: Text('Series: '),
+                          ),
+                          Expanded(
+                            child: TextFormField(
+                              // se cambiará por un dropdown
+                              decoration: InputDecoration(
+                                hintText: 'Series',
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Container(
+                        width: 200,
+                        height: 200,
+                        child: Image(
+                          image: AssetImage('assets/image/logo.png'),
                         ),
-                        Container(
-                          height: 25,
-                        ),
-                        Text('Musculo'),
-                      ],
-                    ),
-                  ],
-                )
-              ],
+                      ),
+                      Container(
+                        width: 25,
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('Descanso recomendado:'),
+                          Container(
+                            width: 10,
+                          ),
+                          Text('Get de eso'),
+                          Container(
+                            height: 15,
+                          ),
+                          Row(
+                            children: [
+                              Text('Dificultad:'),
+                              Container(
+                                width: 10,
+                              ),
+                              Text('Get de eso'),
+                            ],
+                          ),
+                          Container(
+                            height: 25,
+                          ),
+                          Text('Musculo'),
+                        ],
+                      ),
+                    ],
+                  )
+                ],
+              ),
             ),
           ),
         ),
