@@ -7,14 +7,29 @@ class Ejercicios extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    int m1 = 0;
+    int m2 = 0;
+    int m3 = 0;
+    if (selectedMusc.length == 1) {
+      m1 = 1;
+    } else if (selectedMusc.length == 2) {
+      m1 = 1;
+      m2 = 1;
+    } else {
+      m1 = 1;
+      m2 = 1;
+      m3 = 3;
+    }
+    int cantidad = m1 + m2 + m3;
+    print(cantidad);
     String miString = selectedMusc.join(" ");
-    print(selectedMusc);
     return MaterialApp(
+      theme: ThemeData.dark().copyWith(),
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
           leading: IconButton(
-            icon: Icon(Icons.arrow_back),
+            icon: const Icon(Icons.arrow_back),
             onPressed: () {
               Navigator.of(context).pop();
             },
@@ -24,9 +39,9 @@ class Ejercicios extends StatelessWidget {
         body: SingleChildScrollView(
             child: Column(
           children: [
-            CardE(),
-            CardE(),
-            CardE(),
+            CardE(
+              cantidad: cantidad,
+            ),
           ],
         )),
       ),
@@ -35,114 +50,112 @@ class Ejercicios extends StatelessWidget {
 }
 
 class CardE extends StatelessWidget {
-  const CardE({super.key});
+  final int cantidad;
+  const CardE({super.key, required this.cantidad});
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Center(
-        child: IntrinsicHeight(
-          child: Card(
-            color: Color.fromARGB(255, 110, 114, 116),
-            child: Padding(
-              padding: EdgeInsets.all(8.0),
-              child: Column(
-                children: <Widget>[
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+    print(cantidad);
+    List<Widget> cards = [];
+    for (int index = 0; index < cantidad; index++) {
+      cards.add(Card(
+        color: const Color.fromARGB(255, 58, 58, 59),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            children: <Widget>[
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
                     children: [
-                      Row(
-                        children: [
-                          Container(
-                            width: 120,
-                            child: Text('Nombre: '),
-                          ),
-                          Expanded(child: Text('get del ejercicio')),
-                        ],
-                      ),
                       Container(
-                        height: 10,
+                        width: 120,
+                        child: const Text('Nombre: '),
                       ),
-                      Row(
-                        children: [
-                          Container(
-                            width: 120,
-                            child: Text('Repeticiones: '),
-                          ),
-                          Expanded(
-                            child: TextFormField(
-                              // se cambiará por un dropdown
-                              decoration: InputDecoration(
-                                hintText: 'Repeticiones',
-                              ),
-                            ),
-                          ),
-                        ],
+                      const Expanded(child: Text('get del ejercicio')),
+                    ],
+                  ),
+                  Container(
+                    height: 10,
+                  ),
+                  Row(
+                    children: [
+                      Container(
+                        width: 120,
+                        child: const Text('Repeticiones: '),
                       ),
-                      Row(
-                        children: [
-                          Container(
-                            width: 120,
-                            child: Text('Series: '),
-                          ),
-                          Expanded(
-                            child: TextFormField(
-                              // se cambiará por un dropdown
-                              decoration: InputDecoration(
-                                hintText: 'Series',
-                              ),
-                            ),
-                          ),
-                        ],
+                      Expanded(
+                        child: Rep_Drop(),
+                        // TextFormField(
+                        //    se cambiará por un dropdown
+                        //   decoration: InputDecoration(
+                        //     hintText: 'Repeticiones',
+                        //   ),
+                        // ),
                       ),
                     ],
                   ),
                   Row(
                     children: [
                       Container(
-                        width: 150,
-                        height: 150,
-                        child: Image(
-                          image: AssetImage('assets/image/logo.png'),
-                        ),
+                        width: 120,
+                        child: const Text('Series: '),
                       ),
+                      Expanded(
+                        child: Series_Drop(),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+              Row(
+                children: [
+                  Container(
+                    width: 150,
+                    height: 150,
+                    child: const Image(
+                      image: AssetImage('assets/image/logo.png'),
+                    ),
+                  ),
+                  Container(
+                    width: 25,
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text('Descanso recomendado:'),
                       Container(
-                        width: 25,
+                        width: 10,
                       ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                      const Text('Get de eso'),
+                      Container(
+                        height: 15,
+                      ),
+                      Row(
                         children: [
-                          Text('Descanso recomendado:'),
+                          const Text('Dificultad:'),
                           Container(
                             width: 10,
                           ),
-                          Text('Get de eso'),
-                          Container(
-                            height: 15,
-                          ),
-                          Row(
-                            children: [
-                              Text('Dificultad:'),
-                              Container(
-                                width: 10,
-                              ),
-                              Text('Get de eso'),
-                            ],
-                          ),
-                          Container(
-                            height: 25,
-                          ),
-                          Text('Musculo'),
+                          const Text('Get de eso'),
                         ],
                       ),
+                      Container(
+                        height: 25,
+                      ),
+                      const Text('Musculo'),
                     ],
-                  )
+                  ),
                 ],
-              ),
-            ),
+              )
+            ],
           ),
         ),
-      ),
+      ));
+    }
+    return Column(
+      children: cards,
     );
   }
 }
@@ -153,3 +166,64 @@ TextButton(
   onPressed: () {/* ... */},
 ),
 */
+
+/// Flutter code sample for [DropdownMenu].
+List<String> rep = ['1', '2', '3', '5', '8', '10', '12', '15', '18', '20'];
+List<String> series = ['1', '2', '3', '4', '5'];
+
+class Rep_Drop extends StatefulWidget {
+  Rep_Drop({
+    super.key,
+  });
+
+  @override
+  State<Rep_Drop> createState() => _Rep_DropState();
+}
+
+class _Rep_DropState extends State<Rep_Drop> {
+  String dropdownValue = rep.first;
+
+  @override
+  Widget build(BuildContext context) {
+    return DropdownMenu<String>(
+      initialSelection: rep.first,
+      onSelected: (String? value) {
+        // This is called when the user selects an item.
+        setState(() {
+          dropdownValue = value!;
+        });
+      },
+      dropdownMenuEntries: rep.map<DropdownMenuEntry<String>>((String value) {
+        return DropdownMenuEntry<String>(value: value, label: value);
+      }).toList(),
+    );
+  }
+}
+
+class Series_Drop extends StatefulWidget {
+  const Series_Drop({super.key});
+
+  @override
+  State<Series_Drop> createState() => _Series_DropState();
+}
+
+class _Series_DropState extends State<Series_Drop> {
+  String dropdownValue = series.first;
+
+  @override
+  Widget build(BuildContext context) {
+    return DropdownMenu<String>(
+      initialSelection: series.first,
+      onSelected: (String? value) {
+        // This is called when the user selects an item.
+        setState(() {
+          dropdownValue = value!;
+        });
+      },
+      dropdownMenuEntries:
+          series.map<DropdownMenuEntry<String>>((String value) {
+        return DropdownMenuEntry<String>(value: value, label: value);
+      }).toList(),
+    );
+  }
+}
