@@ -14,6 +14,7 @@ class _EjerciciosAdd extends State<EjerciciosAdd> {
   final _descanso = TextEditingController();
   final _difucultad = TextEditingController();
   final _nomMusc = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -30,9 +31,13 @@ class _EjerciciosAdd extends State<EjerciciosAdd> {
                 // se cambiará por un dropdown
                 controller: _nomEje,
                 textInputAction: TextInputAction.next,
-                decoration: const InputDecoration(
-                  hintText: 'asd',
-                ),
+                decoration: const InputDecoration(hintText: 'asd'),
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return 'Porfavor de poner un nombre completo correcto';
+                  }
+                  return null;
+                },
               ),
             ),
           ],
@@ -48,9 +53,13 @@ class _EjerciciosAdd extends State<EjerciciosAdd> {
                 controller: _descanso,
                 textInputAction: TextInputAction.next,
                 // se cambiará por un dropdown
-                decoration: const InputDecoration(
-                  hintText: 'asd',
-                ),
+                decoration: const InputDecoration(hintText: 'asd'),
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return 'Porfavor de poner un nombre completo correcto';
+                  }
+                  return null;
+                },
               ),
             ),
           ],
@@ -66,9 +75,13 @@ class _EjerciciosAdd extends State<EjerciciosAdd> {
                 controller: _difucultad,
                 textInputAction: TextInputAction.next,
                 // se cambiará por un dropdown
-                decoration: const InputDecoration(
-                  hintText: 'asd',
-                ),
+                decoration: const InputDecoration(hintText: 'asd'),
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return 'Porfavor de poner un nombre completo correcto';
+                  }
+                  return null;
+                },
               ),
             ),
           ],
@@ -84,9 +97,13 @@ class _EjerciciosAdd extends State<EjerciciosAdd> {
                 controller: _nomMusc,
                 textInputAction: TextInputAction.next,
                 // se cambiará por un dropdown
-                decoration: const InputDecoration(
-                  hintText: 'asd',
-                ),
+                decoration: const InputDecoration(hintText: 'asd'),
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return 'Porfavor de poner un nombre completo correcto';
+                  }
+                  return null;
+                },
               ),
             ),
           ],
@@ -102,14 +119,13 @@ class _EjerciciosAdd extends State<EjerciciosAdd> {
               style: TextStyle(fontSize: 24),
             ),
             onPressed: () async {
-              if (_formKey.currentState!.validate()) {
-                await exerciseCreate(
-                  nombreEjercicio: _nomEje,
-                  descanso: _descanso,
-                  dificultad: _difucultad,
-                  nombreMusculo: _nomMusc,
-                );
-              }
+              ExerciseService exerciseService = ExerciseService(
+                nombreEjercicio: _nomEje.text,
+                descanso: _descanso.text,
+                dificuldad: _difucultad.text,
+                nombreMusculo: _nomMusc.text,
+              );
+              await exerciseCreate(exerciseService);
             }
             //recordar registrar bajo el nombre de
             ),

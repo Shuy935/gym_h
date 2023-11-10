@@ -1,9 +1,9 @@
-import 'package:firebase_database/firebase_database.dart';
+import 'package:gym_h/utils/utils.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
 
 class ExerciseService {
   final String? nombreEjercicio;
-  final int? descanso;
+  final String? descanso;
   final String? dificuldad;
   final String? nombreMusculo;
 
@@ -18,17 +18,19 @@ class ExerciseService {
 ParseObject mapModel(ExerciseService exerciseService) {
   final objeto = ParseObject('exercise')
     ..set('nombre-ejercicio', exerciseService.nombreEjercicio)
-    ..set('nombre-musculo', exerciseService.nombreMusculo)
+    ..set('descanso', exerciseService.descanso)
     ..set('dificultad', exerciseService.dificuldad)
-    ..set('descanso', exerciseService.descanso);
+    ..set('nombre-musculo', exerciseService.nombreMusculo);
   return objeto;
 }
 
 exerciseCreate(ExerciseService exerciseService) async {
   final objeto = mapModel(exerciseService);
   try {
-    await objeto.save();
+    print(objeto);
+    final a = await objeto.save();
+    print(a.results);
   } catch (e) {
-    print(e);
+    Utils.showSnackBar(e.toString());
   }
 }

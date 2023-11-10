@@ -4,10 +4,18 @@ import 'package:flutter/material.dart';
 import 'package:gym_h/screens/login/auth_page.dart';
 import 'package:gym_h/screens/login/verify_email_page.dart';
 import 'package:gym_h/utils/utils.dart';
+import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
 import 'firebase_options.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  const keyApplicationId = 'zJz6TnWQlErwD7qxTyvCOcCSDSX8YXrVtV2pACVG';
+  const keyClientKey = 'zU1RDMBoSjHi2qiyMJzGG5YoJYPL7t6b3OMs6Pmc';
+  const keyParseServerUrl = 'https://parseapi.back4app.com';
+
+  await Parse().initialize(keyApplicationId, keyParseServerUrl,
+      clientKey: keyClientKey, autoSendSessionId: true);
+
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
