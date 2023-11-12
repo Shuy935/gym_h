@@ -22,7 +22,7 @@ class _DrawerProfile extends State<DrawerProfile> {
   }
 
   Future<void> getUserName() async {
-    final userData = await readUser();
+    final userData = await readCompleteUser();
     if (userData != null && userData.isNotEmpty) {
       final user = userData[0]; // Suponemos que solo hay un usuario
       setState(() {
@@ -32,7 +32,7 @@ class _DrawerProfile extends State<DrawerProfile> {
   }
 
   Future<void> getUserEmail() async {
-    final userData = await readUser();
+    final userData = await readCompleteUser();
     if (userData != null && userData.isNotEmpty) {
       final user = userData[0]; // Suponemos que solo hay un usuario
       setState(() {

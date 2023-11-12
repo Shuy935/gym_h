@@ -31,7 +31,7 @@ class _ProfileState extends State<Profile> {
   }
 
   Future<void> getUserData() async {
-    final userData = await readUser();
+    final userData = await readCompleteUser();
     if (userData != null && userData.isNotEmpty) {
       final user = userData[0]; // Suponemos que solo hay un usuario
       setState(() {

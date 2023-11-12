@@ -1,3 +1,4 @@
+import 'package:gym_h/utils/utils.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -30,7 +31,7 @@ Future<void> addAsistencia(AsistenciaService asistenciaService) async {
   try {
     await objeto.save();
   } catch (e) {
-    print(e);
+    Utils.showSnackBar(e.toString());
   }
 }
 
@@ -50,10 +51,10 @@ Future<List<AsistenciaService>> readAsistencias() async {
           }).toList() ??
           [];
     } else {
-      print(response.error?.message);
+      Utils.showSnackBar(response.error?.message);
     }
   } catch (e) {
-    print(e);
+    Utils.showSnackBar(e.toString());
   }
   return [];
 }
@@ -73,13 +74,13 @@ Future<void> updateAsistencia(AsistenciaService asistenciaService) async {
     final updateResponse = await objetoAActualizar.save();
 
     if (updateResponse.success) {
-      print('Asistencia actualizada con éxito');
+      Utils.showSusSnackBar('Asistencia actualizada con éxito');
     } else {
-      print(
+      Utils.showSnackBar(
           'Error al actualizar la asistencia: ${updateResponse.error.message}');
     }
   } else {
-    print('No se encontró un objeto para actualizar.');
+    Utils.showSnackBar('No se encontró un objeto para actualizar.');
   }
 }
 
@@ -95,11 +96,12 @@ Future<void> deleteAsistencia(DateTime fecha, String email) async {
     final deleteResponse = await objetoAEliminar.delete();
 
     if (deleteResponse.success) {
-      print('Asistencia eliminada con éxito');
+      Utils.showSusSnackBar('Asistencia eliminada con éxito');
     } else {
-      print('Error al eliminar la asistencia: ${deleteResponse.error.message}');
+      Utils.showSnackBar(
+          'Error al eliminar la asistencia: ${deleteResponse.error.message}');
     }
   } else {
-    print('No se encontró un objeto para eliminar.');
+    Utils.showSnackBar('No se encontró un objeto para eliminar.');
   }
 }

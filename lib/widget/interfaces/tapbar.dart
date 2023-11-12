@@ -23,7 +23,8 @@ class TabBarH extends StatelessWidget {
         body: const TabBarView(
           children: [
             Center(child: Text('Rutina de hoy:')),
-            Center(child: Musculos()),
+            //se tiene que eliminar el const despues
+            Center(child: MuscleScrn()),
             Center(child: ListaU()),
             Center(child: Text('Historial')),
           ],

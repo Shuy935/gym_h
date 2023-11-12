@@ -1,4 +1,3 @@
-import 'package:easy_search_bar/easy_search_bar.dart';
 import 'package:flutter/material.dart';
 
 class ListaU extends StatefulWidget {
@@ -9,34 +8,16 @@ class ListaU extends StatefulWidget {
 }
 
 class _ListaUState extends State<ListaU> {
-  final List<String> _suggestions = [
-    'Puto programa de cagada',
-    'Ya me tiene hasta la madre',
-    'Aqui ira el get de los usuarios',
-  ];
-  String usuario = '';
-  String searchValue = '';
+  String Usuario = 'manolo'; //get del usuario actual
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: EasySearchBar(
-        title: const Text('Registro'),
-        suggestions: _suggestions,
-        onSearch: (value) {
-          setState(() {
-            searchValue = value;
-          });
-        },
-        onSuggestionTap: (item) {
-          usuario = searchValue;
-        },
-      ),
       body: Column(
         children: [
           Container(height: 10),
           Text(
-            'Usuario a registrar:\n$usuario',
+            'Usuario a registrar:\n$Usuario',
             style: const TextStyle(fontSize: 25),
           ),
           ElevatedButton.icon(
@@ -50,7 +31,7 @@ class _ListaUState extends State<ListaU> {
               style: TextStyle(fontSize: 24),
             ),
             onPressed: null
-            //se supone que aqui ira el get con el valor de Usuario
+            //aqui ira el registro de asistencia del usuario actual
             ,
           ),
         ],

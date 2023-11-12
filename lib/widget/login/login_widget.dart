@@ -128,7 +128,7 @@ class _LoginWidgetState extends State<LoginWidget> {
       );
 
       final userServices =
-          await readUser(); // Utiliza la función readUser para obtener los datos del usuario.
+          await readCompleteUser(); // Utiliza la función readUser para obtener los datos del usuario.
 
       if (userServices != null && userServices.isNotEmpty) {
         final userService = userServices.first;

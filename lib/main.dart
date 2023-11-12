@@ -5,7 +5,6 @@ import 'package:gym_h/screens/login/auth_page.dart';
 import 'package:gym_h/screens/login/verify_email_page.dart';
 import 'package:gym_h/utils/utils.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
-
 import 'firebase_options.dart';
 
 Future<void> main() async {
