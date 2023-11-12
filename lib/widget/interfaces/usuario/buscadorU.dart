@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:gym_h/models/users_model.dart';
+import 'package:gym_h/widget/interfaces/usuario/registrosHU.dart';
 
 class ListaU extends StatefulWidget {
   const ListaU({Key? key}) : super(key: key);
@@ -8,7 +10,23 @@ class ListaU extends StatefulWidget {
 }
 
 class _ListaUState extends State<ListaU> {
-  String Usuario = 'manolo'; //get del usuario actual
+  //get del usuario actual
+
+  String? usuario;
+  @override
+  void initState() {
+    super.initState();
+    // Obtén el nombre del usuario antes de construir el cajón de navegación
+    getUserName();
+  }
+
+  Future<void> getUserName() async {
+    final userData = await readCompleteUser();
+    if (userData != null && userData.isNotEmpty) {
+      final user = userData[0]; // Suponemos que solo hay un usuario
+      setState(() => usuario = user.fullname!);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +35,7 @@ class _ListaUState extends State<ListaU> {
         children: [
           Container(height: 10),
           Text(
-            'Usuario a registrar:\n$Usuario',
+            'Usuario a registrar:\n${usuario ?? 'usuario'}',
             style: const TextStyle(fontSize: 25),
           ),
           ElevatedButton.icon(
@@ -30,7 +48,7 @@ class _ListaUState extends State<ListaU> {
               'Registrar',
               style: TextStyle(fontSize: 24),
             ),
-            onPressed: null
+            onPressed: () => RegistroHU()
             //aqui ira el registro de asistencia del usuario actual
             ,
           ),
