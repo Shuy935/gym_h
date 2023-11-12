@@ -187,6 +187,7 @@ class _Rep_DropState extends State<Rep_Drop> {
   Widget build(BuildContext context) {
     return DropdownMenu<String>(
       initialSelection: rep.first,
+      width: 100,
       onSelected: (String? value) {
         // This is called when the user selects an item.
         setState(() {
@@ -214,6 +215,7 @@ class _Series_DropState extends State<Series_Drop> {
   Widget build(BuildContext context) {
     return DropdownMenu<String>(
       initialSelection: series.first,
+      width: 100,
       onSelected: (String? value) {
         // This is called when the user selects an item.
         setState(() {
