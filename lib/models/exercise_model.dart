@@ -24,12 +24,14 @@ ParseObject mapModel(ExerciseService exerciseService) {
   return objeto;
 }
 
-exerciseCreate(ExerciseService exerciseService) async {
-  final objeto = mapModel(exerciseService);
+Future<void> exerciseCreate(ExerciseService exerciseService) async {
+  final objeto = ParseObject('exercise')
+    ..set('nombreEjercicio', exerciseService.nombreEjercicio)
+    ..set('descanso', exerciseService.descanso)
+    ..set('dificultad', exerciseService.dificuldad)
+    ..set('nombreMusculo', exerciseService.nombreMusculo);
   try {
-    print(objeto);
-    final a = await objeto.save();
-    print(a.results);
+    await objeto.save();
   } catch (e) {
     Utils.showSnackBar(e.toString());
   }
