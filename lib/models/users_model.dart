@@ -3,6 +3,7 @@ import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class UserService {
+  final String? objectId;
   final String? email;
   final String? fullname;
   final String? sex;
@@ -12,6 +13,7 @@ class UserService {
   final bool? isAdm;
 
   UserService({
+    this.objectId,
     this.email,
     this.fullname,
     this.sex,
@@ -22,7 +24,7 @@ class UserService {
   });
 }
 
-ParseObject mapModel(UserService userService) {
+addUser(UserService userService) async {
   final currentUser = FirebaseAuth.instance.currentUser;
   final objeto = ParseObject('users')
     ..set('firebaseUserId', currentUser?.uid)
@@ -33,13 +35,8 @@ ParseObject mapModel(UserService userService) {
     ..set('weight', userService.weight)
     ..set('height', userService.height)
     ..set('isAdm', userService.isAdm);
-  return objeto;
-}
-
-addUser(UserService userService) async {
-  final object = mapModel(userService);
   try {
-    await object.save();
+    await objeto.save();
   } catch (e) {
     Utils.showSnackBar(e.toString());
   }
@@ -54,6 +51,7 @@ Future<List<UserService>?> readCompleteUser() async {
     if (response.success) {
       return response.results?.map((a) {
         return UserService(
+          objectId: a.get('objectId') ?? '',
           fullname: a.get('fullname') ?? '',
           email: a.get('email') ?? '',
           age: a.get('age') ?? '',

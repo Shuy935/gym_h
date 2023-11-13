@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gym_h/models/attendance_record_model.dart';
 import 'package:gym_h/models/users_model.dart';
 import 'package:gym_h/widget/interfaces/usuario/registrosHU.dart';
 
@@ -48,9 +49,10 @@ class _ListaUState extends State<ListaU> {
               'Registrar',
               style: TextStyle(fontSize: 24),
             ),
-            onPressed: () => RegistroHU()
+            onPressed: () {
+              addAsistencia();
+            },
             //aqui ira el registro de asistencia del usuario actual
-            ,
           ),
         ],
       ),

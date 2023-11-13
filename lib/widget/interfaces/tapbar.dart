@@ -32,7 +32,7 @@ class _TabBarH extends State<TabBarH> {
       final List<Widget> tabs0 = [
         const Tab(text: 'Rutina'),
         const Tab(text: 'Musculos'),
-        const Tab(text: 'Lista'),
+        const Tab(text: 'Asistencia'),
         const Tab(text: 'Historial'),
       ];
 
@@ -58,7 +58,7 @@ class _TabBarH extends State<TabBarH> {
       final List<Widget> tabs = [
         const Tab(text: 'Rutina'),
         const Tab(text: 'Musculos'),
-        const Tab(text: 'Lista'),
+        const Tab(text: 'Asistencia'),
         const Tab(text: 'Historial'),
       ];
 
