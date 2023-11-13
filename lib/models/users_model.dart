@@ -20,14 +20,6 @@ class UserService {
     this.height,
     this.isAdm,
   });
-  Map<String, dynamic> toJson() => {
-        "email": email,
-        "fullname": fullname,
-        "sex": sex,
-        "age": age,
-        "weight": weight,
-        "height": height,
-      };
 }
 
 final currentUser = FirebaseAuth.instance.currentUser;

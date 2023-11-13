@@ -41,7 +41,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   card_swiper: ^3.0.1
   firebase_core: ^2.19.0
-  firebase_database: ^10.3.2
+  #firebase_database: ^10.3.2
 
   firebase_auth: ^4.6.2
   email_validator: ^2.1.17
@@ -52,7 +52,7 @@ dev_dependencies:
     # Firesabe
 
   # Firebase Database
-  cloud_firestore: ^4.8.0
+  #cloud_firestore: ^4.8.0
 
   # Validate Email
 
