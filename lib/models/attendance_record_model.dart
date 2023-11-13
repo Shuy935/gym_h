@@ -20,9 +20,8 @@ class AsistenciaService {
       };
 }
 
-final currentUser = FirebaseAuth.instance.currentUser;
-
 Future<void> addAsistencia(AsistenciaService asistenciaService) async {
+  final currentUser = FirebaseAuth.instance.currentUser;
   final objeto = ParseObject('Asistencia')
     ..set('firebaseUserId', currentUser?.uid)
     ..set('fecha', asistenciaService.fecha)
@@ -36,6 +35,7 @@ Future<void> addAsistencia(AsistenciaService asistenciaService) async {
 }
 
 Future<List<AsistenciaService>> readAsistencias() async {
+  final currentUser = FirebaseAuth.instance.currentUser;
   try {
     final query = QueryBuilder<ParseObject>(ParseObject('Asistencia'))
       ..whereEqualTo('firebaseUserId', currentUser?.uid);
@@ -60,6 +60,7 @@ Future<List<AsistenciaService>> readAsistencias() async {
 }
 
 Future<void> updateAsistencia(AsistenciaService asistenciaService) async {
+  final currentUser = FirebaseAuth.instance.currentUser;
   final query = QueryBuilder<ParseObject>(ParseObject('Asistencia'))
     ..whereEqualTo('firebaseUserId', currentUser?.uid);
 

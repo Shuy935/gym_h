@@ -22,8 +22,8 @@ class UserService {
   });
 }
 
-final currentUser = FirebaseAuth.instance.currentUser;
 ParseObject mapModel(UserService userService) {
+  final currentUser = FirebaseAuth.instance.currentUser;
   final objeto = ParseObject('users')
     ..set('firebaseUserId', currentUser?.uid)
     ..set('fullname', userService.fullname)
@@ -46,6 +46,7 @@ addUser(UserService userService) async {
 }
 
 Future<List<UserService>?> readCompleteUser() async {
+  final currentUser = FirebaseAuth.instance.currentUser;
   try {
     final query = QueryBuilder<ParseObject>(ParseObject('users'))
       ..whereEqualTo('firebaseUserId', currentUser?.uid);
@@ -72,6 +73,7 @@ Future<List<UserService>?> readCompleteUser() async {
 }
 
 Future<void> updateUser(UserService userService) async {
+  final currentUser = FirebaseAuth.instance.currentUser;
   final query = QueryBuilder<ParseObject>(ParseObject('users'))
     ..whereEqualTo('firebaseUserId', currentUser?.uid);
 
