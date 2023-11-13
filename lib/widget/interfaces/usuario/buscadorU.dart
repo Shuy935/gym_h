@@ -19,6 +19,7 @@ class _ListaUState extends State<ListaU> {
     super.initState();
     // Obtén el nombre del usuario antes de construir el cajón de navegación
     getUserName();
+    readAsistencias();
   }
 
   Future<void> getUserName() async {

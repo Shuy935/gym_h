@@ -1,5 +1,6 @@
 import 'package:easy_search_bar/easy_search_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:gym_h/models/users_model.dart';
 import 'package:gym_h/widget/interfaces/entrenador/registrosH.dart';
 
 class Lista extends StatefulWidget {
@@ -10,11 +11,31 @@ class Lista extends StatefulWidget {
 }
 
 class _ListaState extends State<Lista> {
-  final List<String> _suggestions = [
-    'Hana song',
-    'Gabriel reyes',
-    'Ana amari',
-  ];
+  List<String> _suggestions = [];
+
+  @override
+  void initState() {
+    super.initState();
+    // Llamada al método para obtener usuarios y actualizar las sugerencias
+    _actualizarListaDeSugerencias();
+  }
+
+  // Método para obtener usuarios y actualizar la lista de sugerencias
+  void _actualizarListaDeSugerencias() async {
+    try {
+      final userList = await readUsers();
+
+      if (userList != null) {
+        setState(() {
+          _suggestions =
+              userList.map((user) => user['fullname'].toString()).toList();
+        });
+      }
+    } catch (e) {
+      print('Error al obtener usuarios: $e');
+    }
+  }
+
   String usuario = '';
   String searchValue = '';
 

@@ -111,11 +111,13 @@ Future<List<Map<String, dynamic>>?> readUsers() async {
       final userList = response.results?.map((a) {
         final fullname = a.get<String>('fullname') ?? '';
         final email = a.get<String>('email');
-        final isAdm = a.get<bool>('isAdm');
+        //final isAdm = a.get<bool>('isAdm');
+        final firebaseUserid = a.get<String>('firebaseUserId');
         return {
           'email': email,
           'fullname': fullname,
-          'isAdm': isAdm, // Establecer isAdm como false
+          //'isAdm': isAdm,
+          'firebaseUserId': firebaseUserid
         };
       }).toList();
       // print(userList);

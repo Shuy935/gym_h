@@ -5,18 +5,18 @@ import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class AsistenciaService {
-  final String? firebaseUserId;
-  final DateTime? fecha;
+  final String? objectId;
+  final String? fecha;
   final String? fullname;
 
   AsistenciaService({
-    this.firebaseUserId,
+    this.objectId,
     this.fecha,
     this.fullname,
   });
 
   Map<String, dynamic> toJson() => {
-        "firebaseUserId": firebaseUserId,
+        "objectId": objectId,
         "fecha": fecha,
         "fullname": fullname,
       };
@@ -43,38 +43,29 @@ Future<void> addAsistencia() async {
   }
 }
 
-// Future<List<AsistenciaService>> readAsistencias() async {
-//   String? a;
-//   final userData = await readCompleteUser();
-//   if (userData != null && userData.isNotEmpty) {
-//     final user = userData[0]; // Suponemos que solo hay un usuario
-//     a = user.objectId!;
-//   }
-//   try {
-//     final query = QueryBuilder<ParseObject>(ParseObject('asistencia'))
-//       ..whereEqualTo(
-//           'objectId', (ParseObject('users')..objectId = a).toPointer())
-//       ..orderByAscending('fullname');
-//     final ParseResponse response = await query.query();
-//     print(response.error);
-//   } catch (e) {
-//     Utils.showSnackBar(e.toString());
-//   }
-//   return [];
-// }
 Future<List<AsistenciaService>> readAsistencias() async {
-  final currentUser = FirebaseAuth.instance.currentUser;
-  try {
-    final query = QueryBuilder<ParseObject>(ParseObject('Asistencia'))
-      ..whereEqualTo('firebaseUserId', currentUser?.uid);
-    final response = await query.query();
+  String? a;
 
+  final userData = await readCompleteUser();
+  if (userData != null && userData.isNotEmpty) {
+    final user = userData[0]; // Suponemos que solo hay un usuario
+    a = user.objectId!;
+  }
+  try {
+    final query = QueryBuilder<ParseObject>(ParseObject('asistencia'))
+      ..whereEqualTo('usuarioID',
+          {'__type': 'Pointer', 'className': 'users', 'objectId': a})
+      ..includeObject(['usuarioID']);
+    //..orderByAscending('fullname');
+
+    final ParseResponse response = await query.query();
+    print(response.results);
     if (response.success) {
       return response.results?.map((a) {
             return AsistenciaService(
-              firebaseUserId: a.get('firebaseUserId'),
+              objectId: a.get('objectId'),
               fecha: a.get('fecha'),
-              fullname: a.get('fullname'),
+              // fullname: a.get('fullname'),
             );
           }).toList() ??
           [];
@@ -86,6 +77,31 @@ Future<List<AsistenciaService>> readAsistencias() async {
   }
   return [];
 }
+
+// Future<List<AsistenciaService>> readAsistencias() async {
+//   final currentUser = FirebaseAuth.instance.currentUser;
+//   try {
+//     final query = QueryBuilder<ParseObject>(ParseObject('Asistencia'))
+//       ..whereEqualTo('firebaseUserId', currentUser?.uid);
+//     final response = await query.query();
+
+//     if (response.success) {
+//       return response.results?.map((a) {
+//             return AsistenciaService(
+//               firebaseUserId: a.get('firebaseUserId'),
+//               fecha: a.get('fecha'),
+//               fullname: a.get('fullname'),
+//             );
+//           }).toList() ??
+//           [];
+//     } else {
+//       Utils.showSnackBar(response.error?.message);
+//     }
+//   } catch (e) {
+//     Utils.showSnackBar(e.toString());
+//   }
+//   return [];
+// }
 
 Future<void> updateAsistencia(AsistenciaService asistenciaService) async {
   final currentUser = FirebaseAuth.instance.currentUser;
@@ -132,5 +148,15 @@ Future<void> deleteAsistencia(DateTime fecha, String email) async {
     }
   } else {
     Utils.showSnackBar('No se encontró un objeto para eliminar.');
+  }
+}
+
+Future<List<ParseObject>?> getAllAsistencia() async {
+  final ParseResponse result = await ParseObject('asistencia').getAll();
+  if (result.success && result.results != null) {
+    print(result.results);
+    return result.results?.cast<ParseObject>();
+  } else {
+    throw Exception('Error al obtener datos de asistencia');
   }
 }
