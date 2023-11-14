@@ -65,7 +65,7 @@ Future<List<AsistenciaService>> readAsistencias() async {
             return AsistenciaService(
               objectId: a.get('objectId'),
               fecha: a.get('fecha'),
-              // fullname: a.get('fullname'),
+              fullname: a.get('fullname'),
             );
           }).toList() ??
           [];
@@ -151,12 +151,34 @@ Future<void> deleteAsistencia(DateTime fecha, String email) async {
   }
 }
 
-Future<List<ParseObject>?> getAllAsistencia() async {
-  final ParseResponse result = await ParseObject('asistencia').getAll();
-  if (result.success && result.results != null) {
-    print(result.results);
-    return result.results?.cast<ParseObject>();
-  } else {
-    throw Exception('Error al obtener datos de asistencia');
+Future<void> addAsistenciaUsuario(String fullname) async {
+  DateTime now = DateTime.now();
+  String formatDate = DateFormat('yyyy-MM-dd HH:mm').format(now);
+
+  final objectId = await getObjectIdByFullname(fullname);
+
+  if (objectId != null) {
+    final objeto = ParseObject('asistencia')
+      ..set('fecha', formatDate)
+      ..set('usuarioID', ParseObject('users')..objectId = objectId);
+
+    try {
+      await objeto.save();
+      Utils.showSusSnackBar('Se agregó la asistencia');
+    } catch (e) {
+      Utils.showSnackBar(e.toString());
+    }
   }
 }
+
+
+
+// Future<List<ParseObject>?> getAllAsistencia() async {
+//   final ParseResponse result = await ParseObject('asistencia').getAll();
+//   if (result.success && result.results != null) {
+//     print(result.results);
+//     return result.results?.cast<ParseObject>();
+//   } else {
+//     throw Exception('Error al obtener datos de asistencia');
+//   }
+// }

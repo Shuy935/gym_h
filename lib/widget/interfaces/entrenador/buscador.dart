@@ -1,5 +1,6 @@
 import 'package:easy_search_bar/easy_search_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:gym_h/models/attendance_record_model.dart';
 import 'package:gym_h/models/users_model.dart';
 import 'package:gym_h/widget/interfaces/entrenador/registrosH.dart';
 
@@ -24,7 +25,6 @@ class _ListaState extends State<Lista> {
   void _actualizarListaDeSugerencias() async {
     try {
       final userList = await readUsers();
-
       if (userList != null) {
         setState(() {
           _suggestions =
@@ -93,6 +93,7 @@ class _ListaState extends State<Lista> {
                               child: const Text('Aceptar'),
                               onPressed: () {
                                 // Realiza la lógica de registro aquí
+                                addAsistenciaUsuario(usuario);
                                 // Puedes agregar código para manejar el registro
                                 Navigator.of(context)
                                     .pop(); // Cierra el AlertDialog

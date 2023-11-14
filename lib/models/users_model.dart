@@ -130,3 +130,25 @@ Future<List<Map<String, dynamic>>?> readUsers() async {
   }
   return null;
 }
+
+Future<String?> getObjectIdByFullname(String fullname) async {
+  try {
+    final query = QueryBuilder<ParseObject>(ParseObject('users'))
+      ..whereEqualTo('isAdm', false)
+      ..whereEqualTo('fullname', fullname);
+
+    final response = await query.query();
+    if (response.success &&
+        response.results != null &&
+        response.results!.isNotEmpty) {
+      final ParseObject user = response.results![0];
+      return user.objectId;
+    } else {
+      Utils.showSnackBar(
+          'No se encontró el usuario con el nombre completo: $fullname');
+    }
+  } catch (e) {
+    Utils.showSnackBar(e.toString());
+  }
+  return null;
+}
