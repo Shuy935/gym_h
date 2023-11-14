@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:gym_h/utils/utils.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
 
@@ -6,22 +8,15 @@ class ExerciseService {
   final String? descanso;
   final String? dificuldad;
   final String? nombreMusculo;
+  final String? linkImagen;
 
   ExerciseService({
     this.nombreMusculo,
     this.dificuldad,
     this.descanso,
     this.nombreEjercicio,
+    this.linkImagen,
   });
-}
-
-ParseObject mapModel(ExerciseService exerciseService) {
-  final objeto = ParseObject('exercise')
-    ..set('nombre-ejercicio', exerciseService.nombreEjercicio)
-    ..set('descanso', exerciseService.descanso)
-    ..set('dificultad', exerciseService.dificuldad)
-    ..set('nombre-musculo', exerciseService.nombreMusculo);
-  return objeto;
 }
 
 Future<void> exerciseCreate(ExerciseService exerciseService) async {
@@ -29,9 +24,11 @@ Future<void> exerciseCreate(ExerciseService exerciseService) async {
     ..set('nombreEjercicio', exerciseService.nombreEjercicio)
     ..set('descanso', exerciseService.descanso)
     ..set('dificultad', exerciseService.dificuldad)
-    ..set('nombreMusculo', exerciseService.nombreMusculo);
+    ..set('nombreMusculo', exerciseService.nombreMusculo)
+    ..set('linkImagen', exerciseService.linkImagen);
   try {
-    await objeto.save();
+    final a = await objeto.save();
+    print(a.error);
   } catch (e) {
     Utils.showSnackBar(e.toString());
   }

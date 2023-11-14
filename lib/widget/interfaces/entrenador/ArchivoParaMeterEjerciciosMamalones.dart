@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:gym_h/models/exercise_model.dart';
+import 'package:image_picker/image_picker.dart';
 
 class EjerciciosAdd extends StatefulWidget {
   const EjerciciosAdd({super.key});
@@ -13,6 +16,7 @@ class _EjerciciosAdd extends State<EjerciciosAdd> {
   final _descanso = TextEditingController();
   final _difucultad = TextEditingController();
   final _nomMusc = TextEditingController();
+  final _link = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -107,6 +111,28 @@ class _EjerciciosAdd extends State<EjerciciosAdd> {
             ),
           ],
         ),
+        Row(
+          children: [
+            Container(
+              width: 120,
+              child: const Text('link de ejemplo: '),
+            ),
+            Expanded(
+              child: TextFormField(
+                controller: _link,
+                textInputAction: TextInputAction.next,
+                // se cambiará por un dropdown
+                decoration: const InputDecoration(hintText: 'asd'),
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return 'Porfavor de poner un ahhhhh correcto';
+                  }
+                  return null;
+                },
+              ),
+            ),
+          ],
+        ),
         ElevatedButton.icon(
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.transparent,
@@ -123,6 +149,7 @@ class _EjerciciosAdd extends State<EjerciciosAdd> {
                 descanso: _descanso.text,
                 dificuldad: _difucultad.text,
                 nombreMusculo: _nomMusc.text,
+                linkImagen: _link.text,
               );
               await exerciseCreate(exerciseService);
             }

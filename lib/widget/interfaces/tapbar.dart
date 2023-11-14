@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gym_h/models/users_model.dart';
 import 'package:gym_h/widget/interfaces/Widgets.dart';
+import 'package:gym_h/widget/interfaces/entrenador/ArchivoParaMeterEjerciciosMamalones.dart';
 
 class TabBarH extends StatefulWidget {
   const TabBarH({Key? key}) : super(key: key);
@@ -48,7 +49,7 @@ class _TabBarH extends State<TabBarH> {
               Center(child: Text('Rutina')),
               Center(child: MuscleScrn()),
               Center(child: Lista()),
-              Center(child: Text('Historial')),
+              Center(child: EjerciciosAdd()),
             ],
           ),
           drawer: const DrawerProfile(),
