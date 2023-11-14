@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:gym_h/models/attendance_record_model.dart';
 
 class RegistroHU extends StatelessWidget {
-  final List<AsistenciaService> asistencias;
-
-  const RegistroHU({Key? key, required this.asistencias}) : super(key: key);
-
+  const RegistroHU({Key? key}) : super(key: key);
+//este es unicamente para el usuario actual (cuando no es admin)
   @override
   Widget build(BuildContext context) {
+    final List<Registro> registros = [
+      Registro('Manolo', 19, 'Estudiante'),
+      Registro('Sofia', 35, 'Maestra'),
+      Registro('Canela', 3, 'Mascota'),
+    ];
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData.dark().copyWith(),
@@ -29,11 +32,25 @@ class RegistroHU extends StatelessWidget {
                 style: TextStyle(fontStyle: FontStyle.italic),
               ),
             ),
+            DataColumn(
+              label: Text(
+                'Age',
+                style: TextStyle(fontStyle: FontStyle.italic),
+              ),
+            ),
+            DataColumn(
+              label: Text(
+                'Role',
+                style: TextStyle(fontStyle: FontStyle.italic),
+              ),
+            ),
           ],
-          rows: asistencias.map((asistencia) {
+          rows: registros.map((registro) {
             return DataRow(
               cells: <DataCell>[
-                DataCell(Text('')),
+                DataCell(Text(registro.name)),
+                DataCell(Text(registro.age.toString())),
+                DataCell(Text(registro.role)),
               ],
             );
           }).toList(),
@@ -43,11 +60,10 @@ class RegistroHU extends StatelessWidget {
   }
 }
 
+class Registro {
+  final String name;
+  final int age;
+  final String role;
 
-// class Registro {
-//   final String name;
-//   final int age;
-//   final String role;
-
-//   Registro(this.name, this.age, this.role);
-// }
+  Registro(this.name, this.age, this.role);
+}

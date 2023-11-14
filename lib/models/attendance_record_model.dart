@@ -59,7 +59,37 @@ Future<List<AsistenciaService>> readAsistencias() async {
     //..orderByAscending('fullname');
 
     final ParseResponse response = await query.query();
-    print(response.results);
+    //print(response.results);
+    if (response.success) {
+      return response.results?.map((a) {
+            return AsistenciaService(
+              objectId: a.get('objectId'),
+              fecha: a.get('fecha'),
+              fullname: a.get('fullname'),
+            );
+          }).toList() ??
+          [];
+    } else {
+      Utils.showSnackBar(response.error?.message);
+    }
+  } catch (e) {
+    Utils.showSnackBar(e.toString());
+  }
+  return [];
+}
+
+Future<List<AsistenciaService>> readAsistenciasUsuario(String ObjectId) async {
+  String a = ObjectId;
+
+  try {
+    final query = QueryBuilder<ParseObject>(ParseObject('asistencia'))
+      ..whereEqualTo('usuarioID',
+          {'__type': 'Pointer', 'className': 'users', 'objectId': a})
+      ..includeObject(['usuarioID']);
+    //..orderByAscending('fullname');
+
+    final ParseResponse response = await query.query();
+    //print(response.results);
     if (response.success) {
       return response.results?.map((a) {
             return AsistenciaService(

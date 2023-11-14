@@ -105,7 +105,8 @@ Future<void> updateUser(UserService userService) async {
 Future<List<Map<String, dynamic>>?> readUsers() async {
   try {
     final query = QueryBuilder<ParseObject>(ParseObject('users'))
-      ..whereEqualTo('isAdm', false); // Filtrar por isAdm igual a false
+      ..whereEqualTo('isAdm', false)
+      ..whereNotEqualTo('fullname', null); // Filtrar por isAdm igual a false
     final response = await query.query();
     if (response.success) {
       final userList = response.results?.map((a) {

@@ -13,6 +13,7 @@ class Lista extends StatefulWidget {
 
 class _ListaState extends State<Lista> {
   List<String> _suggestions = [];
+  String? usuario;
 
   @override
   void initState() {
@@ -36,7 +37,7 @@ class _ListaState extends State<Lista> {
     }
   }
 
-  String usuario = '';
+  //String usuario = '';
   String searchValue = '';
 
   @override
@@ -93,7 +94,7 @@ class _ListaState extends State<Lista> {
                               child: const Text('Aceptar'),
                               onPressed: () {
                                 // Realiza la lógica de registro aquí
-                                addAsistenciaUsuario(usuario);
+                                addAsistenciaUsuario(usuario!);
                                 // Puedes agregar código para manejar el registro
                                 Navigator.of(context)
                                     .pop(); // Cierra el AlertDialog
@@ -117,8 +118,9 @@ class _ListaState extends State<Lista> {
               shape: const CircleBorder(),
               splashColor: Colors.white,
               onPressed: () {
-                final route =
-                    MaterialPageRoute(builder: (context) => RegistroH());
+                final route = MaterialPageRoute(
+                  builder: (context) => RegistroH(),
+                );
                 Navigator.push(context, route);
               },
               child: const Icon(Icons.history),
