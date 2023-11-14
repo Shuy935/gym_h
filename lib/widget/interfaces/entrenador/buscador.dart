@@ -119,7 +119,7 @@ class _ListaState extends State<Lista> {
               splashColor: Colors.white,
               onPressed: () {
                 final route = MaterialPageRoute(
-                  builder: (context) => RegistroH(),
+                  builder: (context) => RegistroH(usuario: usuario),
                 );
                 Navigator.push(context, route);
               },

@@ -89,7 +89,6 @@ Future<List<AsistenciaService>> readAsistenciasUsuario(String ObjectId) async {
     //..orderByAscending('fullname');
 
     final ParseResponse response = await query.query();
-    //print(response.results);
     if (response.success) {
       return response.results?.map((a) {
             return AsistenciaService(
