@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gym_h/models/users_model.dart';
 import 'package:gym_h/widget/interfaces/Widgets.dart';
+import 'package:gym_h/widget/interfaces/usuario/rutina.dart';
 import 'package:gym_h/widget/interfaces/widgets.dart';
 
 class TabBarH extends StatefulWidget {
@@ -44,9 +45,9 @@ class _TabBarH extends State<TabBarH> {
             title: const Text('Inicio'),
             bottom: TabBar(tabs: tabs0),
           ),
-          body: const TabBarView(
+          body: TabBarView(
             children: [
-              Center(child: Text('Rutina')),
+              Center(child: Rutinas()),
               Center(child: MuscleScrn(selectedDias: [],)),
               Center(child: Lista()),
               Center(child: Text('Historial')),

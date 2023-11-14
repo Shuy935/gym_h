@@ -1,6 +1,5 @@
 export 'package:gym_h/widget/interfaces/entrenador/buscador.dart';
 export 'package:gym_h/widget/interfaces/usuario/buscadorU.dart';
-export 'package:gym_h/widget/interfaces/rutinas.dart';
 export 'package:gym_h/widget/interfaces/consejos.dart';
 export 'package:gym_h/widget/interfaces/tapbar.dart';
 export 'package:gym_h/widget/interfaces/drawer.dart';

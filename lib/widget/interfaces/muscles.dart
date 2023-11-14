@@ -138,7 +138,7 @@ class _MuscleScrnState extends State<MuscleScrn> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => Ejercicios(selectedMusc: selectedMusc),
+        builder: (context) => Ejercicios(selectedMusc: selectedMusc,),
       ),
     );
   }

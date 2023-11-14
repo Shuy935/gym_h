@@ -146,7 +146,10 @@ class CardE extends StatelessWidget {
                       Container(
                         height: 25,
                       ),
-                      const Text('Musculo'),
+                      Row(children: [
+                        Text('Musculo'),
+                        
+                      ]),
                     ],
                   ),
                 ],
