@@ -11,11 +11,12 @@ class Ejercicios extends StatelessWidget {
     int m1 = 0;
     int m2 = 0;
     int m3 = 0;
+    //get de cada musculo DENTRO de los ifs
     if (selectedMusc.length == 1) {
       m1 = 1;
     } else if (selectedMusc.length == 2) {
       m1 = 1;
-      m2 = 1;
+      m2 = 2;
     } else {
       m1 = 1;
       m2 = 1;

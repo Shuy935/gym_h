@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:gym_h/widget/interfaces/ejercicios.dart';
 
 class MuscleScrn extends StatefulWidget {
-  const MuscleScrn({super.key});
+  final List<String> selectedDias;
+  const MuscleScrn({super.key, required this.selectedDias});
 
   @override
   State<MuscleScrn> createState() => _MuscleScrnState();
@@ -26,6 +27,7 @@ class _MuscleScrnState extends State<MuscleScrn> {
 
   List<String> filteredMusc = [];
 
+
   @override
   void initState() {
     filteredMusc = allMusc;
@@ -34,6 +36,7 @@ class _MuscleScrnState extends State<MuscleScrn> {
 
   @override
   Widget build(BuildContext context) {
+    print(widget.selectedDias);
     return Scaffold(
       appBar: AppBar(
         title: Text('Selecciona tus músculos'),

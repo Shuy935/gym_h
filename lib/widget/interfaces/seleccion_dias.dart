@@ -10,6 +10,7 @@ class DiasScrn extends StatefulWidget {
 }
 
 class _DiasScrnState extends State<DiasScrn> {
+  List<String> selectedDias = [];
   final List<String> dias = [
     'Domingo',
     'Lunes',
@@ -19,7 +20,6 @@ class _DiasScrnState extends State<DiasScrn> {
     'Viernes',
     'Sabado',
   ];
-  List<String> selectedDias = [];
   List<String> filtereDia = [];
 
   @override
@@ -38,7 +38,7 @@ class _DiasScrnState extends State<DiasScrn> {
         children: <Widget>[
           const ListTile(
             title: Text(
-              'Selecciona días para entrenar',
+              'Selecciona el/los dia/s \n a asignar rutina',
               style: TextStyle(
                 fontSize: 25,
                 fontWeight: FontWeight.w900,
@@ -84,13 +84,13 @@ class _DiasScrnState extends State<DiasScrn> {
       setState(() {
         selectedDias.add(dia);
       });
-    } else if (selectedDias.length < 7) {
+    } else if (selectedDias.length < 2) {
       //Restricción de días
       setState(() {
         selectedDias.add(dia);
       });
     } else {
-      showSelectionError('Solo puedes seleccionar un máximo de 7 días.');
+      showSelectionError('Solo puedes seleccionar un máximo de 2 días.');
     }
   }
 
@@ -105,7 +105,7 @@ class _DiasScrnState extends State<DiasScrn> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => MuscleScrn(),
+        builder: (context) => MuscleScrn(selectedDias: selectedDias),
       ),
     );
   }

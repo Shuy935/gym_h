@@ -47,7 +47,7 @@ class _TabBarH extends State<TabBarH> {
           body: const TabBarView(
             children: [
               Center(child: Text('Rutina')),
-              Center(child: MuscleScrn()),
+              Center(child: MuscleScrn(selectedDias: [],)),
               Center(child: Lista()),
               Center(child: Text('Historial')),
             ],
