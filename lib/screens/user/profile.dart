@@ -14,7 +14,7 @@ class TheProfile extends StatelessWidget {
   }
 }
 
-String _sexController = '';
+String? _sexController;
 
 class Profile extends StatefulWidget {
   const Profile({super.key});
@@ -45,6 +45,7 @@ class _ProfileState extends State<Profile> {
       setState(() {
         _fullnameController.text = user.fullname!;
         _ageController.text = user.age!;
+        _sexController = user.sex!;
         _weightController.text = user.weight!;
         _heightController.text = user.height!;
       });
@@ -81,7 +82,6 @@ class _ProfileState extends State<Profile> {
               textInputAction: TextInputAction.next,
               decoration: const InputDecoration(labelText: 'Edad'),
               keyboardType: TextInputType.number,
-              // maxLength: 2,
               validator: (value) {
                 if (value!.isEmpty ||
                     int.parse(value.toString()) < 15 ||
@@ -97,7 +97,6 @@ class _ProfileState extends State<Profile> {
               textInputAction: TextInputAction.next,
               decoration: const InputDecoration(labelText: 'Altura (cm)'),
               keyboardType: TextInputType.number,
-              // maxLength: 3,
               validator: (value) {
                 if (value!.isEmpty ||
                     int.parse(value.toString()) < 100 ||
@@ -113,7 +112,6 @@ class _ProfileState extends State<Profile> {
               textInputAction: TextInputAction.next,
               decoration: const InputDecoration(labelText: 'Peso (kg)'),
               keyboardType: TextInputType.number,
-              // maxLength: 3,
               validator: (value) {
                 if (value!.isEmpty ||
                     int.parse(value.toString()) < 30 ||
@@ -164,7 +162,6 @@ class _ProfileState extends State<Profile> {
     _ageController.dispose();
     _fullnameController.dispose();
     _heightController.dispose();
-    // _sexController.dispose();
     _weightController.dispose();
   }
 }
@@ -190,7 +187,7 @@ class _DropdownMenuExampleState extends State<DropdownMenuExample> {
   @override
   Widget build(BuildContext context) {
     return DropdownMenu<String>(
-      initialSelection: list.first,
+      initialSelection: _sexController ?? list.first,
       onSelected: (String? value) {
         // This is called when the user selects an item.
         setState(() {

@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:gym_h/utils/utils.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
 
@@ -27,8 +25,7 @@ Future<void> exerciseCreate(ExerciseService exerciseService) async {
     ..set('nombreMusculo', exerciseService.nombreMusculo)
     ..set('linkImagen', exerciseService.linkImagen);
   try {
-    final a = await objeto.save();
-    print(a.error);
+    await objeto.save();
   } catch (e) {
     Utils.showSnackBar(e.toString());
   }
