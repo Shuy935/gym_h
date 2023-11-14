@@ -12,7 +12,7 @@ class RegistroH extends StatefulWidget {
 class _RegistroHState extends State<RegistroH> {
   final List<Registro> registros = [
     //get de id, nombre y fecha
-    Registro('Manolo', DateTime(2023, 1, 15)),
+    Registro('Manolo', DateTime(2023, 1, 13)),
     Registro('Sofia', DateTime(2023, 2, 10)),
     Registro('Canela', DateTime(2023, 3, 5)),
   ];

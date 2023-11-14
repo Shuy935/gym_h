@@ -43,17 +43,19 @@ class _MuscleScrnState extends State<MuscleScrn> {
       ),
       body: Column(
         children: <Widget>[
-          // ListTile(
-          //   title: const Text(
-          //     'Selecciona de 1-3 músculos',
-          //     style: TextStyle(
-          //       fontSize: 25,
-          //       fontWeight: FontWeight.w900,
-          //       color: Color.fromARGB(255, 255, 255, 255),
-          //     ),
-          //     textAlign: TextAlign.center,
-          //   ),
-          // ),
+          /*
+           ListTile(
+             title: const Text(
+               'Selecciona de 1-3 músculos',
+               style: TextStyle(
+                 fontSize: 25,
+                 fontWeight: FontWeight.w900,
+                 color: Color.fromARGB(255, 255, 255, 255),
+               ),
+               textAlign: TextAlign.center,
+             ),
+           ),
+           */
           Expanded(
             child: buildMuscleList(),
           ),

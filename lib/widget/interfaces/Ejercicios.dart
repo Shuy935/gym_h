@@ -23,7 +23,6 @@ class Ejercicios extends StatelessWidget {
       m3 = 3;
     }
     int cantidad = m1 + m2 + m3;
-    print(cantidad);
     String miString = selectedMusc.join(" ");
     return MaterialApp(
       theme: ThemeData.dark().copyWith(),
