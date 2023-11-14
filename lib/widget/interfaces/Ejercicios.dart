@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gym_h/widget/interfaces/buscadoruwu.dart';
 import 'package:gym_h/widget/interfaces/widgets.dart';
 
 class Ejercicios extends StatelessWidget {
@@ -38,7 +39,8 @@ class Ejercicios extends StatelessWidget {
         ),
         body: SingleChildScrollView(
             child: Column(
-          children: [
+          children: <Widget>[
+            Buscador_uwu(),
             CardE(
               cantidad: cantidad,
             ),

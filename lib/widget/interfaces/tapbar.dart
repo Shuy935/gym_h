@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gym_h/models/users_model.dart';
 import 'package:gym_h/widget/interfaces/Widgets.dart';
+import 'package:gym_h/widget/interfaces/widgets.dart';
 
 class TabBarH extends StatefulWidget {
   const TabBarH({Key? key}) : super(key: key);
@@ -57,7 +58,7 @@ class _TabBarH extends State<TabBarH> {
     } else {
       final List<Widget> tabs = [
         const Tab(text: 'Rutina'),
-        const Tab(text: 'Musculos'),
+        const Tab(text: 'Seleccion de Rutina'), //mandar a selección de rutina
         const Tab(text: 'Asistencia'),
         const Tab(text: 'Historial'),
       ];
@@ -72,7 +73,7 @@ class _TabBarH extends State<TabBarH> {
           body: const TabBarView(
             children: [
               Center(child: Text('Rutina de hoy:')),
-              Center(child: MuscleScrn()),
+              Center(child: DiasScrn()),
               Center(child: ListaU()),
               Center(child: Text('Historial')),
             ],
