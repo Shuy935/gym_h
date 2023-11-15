@@ -30,10 +30,12 @@ class _TabBarH extends State<TabBarH> {
 
   @override
   Widget build(BuildContext context) {
-    if (rol != true) {
+    if (rol == true) {
+      //if (rol == true) {
       final List<Widget> tabs0 = [
         const Tab(text: 'Rutina'),
-        const Tab(text: 'Musculos'),
+        const Tab(
+            text: 'Asignación de rutina'), //Selección de rutina para un usuario
         const Tab(text: 'Asistencia'),
         const Tab(text: 'Historial'),
       ];
@@ -47,8 +49,8 @@ class _TabBarH extends State<TabBarH> {
           ),
           body: TabBarView(
             children: [
-              Center(child: Rutinas()),
-              Center(child: MuscleScrn(selectedDias: [],)),
+              Center(child: Text('Rutina')),
+              Center(child: DiasScrn()),
               Center(child: Lista()),
               Center(child: Text('Historial')),
             ],
@@ -59,7 +61,8 @@ class _TabBarH extends State<TabBarH> {
     } else {
       final List<Widget> tabs = [
         const Tab(text: 'Rutina'),
-        const Tab(text: 'Seleccion de Rutina'), //mandar a selección de rutina
+        const Tab(
+            text: 'Seleccion de Rutina'), //Selección de rutina por un usuario
         const Tab(text: 'Asistencia'),
         const Tab(text: 'Historial'),
       ];
@@ -74,7 +77,7 @@ class _TabBarH extends State<TabBarH> {
           body: const TabBarView(
             children: [
               Center(child: Text('Rutina de hoy:')),
-              Center(child: DiasScrn()),
+              Center(child: DiasScrn()), //Selección de rutina por un usuario
               Center(child: ListaU()),
               Center(child: Text('Historial')),
             ],

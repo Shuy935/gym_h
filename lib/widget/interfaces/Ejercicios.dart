@@ -24,6 +24,7 @@ class Ejercicios extends StatelessWidget {
     }
     int cantidad = m1 + m2 + m3;
     String miString = selectedMusc.join(" ");
+
     return MaterialApp(
       theme: ThemeData.dark().copyWith(),
       debugShowCheckedModeBanner: false,
@@ -40,7 +41,7 @@ class Ejercicios extends StatelessWidget {
         body: SingleChildScrollView(
             child: Column(
           children: <Widget>[
-            Buscador_uwu(),
+            const Buscador_uwu(),
             CardE(
               cantidad: cantidad,
             ),
@@ -87,7 +88,7 @@ class CardE extends StatelessWidget {
                         width: 120,
                         child: const Text('Repeticiones: '),
                       ),
-                      Expanded(
+                      const Expanded(
                         child: Rep_Drop(),
                         // TextFormField(
                         //    se cambiará por un dropdown
@@ -104,7 +105,7 @@ class CardE extends StatelessWidget {
                         width: 120,
                         child: const Text('Series: '),
                       ),
-                      Expanded(
+                      const Expanded(
                         child: Series_Drop(),
                       ),
                     ],
@@ -146,10 +147,42 @@ class CardE extends StatelessWidget {
                       Container(
                         height: 25,
                       ),
-                      Row(children: [
-                        Text('Musculo'),
-                        
-                      ]),
+                      Stack(
+                          //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: <Widget>[
+                            const SizedBox(
+                              //color: Colors.blue,
+                              width: 150,
+                              height: 70,
+                            ),
+                            const Center(
+                              child: Text('Musculo'),
+                            ),
+                            Positioned(
+                              left: 80,
+                              top: -5,
+                              child: ElevatedButton(
+                                style: ButtonStyle(backgroundColor:
+                                    MaterialStateProperty.resolveWith<Color?>(
+                                        (Set<MaterialState> states) {
+                                  // Cambiar el color en función del estado
+                                  if (states.contains(MaterialState.pressed)) {
+                                    // Estado cuando se presiona el botón por unos segundos
+                                    return Color.fromARGB(255, 18, 109, 0);
+                                    //hacer que se quede de ese color cuando se seleccione
+                                  }
+                                  // Estado normal
+                                  return const Color.fromARGB(
+                                      255, 111, 113, 114);
+                                })),
+                                onPressed: () {
+                                  // Acción selecciona el ejercicio
+                                  print('Botón presionado');
+                                },
+                                child: const Icon(Icons.check_circle_outline),
+                              ),
+                            )
+                          ]),
                     ],
                   ),
                 ],

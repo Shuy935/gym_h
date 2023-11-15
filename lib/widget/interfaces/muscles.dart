@@ -21,12 +21,12 @@ class _MuscleScrnState extends State<MuscleScrn> {
     'Cuádriceps',
     'Femoral',
     'Pantorrilla',
+    'Antebrazo',
   ];
   List<String> selectedMusc = [];
   String searching = '';
 
   List<String> filteredMusc = [];
-
 
   @override
   void initState() {
@@ -43,19 +43,9 @@ class _MuscleScrnState extends State<MuscleScrn> {
       ),
       body: Column(
         children: <Widget>[
-          /*
-           ListTile(
-             title: const Text(
-               'Selecciona de 1-3 músculos',
-               style: TextStyle(
-                 fontSize: 25,
-                 fontWeight: FontWeight.w900,
-                 color: Color.fromARGB(255, 255, 255, 255),
-               ),
-               textAlign: TextAlign.center,
-             ),
-           ),
-           */
+          /* ListTile(title: const Text('Selecciona de 1-3 músculos',style: TextStyle(
+                 fontSize: 25,fontWeight: FontWeight.w900,color: Color.fromARGB(255, 255, 255, 255),),textAlign: TextAlign.center,),),
+          */
           Expanded(
             child: buildMuscleList(),
           ),
@@ -138,7 +128,9 @@ class _MuscleScrnState extends State<MuscleScrn> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => Ejercicios(selectedMusc: selectedMusc,),
+        builder: (context) => Ejercicios(
+          selectedMusc: selectedMusc,
+        ),
       ),
     );
   }
