@@ -173,10 +173,10 @@ class CardE extends StatelessWidget {
                                     print(color);
                                     if (color == Color(0xff484848)) {
                                       color = Colors.green;
-                                      //ejercicio añadido
+                                      //logica de ejercicio añadido
                                     }else{
                                       color = Color(0xff484848);
-                                      //ejercicio eliminado
+                                      //logica de ejercicio eliminado
                                     }
                                     return color;
                                     //hacer que se quede de ese color cuando se seleccione
