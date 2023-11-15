@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gym_h/widget/interfaces/buscadoruwu.dart';
 import 'package:gym_h/widget/interfaces/widgets.dart';
+import 'package:provider/provider.dart';
 
 class Ejercicios extends StatelessWidget {
   final List<String> selectedMusc;
@@ -60,6 +61,7 @@ class CardE extends StatelessWidget {
   Widget build(BuildContext context) {
     print(cantidad);
     List<Widget> cards = [];
+    Color color = const Color.fromARGB(255, 72, 72, 72);
     for (int index = 0; index < cantidad; index++) {
       cards.add(Card(
         color: const Color.fromARGB(255, 58, 58, 59),
@@ -168,12 +170,19 @@ class CardE extends StatelessWidget {
                                   // Cambiar el color en función del estado
                                   if (states.contains(MaterialState.pressed)) {
                                     // Estado cuando se presiona el botón por unos segundos
-                                    return Color.fromARGB(255, 18, 109, 0);
+                                    print(color);
+                                    if (color == Color(0xff484848)) {
+                                      color = Colors.green;
+                                      //ejercicio añadido
+                                    }else{
+                                      color = Color(0xff484848);
+                                      //ejercicio eliminado
+                                    }
+                                    return color;
                                     //hacer que se quede de ese color cuando se seleccione
                                   }
                                   // Estado normal
-                                  return const Color.fromARGB(
-                                      255, 111, 113, 114);
+                                  return color;
                                 })),
                                 onPressed: () {
                                   // Acción selecciona el ejercicio
