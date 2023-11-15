@@ -36,7 +36,6 @@ class _MuscleScrnState extends State<MuscleScrn> {
 
   @override
   Widget build(BuildContext context) {
-    print(widget.selectedDias);
     return Scaffold(
       appBar: AppBar(
         title: Text('Selecciona tus músculos'),

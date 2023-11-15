@@ -59,10 +59,9 @@ class CardE extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(cantidad);
     List<Widget> cards = [];
-    Color color = const Color.fromARGB(255, 72, 72, 72);
     for (int index = 0; index < cantidad; index++) {
+      Color color = const Color.fromARGB(255, 72, 72, 72);
       cards.add(Card(
         color: const Color.fromARGB(255, 58, 58, 59),
         child: Padding(
@@ -170,7 +169,6 @@ class CardE extends StatelessWidget {
                                   // Cambiar el color en función del estado
                                   if (states.contains(MaterialState.pressed)) {
                                     // Estado cuando se presiona el botón por unos segundos
-                                    print(color);
                                     if (color == Color(0xff484848)) {
                                       color = Colors.green;
                                       //logica de ejercicio añadido
