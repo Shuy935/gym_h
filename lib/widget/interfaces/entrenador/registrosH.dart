@@ -90,7 +90,24 @@ class _RegistroHState extends State<RegistroH> {
               rows: listaAsistencia.map((asistencia) {
                 return DataRow(
                   cells: <DataCell>[
-                    DataCell(Text(fullname.toString())),
+                    DataCell(
+                      Container(
+                        constraints: BoxConstraints(
+                          maxWidth: size.width * 0.24,
+                        ),
+                        child: RichText(
+                          text: TextSpan(
+                            text: fullname.toString(),
+                            children: const [
+                              TextSpan(
+                                text: '\n',
+                                style: TextStyle(fontSize: 4),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
                     DataCell(Container(
                       margin: EdgeInsets.only(right: size.width * 0.05),
                       child: Text(''),
