@@ -73,6 +73,7 @@ class _RegistroHState extends State<RegistroH> {
                     ),
                   ),
                 ),
+                DataColumn(label: Text('')),
                 DataColumn(
                   label: Expanded(
                     child: Text(
@@ -82,19 +83,46 @@ class _RegistroHState extends State<RegistroH> {
                     ),
                   ),
                 ),
+                DataColumn(label: Text('')),
+                DataColumn(label: Text('Editar')),
+                DataColumn(label: Text('Borrar'))
               ],
               rows: listaAsistencia.map((asistencia) {
                 return DataRow(
                   cells: <DataCell>[
                     DataCell(Text(fullname.toString())),
+                    DataCell(Container(
+                      margin: EdgeInsets.only(right: size.width * 0.05),
+                      child: Text(''),
+                    )),
                     DataCell(Text(
                       DateFormat('yyyy-MM-dd')
                           .format(DateTime.parse(asistencia.fecha.toString())),
                     )),
+                    DataCell(Container(
+                      margin: EdgeInsets.only(right: size.width * 0.15),
+                      child: Text(''),
+                    )),
+                    DataCell(
+                      IconButton(
+                        icon: Icon(Icons.edit),
+                        onPressed: () {
+                          //editar registro
+                        },
+                      ),
+                    ),
+                    DataCell(
+                      IconButton(
+                        icon: Icon(Icons.delete),
+                        onPressed: () {
+                          //borrar registro
+                        },
+                      ),
+                    ),
                   ],
                 );
               }).toList(),
-              columnSpacing: size.width * 0.5,
+              columnSpacing: size.width * 0.025,
               dividerThickness: 2,
               horizontalMargin: 5,
             ),
