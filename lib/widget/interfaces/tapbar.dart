@@ -33,7 +33,8 @@ class _TabBarH extends State<TabBarH> {
     if (rol == true) {
       //if (rol == true) {
       final List<Widget> tabs0 = [
-        const Tab(text: 'Asignación de rutina'), //Selección de rutina para un usuario
+        const Tab(
+            text: 'Asignación de rutina'), //Selección de rutina para un usuario
         const Tab(text: 'Asistencia'),
         const Tab(text: 'Historial'),
       ];
@@ -47,7 +48,7 @@ class _TabBarH extends State<TabBarH> {
           ),
           body: TabBarView(
             children: [
-              Center(child: DiasScrn()),
+              Center(child: Lista_Clientes()),
               Center(child: Lista()),
               Center(child: Text('Historial')),
             ],
@@ -58,7 +59,8 @@ class _TabBarH extends State<TabBarH> {
     } else {
       final List<Widget> tabs = [
         const Tab(text: 'Rutina'),
-        const Tab(text: 'Seleccion de Rutina'), //Selección de rutina por un usuario
+        const Tab(
+            text: 'Seleccion de Rutina'), //Selección de rutina por un usuario
         const Tab(text: 'Asistencia'),
         const Tab(text: 'Historial'),
       ];
