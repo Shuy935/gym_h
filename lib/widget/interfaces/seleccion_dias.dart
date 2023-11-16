@@ -31,22 +31,22 @@ class _DiasScrnState extends State<DiasScrn> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   title: Text('Selecciona tus músculos'),
-      // ),
+      appBar: AppBar(
+        title: Text('Selecciona el/los dia/s \n a asignar rutina'),
+      ),
       body: Column(
         children: <Widget>[
-          const ListTile(
-            title: Text(
-              'Selecciona el/los dia/s \n a asignar rutina',
-              style: TextStyle(
-                fontSize: 25,
-                fontWeight: FontWeight.w900,
-                color: Color.fromARGB(255, 255, 255, 255),
-              ),
-              textAlign: TextAlign.center,
-            ),
-          ),
+          // const ListTile(
+          //   title: Text(
+          //     'Selecciona el/los dia/s \n a asignar rutina',
+          //     style: TextStyle(
+          //       fontSize: 25,
+          //       fontWeight: FontWeight.w900,
+          //       color: Color.fromARGB(255, 255, 255, 255),
+          //     ),
+          //     textAlign: TextAlign.center,
+          //   ),
+          // ),
           Expanded(
             child: buildDiasList(),
           ),
