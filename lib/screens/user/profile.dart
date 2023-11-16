@@ -171,7 +171,7 @@ class _ProfileState extends State<Profile> {
 const List<String> list = <String>[
   'Masculino',
   'Femenino',
-  'Otros 39 tipos de gays'
+  'Prefiero no responder'
 ];
 
 class DropdownMenuExample extends StatefulWidget {

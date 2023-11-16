@@ -1,28 +1,68 @@
 import 'package:flutter/material.dart';
+import 'package:gym_h/models/exercise_model.dart';
 import 'package:gym_h/widget/interfaces/widgets.dart';
 
-class Ejercicios extends StatelessWidget {
+class Ejercicios extends StatefulWidget {
   final List<String> selectedMusc;
-  Ejercicios({super.key, required this.selectedMusc});
+  const Ejercicios({super.key, required this.selectedMusc});
+
+  @override
+  State<Ejercicios> createState() => _EjerciciosState();
+}
+
+class _EjerciciosState extends State<Ejercicios> {
+  int count = 0;
+  List<ExerciseService>? data;
+  int cantidad = 0;
+  @override
+  void initState() {
+    super.initState();
+    // Llama a la función para recuperar los datos del usuario
+    if (widget.selectedMusc.length == 1) {
+      getExerciseData1();
+    } else if (widget.selectedMusc.length == 2) {
+      getExerciseData2();
+    } else {
+      getExerciseData3();
+    }
+  }
+
+  Future<void> getExerciseData1() async {
+    final exerciseData = await readOneExercise(widget.selectedMusc[0]);
+    if (exerciseData != null && exerciseData.isNotEmpty) {
+      data = exerciseData;
+      setState(() {
+        cantidad = data!.length;
+      });
+    }
+  }
+
+  Future<void> getExerciseData2() async {
+    final exerciseData =
+        await readTwoExercise(widget.selectedMusc[0], widget.selectedMusc[1]);
+    if (exerciseData != null && exerciseData.isNotEmpty) {
+      data = exerciseData;
+      setState(() {
+        cantidad = data!.length;
+      });
+    }
+  }
+
+  Future<void> getExerciseData3() async {
+    final exerciseData = await readThreeExercise(
+        widget.selectedMusc[0], widget.selectedMusc[1], widget.selectedMusc[2]);
+    if (exerciseData != null && exerciseData.isNotEmpty) {
+      // for in para meterlos posible(?)
+      data = exerciseData;
+      setState(() {
+        cantidad = data!.length;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    int m1 = 0;
-    int m2 = 0;
-    int m3 = 0;
-    if (selectedMusc.length == 1) {
-      m1 = 1;
-    } else if (selectedMusc.length == 2) {
-      m1 = 1;
-      m2 = 1;
-    } else {
-      m1 = 1;
-      m2 = 1;
-      m3 = 3;
-    }
-    int cantidad = m1 + m2 + m3;
-    print(cantidad);
-    String miString = selectedMusc.join(" ");
+    String miString = widget.selectedMusc.join(" ");
     return MaterialApp(
       theme: ThemeData.dark().copyWith(),
       debugShowCheckedModeBanner: false,
@@ -34,13 +74,14 @@ class Ejercicios extends StatelessWidget {
               Navigator.of(context).pop();
             },
           ),
-          title: Text('Musculos: $selectedMusc'),
+          title: Text('Musculos: $widget.selectedMusc'),
         ),
         body: SingleChildScrollView(
             child: Column(
           children: [
             CardE(
               cantidad: cantidad,
+              data: data,
             ),
           ],
         )),
@@ -49,15 +90,22 @@ class Ejercicios extends StatelessWidget {
   }
 }
 
-class CardE extends StatelessWidget {
-  final int cantidad;
-  const CardE({super.key, required this.cantidad});
+class CardE extends StatefulWidget {
+  final int? cantidad;
+  final List<ExerciseService>? data;
+
+  const CardE({super.key, required this.cantidad, required this.data});
 
   @override
+  State<CardE> createState() => _CardEState();
+}
+
+class _CardEState extends State<CardE> {
+  @override
   Widget build(BuildContext context) {
-    print(cantidad);
     List<Widget> cards = [];
-    for (int index = 0; index < cantidad; index++) {
+    for (int index = 0; index < widget.cantidad!; index++) {
+      ExerciseService? exercise = widget.data?[index];
       cards.add(Card(
         color: const Color.fromARGB(255, 58, 58, 59),
         child: Padding(
@@ -73,7 +121,7 @@ class CardE extends StatelessWidget {
                         width: 120,
                         child: const Text('Nombre: '),
                       ),
-                      const Expanded(child: Text('get del ejercicio')),
+                      Expanded(child: Text(exercise!.nombreEjercicio ?? '')),
                     ],
                   ),
                   Container(
@@ -128,7 +176,7 @@ class CardE extends StatelessWidget {
                       Container(
                         width: 10,
                       ),
-                      const Text('Get de eso'),
+                      Text(exercise.descanso ?? ''),
                       Container(
                         height: 15,
                       ),
@@ -138,13 +186,13 @@ class CardE extends StatelessWidget {
                           Container(
                             width: 10,
                           ),
-                          const Text('Get de eso'),
+                          Text(exercise.dificuldad ?? ''),
                         ],
                       ),
                       Container(
                         height: 25,
                       ),
-                      const Text('Musculo'),
+                      Text(exercise.nombreMusculo ?? ''),
                     ],
                   ),
                 ],

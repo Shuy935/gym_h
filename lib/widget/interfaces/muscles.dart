@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gym_h/widget/interfaces/ejercicios.dart';
+import 'package:gym_h/widget/interfaces/widgets.dart';
 
 class MuscleScrn extends StatefulWidget {
   const MuscleScrn({super.key});
@@ -20,6 +20,7 @@ class _MuscleScrnState extends State<MuscleScrn> {
     'Cuádriceps',
     'Femoral',
     'Pantorrilla',
+    'Antebrazo',
   ];
   List<String> selectedMusc = [];
   String searching = '';
@@ -40,8 +41,8 @@ class _MuscleScrnState extends State<MuscleScrn> {
       // ),
       body: Column(
         children: <Widget>[
-          ListTile(
-            title: const Text(
+          const ListTile(
+            title: Text(
               'Selecciona de 1-3 músculos',
               style: TextStyle(
                 fontSize: 25,
@@ -58,7 +59,7 @@ class _MuscleScrnState extends State<MuscleScrn> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: handleFloatingActionButton,
-        child: Icon(Icons.arrow_forward),
+        child: const Icon(Icons.arrow_forward),
       ),
     );
   }
@@ -70,7 +71,7 @@ class _MuscleScrnState extends State<MuscleScrn> {
         onChanged: handleSearch,
         decoration: InputDecoration(
           labelText: 'Buscar Músculos',
-          prefixIcon: Icon(Icons.search),
+          prefixIcon: const Icon(Icons.search),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10.0),
           ),
@@ -90,8 +91,8 @@ class _MuscleScrnState extends State<MuscleScrn> {
       title: Text(muscle),
       onTap: () => handleMuscleSelection(muscle),
       trailing: selectedMusc.contains(muscle)
-          ? Icon(Icons.check_circle, color: Colors.green)
-          : Icon(Icons.check_circle_outline),
+          ? const Icon(Icons.check_circle, color: Colors.green)
+          : const Icon(Icons.check_circle_outline),
     );
   }
 
@@ -143,11 +144,11 @@ class _MuscleScrnState extends State<MuscleScrn> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: Text('Advertencia'),
+          title: const Text('Advertencia'),
           content: Text(errorMessage),
           actions: <Widget>[
             TextButton(
-              child: Text('Aceptar'),
+              child: const Text('Aceptar'),
               onPressed: () {
                 Navigator.of(context).pop();
               },
