@@ -68,7 +68,7 @@ class _DrawerProfile extends State<DrawerProfile> {
             leading: const Icon(Icons.settings),
             title: const Text('Configurations'),
             onTap: () {
-              readAsistencias();
+             // readAsistenciasGeneral();
               // final route = MaterialPageRoute(builder: (context) => Page2());
               // Navigator.push(context, route);
             },

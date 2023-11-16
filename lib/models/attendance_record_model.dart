@@ -94,7 +94,7 @@ Future<List<AsistenciaService>> readAsistenciasUsuario(String ObjectId) async {
             return AsistenciaService(
               objectId: a.get('objectId'),
               fecha: a.get('fecha'),
-              fullname: a.get('fullname'),
+              fullname: a.get('usuarioID')?.get('fullname'),
             );
           }).toList() ??
           [];
@@ -200,7 +200,31 @@ Future<void> addAsistenciaUsuario(String fullname) async {
   }
 }
 
+Future<List<AsistenciaService>> readAsistenciasGeneral() async {
+  try {
+    final query = QueryBuilder<ParseObject>(ParseObject('asistencia'))
+      ..includeObject(['usuarioID']);
+    //..orderByAscending('fullname');
 
+    final ParseResponse response = await query.query();
+    print(response.results);
+    if (response.success) {
+      return response.results?.map((a) {
+            return AsistenciaService(
+              objectId: a.get('objectId'),
+              fecha: a.get('fecha'),
+              fullname: a.get('usuarioID')?.get('fullname'),
+            );
+          }).toList() ??
+          [];
+    } else {
+      Utils.showSnackBar(response.error?.message);
+    }
+  } catch (e) {
+    Utils.showSnackBar(e.toString());
+  }
+  return [];
+}
 
 // Future<List<ParseObject>?> getAllAsistencia() async {
 //   final ParseResponse result = await ParseObject('asistencia').getAll();
