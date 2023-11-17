@@ -27,6 +27,15 @@ class Rutinas extends StatelessWidget {
       theme: ThemeData.dark().copyWith(),
       debugShowCheckedModeBanner: false,
       home: Scaffold(
+        appBar: AppBar(
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+          title: Text('Rutina:'),
+        ),
         body: SingleChildScrollView(
           child: Column(
             children: <Widget>[
@@ -216,7 +225,8 @@ class _CardRState extends State<CardR> {
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text('Cancelacion'),
-          content: Text('¿Desea marcar el ejercicio seleccionado como no realizado?'),
+          content: Text(
+              '¿Desea marcar el ejercicio seleccionado como no realizado?'),
           actions: <Widget>[
             TextButton(
               onPressed: () {
