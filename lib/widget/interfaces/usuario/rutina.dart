@@ -105,8 +105,11 @@ class _CardRState extends State<CardR> {
                 Container(
                   width: 150,
                   height: 150,
-                  child: const Image(
-                    image: AssetImage('assets/image/logo.png'),
+                  child: FadeInImage(
+                    placeholder: AssetImage('assets/image/loading.gif'),
+                    //En el siguiente comentario pon la linea que deberia jalar el link
+                    //image: NetworkImage('https://drive.google.com/u/0/uc?id=1_OuXPGofaeKI_U3W3mrcUdw5wtyZykjt'),
+                    image: NetworkImage('https://drive.google.com/u/0/uc?id=1_OuXPGofaeKI_U3W3mrcUdw5wtyZykjt'),
                   ),
                 ),
                 Container(
@@ -216,7 +219,8 @@ class _CardRState extends State<CardR> {
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text('Cancelacion'),
-          content: Text('¿Desea marcar el ejercicio seleccionado como no realizado?'),
+          content: Text(
+              '¿Desea marcar el ejercicio seleccionado como no realizado?'),
           actions: <Widget>[
             TextButton(
               onPressed: () {
