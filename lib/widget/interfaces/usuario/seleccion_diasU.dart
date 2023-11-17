@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:gym_h/widget/interfaces/ejercicios.dart';
 import 'package:gym_h/widget/interfaces/widgets.dart';
 
-class DiasScrn extends StatefulWidget {
-  const DiasScrn({super.key});
+class DiasScrnU extends StatefulWidget {
+  const DiasScrnU({super.key});
 
   @override
-  State<DiasScrn> createState() => _DiasScrnState();
+  State<DiasScrnU> createState() => _DiasScrnUState();
 }
 
-class _DiasScrnState extends State<DiasScrn> {
+class _DiasScrnUState extends State<DiasScrnU> {
   List<String> selectedDias = [];
   final List<String> dias = [
     'Lunes',
@@ -36,17 +36,17 @@ class _DiasScrnState extends State<DiasScrn> {
       ),
       body: Column(
         children: <Widget>[
-          // const ListTile(
-          //   title: Text(
-          //     'Selecciona el/los dia/s \n a asignar rutina',
-          //     style: TextStyle(
-          //       fontSize: 25,
-          //       fontWeight: FontWeight.w900,
-          //       color: Color.fromARGB(255, 255, 255, 255),
-          //     ),
-          //     textAlign: TextAlign.center,
-          //   ),
-          // ),
+          const ListTile(
+            title: Text(
+              'Selecciona el/los dia/s \n a asignar rutina',
+              style: TextStyle(
+                fontSize: 25,
+                fontWeight: FontWeight.w900,
+                color: Color.fromARGB(255, 255, 255, 255),
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ),
           Expanded(
             child: buildDiasList(),
           ),

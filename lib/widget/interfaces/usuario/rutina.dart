@@ -27,6 +27,15 @@ class Rutinas extends StatelessWidget {
       theme: ThemeData.dark().copyWith(),
       debugShowCheckedModeBanner: false,
       home: Scaffold(
+        appBar: AppBar(
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+          title: Text('Rutina:'),
+        ),
         body: SingleChildScrollView(
           child: Column(
             children: <Widget>[

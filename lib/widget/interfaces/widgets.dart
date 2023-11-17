@@ -8,3 +8,5 @@ export 'package:gym_h/widget/interfaces/date_picker_widget.dart';
 export 'package:gym_h/widget/interfaces/ejercicios.dart';
 export 'package:gym_h/widget/interfaces/seleccion_dias.dart';
 export 'package:gym_h/widget/interfaces/lista_clientes.dart';
+export 'package:gym_h/widget/interfaces/buscadoruwu.dart';
+export 'package:gym_h/widget/interfaces/usuario/rutina.dart';

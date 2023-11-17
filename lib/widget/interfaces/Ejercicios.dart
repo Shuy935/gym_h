@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:gym_h/widget/interfaces/buscadoruwu.dart';
 import 'package:gym_h/widget/interfaces/widgets.dart';
 import 'package:provider/provider.dart';
+
+List<String> ejerciciosSeleccionados = [];
 
 class Ejercicios extends StatelessWidget {
   final List<String> selectedMusc;
@@ -48,6 +49,19 @@ class Ejercicios extends StatelessWidget {
             ),
           ],
         )),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                //mandar lista de ejercicios a las rutinas y mostrarlas
+                builder: (context) => Rutinas(),
+              ),
+            );
+            print('$ejerciciosSeleccionados');
+          },
+          child: Icon(Icons.arrow_forward),
+        ),
       ),
     );
   }
@@ -171,9 +185,13 @@ class CardE extends StatelessWidget {
                                     // Estado cuando se presiona el botón por unos segundos
                                     if (color == Color(0xff484848)) {
                                       color = Colors.green;
+                                      ejerciciosSeleccionados
+                                          .add("get del ejercicio");
                                       //logica de ejercicio añadido
-                                    }else{
+                                    } else {
                                       color = Color(0xff484848);
+                                      ejerciciosSeleccionados
+                                          .remove("get del ejercicio");
                                       //logica de ejercicio eliminado
                                     }
                                     return color;
@@ -185,6 +203,8 @@ class CardE extends StatelessWidget {
                                 onPressed: () {
                                   // Acción selecciona el ejercicio
                                   print('Botón presionado');
+                                  print(ejerciciosSeleccionados.length);
+                                  //Parece que se queda guardada la lista pero no las selecciones :c
                                 },
                                 child: const Icon(Icons.check_circle_outline),
                               ),
