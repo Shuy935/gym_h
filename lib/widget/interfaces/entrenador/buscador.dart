@@ -97,7 +97,9 @@ class _ListaState extends State<Lista> {
                                 addAsistenciaUsuario(usuario!);
                                 // Puedes agregar código para manejar el registro
                                 Navigator.of(context)
-                                    .pop(); // Cierra el AlertDialog
+                                    .pop(); 
+                                usuario=null;    
+                                // Cierra el AlertDialog
                               },
                             ),
                           ],
@@ -117,11 +119,19 @@ class _ListaState extends State<Lista> {
               backgroundColor: Colors.amber,
               shape: const CircleBorder(),
               splashColor: Colors.white,
-              onPressed: () {
+              onPressed: () async {
                 final route = MaterialPageRoute(
                   builder: (context) => RegistroH(usuario: usuario),
                 );
-                Navigator.push(context, route);
+                // Espera a que la ruta se complete y recibe el valor devuelto por la pantalla RegistroH
+                    final result = await Navigator.push(context, route);
+
+                    // Verifica si el valor de result es null y actualiza usuario en consecuencia
+                    if (result == null) {
+                      setState(() {
+                        usuario = null;
+                      });
+                    }
               },
               child: const Icon(Icons.history),
             ),
