@@ -182,6 +182,22 @@ Future<void> addAsistenciaUsuario(String fullname) async {
     }
   }
 }
+Future<void> addAsistenciaUsuarioFecha(String fullname, String fecha) async {
+  final objectId = await getObjectIdByFullname(fullname);
+
+  if (objectId != null) {
+    final objeto = ParseObject('asistencia')
+      ..set('fecha', fecha)
+      ..set('usuarioID', ParseObject('users')..objectId = objectId);
+
+    try {
+      await objeto.save();
+      Utils.showSusSnackBar('Se agregó la asistencia');
+    } catch (e) {
+      Utils.showSnackBar(e.toString());
+    }
+  }
+}
 
 Future<List<AsistenciaService>> readAsistenciasGeneral() async {
   try {

@@ -356,20 +356,25 @@ class _RegistroHState extends State<RegistroH> {
                     ),
                     TextButton(
                       child: const Text('Agregar'),
-                      onPressed: () {
+                      onPressed: () async {
                         final nombre = nombreController.text;
                         final fechaStr = fechaController.text;
-                        // final fecha = '';
-                        //     DateFormat('yyyy-MM-dd').parse(fechaStr, true);
+                        if (nombre.isNotEmpty && fechaStr.isNotEmpty) {
+                        // Llamada al método addAsistenciaUsuario con nombre y fecha
+                          await addAsistenciaUsuarioFecha(nombre, fechaStr);
 
-                        if (nombre != '') {
-                          setState(() {
-                            //registros.insert(0, Registro(nombre, fecha));
+                            // Limpiar controladores y cerrar el cuadro de diálogo
                             nombreController.clear();
                             fechaController.clear();
-                          });
-                          Navigator.of(context).pop();
-                        }
+                            Navigator.of(context).pop();
+                            if(fullname!=null){
+                                  _getData();
+                              }else{
+                                _getDataGeneral();
+                              }
+                          } else {
+                            Utils.showSnackBar("Nombre y fecha son obligatorios");
+                          }
                       },
                     ),
                   ],
