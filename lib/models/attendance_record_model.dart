@@ -78,8 +78,8 @@ Future<List<AsistenciaService>> readAsistencias() async {
   return [];
 }
 
-Future<List<AsistenciaService>> readAsistenciasUsuario(String ObjectId) async {
-  String a = ObjectId;
+Future<List<AsistenciaService>> readAsistenciasUsuario(String objectId) async {
+  String a = objectId;
 
   try {
     final query = QueryBuilder<ParseObject>(ParseObject('asistencia'))
