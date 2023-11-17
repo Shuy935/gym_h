@@ -25,7 +25,7 @@ class AsistenciaService {
 Future<void> addAsistencia() async {
   String? a;
   DateTime now = DateTime.now();
-  String formatDate = DateFormat('yyyy-MM-dd HH:mm').format(now);
+  String formatDate = DateFormat('yyyy-MM-dd').format(now);
   final userData = await readCompleteUser();
   if (userData != null && userData.isNotEmpty) {
     final user = userData[0]; // Suponemos que solo hay un usuario
@@ -132,10 +132,16 @@ Future<List<AsistenciaService>> readAsistenciasUsuario(String ObjectId) async {
 //   return [];
 // }
 
-Future<void> updateAsistencia(AsistenciaService asistenciaService) async {
-  final currentUser = FirebaseAuth.instance.currentUser;
-  final query = QueryBuilder<ParseObject>(ParseObject('Asistencia'))
-    ..whereEqualTo('firebaseUserId', currentUser?.uid);
+Future<void> updateAsistencia(String originalFecha, AsistenciaService asistenciaService,String fullname) async {
+  final objectId = await getObjectIdByFullname(fullname);
+  final query = QueryBuilder<ParseObject>(ParseObject('asistencia'))
+    ..whereEqualTo('usuarioID', {
+      '__type': 'Pointer',
+      'className': 'users',
+      'objectId': objectId,
+    })
+    ..whereEqualTo('fecha', originalFecha)
+    ..includeObject(['usuarioID']);
 
   final response = await query.query();
 
@@ -143,7 +149,6 @@ Future<void> updateAsistencia(AsistenciaService asistenciaService) async {
     final objetoAActualizar = response.results!.first;
 
     objetoAActualizar.set('fecha', asistenciaService.fecha);
-    objetoAActualizar.set('fullname', asistenciaService.fullname);
 
     final updateResponse = await objetoAActualizar.save();
 
@@ -158,10 +163,13 @@ Future<void> updateAsistencia(AsistenciaService asistenciaService) async {
   }
 }
 
-Future<void> deleteAsistencia(DateTime fecha, String email) async {
-  final query = QueryBuilder<ParseObject>(ParseObject('Asistencia'))
-    ..whereEqualTo('email', email)
-    ..whereEqualTo('fecha', fecha.toUtc());
+
+Future<void> deleteAsistencia(String fecha, String fullname) async {
+  final objectId = await getObjectIdByFullname(fullname);
+  final query = QueryBuilder<ParseObject>(ParseObject('asistencia'))
+    ..whereEqualTo('usuarioID',
+          {'__type': 'Pointer', 'className': 'users', 'objectId': objectId})
+          ..includeObject(['usuarioID']);
 
   final response = await query.query();
 
@@ -182,7 +190,7 @@ Future<void> deleteAsistencia(DateTime fecha, String email) async {
 
 Future<void> addAsistenciaUsuario(String fullname) async {
   DateTime now = DateTime.now();
-  String formatDate = DateFormat('yyyy-MM-dd HH:mm').format(now);
+  String formatDate = DateFormat('yyyy-MM-dd').format(now);
 
   final objectId = await getObjectIdByFullname(fullname);
 
@@ -207,7 +215,6 @@ Future<List<AsistenciaService>> readAsistenciasGeneral() async {
     //..orderByAscending('fullname');
 
     final ParseResponse response = await query.query();
-    print(response.results);
     if (response.success) {
       return response.results?.map((a) {
             return AsistenciaService(

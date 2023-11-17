@@ -135,7 +135,6 @@ Future<List<Map<String, dynamic>>?> readUsers() async {
 Future<String?> getObjectIdByFullname(String fullname) async {
   try {
     final query = QueryBuilder<ParseObject>(ParseObject('users'))
-      ..whereEqualTo('isAdm', false)
       ..whereEqualTo('fullname', fullname);
 
     final response = await query.query();
