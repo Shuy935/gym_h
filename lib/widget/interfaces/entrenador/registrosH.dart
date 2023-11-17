@@ -232,19 +232,52 @@ class _RegistroHState extends State<RegistroH> {
                       IconButton(
                         icon: const Icon(Icons.delete),
                         onPressed: () {
-                          deleteAsistencia(asistencia.fecha.toString(), asistencia.fullname.toString());
-                          //borrar registro
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text('Asistencia eliminada con éxito'),
+                          // Muestra un AlertDialog para confirmar la eliminación
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title: const Text('Confirmación'),
+                                content: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    const Text('¿Estás seguro de eliminar esta asistencia?'),
+                                    const SizedBox(height: 10),
+                                    Text('Nombre: ${asistencia.fullname}'),
+                                    Text('Fecha: ${DateFormat('yyyy-MM-dd').format(DateTime.parse(asistencia.fecha.toString()))}'),
+                                  ],
                                 ),
+                                actions: <Widget>[
+                                  TextButton(
+                                    onPressed: () {
+                                      // Cierra el AlertDialog y no realiza ninguna acción
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: const Text('Cancelar'),
+                                  ),
+                                  TextButton(
+                                    onPressed: () {
+                                      // Elimina la asistencia y realiza las acciones necesarias
+                                      deleteAsistencia(asistencia.fecha.toString(), asistencia.fullname.toString());
+                                      ScaffoldMessenger.of(context).showSnackBar(
+                                        const SnackBar(
+                                          content:  Text('Asistencia eliminada con éxito'),
+                                        ),
+                                      );
+                                      if (fullname != null) {
+                                        _getData();
+                                      } else {
+                                        _getDataGeneral();
+                                      }
+                                      Navigator.of(context).pop(); // Cierra el AlertDialog
+                                    },
+                                    child: const Text('Eliminar'),
+                                  ),
+                                ],
+                              );
+                            },
                           );
-                          if(fullname!=null){
-                            _getData();
-                          }else{
-                            _getDataGeneral();
-                          }
-
                         },
                       ),
                     ),
