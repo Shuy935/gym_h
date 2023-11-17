@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:gym_h/models/attendance_record_model.dart';
 import 'package:gym_h/models/users_model.dart';
 import 'package:gym_h/screens/user/profile.dart';
 
@@ -68,7 +67,6 @@ class _DrawerProfile extends State<DrawerProfile> {
             leading: const Icon(Icons.settings),
             title: const Text('Configurations'),
             onTap: () {
-             // readAsistenciasGeneral();
               // final route = MaterialPageRoute(builder: (context) => Page2());
               // Navigator.push(context, route);
             },

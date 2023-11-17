@@ -201,8 +201,6 @@ class _RegistroHState extends State<RegistroH> {
                                         fecha: fechaStr,
                                         // Agrega otros campos según la definición de AsistenciaService
                                       );
-                                        print(asistencia.fecha.toString());
-                                        print(fechaStr);
                                       // Llamar a la función de actualización
                                       await updateAsistencia(asistencia.fecha.toString(), nuevaAsistencia,asistencia.fullname.toString());
 

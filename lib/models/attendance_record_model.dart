@@ -2,7 +2,6 @@ import 'package:gym_h/models/users_model.dart';
 import 'package:gym_h/utils/utils.dart';
 import 'package:intl/intl.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 class AsistenciaService {
   final String? objectId;
@@ -107,30 +106,6 @@ Future<List<AsistenciaService>> readAsistenciasUsuario(String objectId) async {
   return [];
 }
 
-// Future<List<AsistenciaService>> readAsistencias() async {
-//   final currentUser = FirebaseAuth.instance.currentUser;
-//   try {
-//     final query = QueryBuilder<ParseObject>(ParseObject('Asistencia'))
-//       ..whereEqualTo('firebaseUserId', currentUser?.uid);
-//     final response = await query.query();
-
-//     if (response.success) {
-//       return response.results?.map((a) {
-//             return AsistenciaService(
-//               firebaseUserId: a.get('firebaseUserId'),
-//               fecha: a.get('fecha'),
-//               fullname: a.get('fullname'),
-//             );
-//           }).toList() ??
-//           [];
-//     } else {
-//       Utils.showSnackBar(response.error?.message);
-//     }
-//   } catch (e) {
-//     Utils.showSnackBar(e.toString());
-//   }
-//   return [];
-// }
 
 Future<void> updateAsistencia(String originalFecha, AsistenciaService asistenciaService,String fullname) async {
   final objectId = await getObjectIdByFullname(fullname);
