@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gym_h/models/exercise_model.dart';
 import 'package:gym_h/models/rutina_model.dart';
+import 'package:gym_h/screens/home_page.dart';
 import 'package:gym_h/widget/interfaces/widgets.dart';
 
 class Ejercicios extends StatefulWidget {
@@ -14,6 +15,8 @@ class Ejercicios extends StatefulWidget {
 }
 
 List<String> ejerciciosSeleccionados = [];
+String repe = '';
+String serie = '';
 
 class _EjerciciosState extends State<Ejercicios> {
   int count = 0;
@@ -94,12 +97,10 @@ class _EjerciciosState extends State<Ejercicios> {
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             addRutina(ejerciciosSeleccionados, widget.selectedDias);
-            Navigator.push(
+            Navigator.pushAndRemoveUntil(
               context,
-              MaterialPageRoute(
-                //mandar lista de ejercicios a las rutinas y mostrarlas
-                builder: (context) => const Rutinas(),
-              ),
+              MaterialPageRoute(builder: (context) => HomePage()),
+              (route) => false,
             );
           },
           child: const Icon(Icons.arrow_forward),
@@ -227,13 +228,18 @@ class _CardEState extends State<CardE> {
                                   // Estado cuando se presiona el botón por unos segundos
                                   if (color == const Color(0xff484848)) {
                                     color = Colors.green;
-                                    ejerciciosSeleccionados
-                                        .add(exercise.objectId.toString());
+                                    ejerciciosSeleccionados.addAll({
+                                      exercise.objectId.toString(),
+                                      serie,
+                                      repe
+                                    });
                                     //logica de ejercicio añadido
                                   } else {
                                     color = const Color(0xff484848);
                                     ejerciciosSeleccionados
                                         .remove(exercise.objectId.toString());
+                                    ejerciciosSeleccionados.remove(serie);
+                                    ejerciciosSeleccionados.remove(repe);
                                     //logica de ejercicio eliminado
                                   }
                                   return color;
@@ -291,16 +297,15 @@ class _RepDropState extends State<RepDrop> {
   @override
   Widget build(BuildContext context) {
     return DropdownMenu<String>(
-      initialSelection: rep.first,
+      initialSelection: null,
       width: 100,
       onSelected: (String? value) {
         // This is called when the user selects an item.
         setState(() {
-          dropdownValue = value!;
+          repe = value ?? '';
         });
       },
       dropdownMenuEntries: rep.map<DropdownMenuEntry<String>>((String value) {
-        print(DropdownMenuEntry<String>(value: value, label: value));
         return DropdownMenuEntry<String>(value: value, label: value);
       }).toList(),
     );
@@ -320,12 +325,12 @@ class _SeriesDropState extends State<SeriesDrop> {
   @override
   Widget build(BuildContext context) {
     return DropdownMenu<String>(
-      initialSelection: series.first,
+      initialSelection: null,
       width: 100,
       onSelected: (String? value) {
         // This is called when the user selects an item.
         setState(() {
-          dropdownValue = value!;
+          serie = value ?? '';
         });
       },
       dropdownMenuEntries:
