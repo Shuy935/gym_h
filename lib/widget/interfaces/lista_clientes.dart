@@ -1,11 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gym_h/widget/interfaces/widgets.dart';
 
-enum ClienteNom { lafayette, jefferson, Juana, Peter }
-
-//Lista con los nombres de los clientes
-final List<String> nombre_clientes = [];
-
 class Lista_Clientes extends StatefulWidget {
   const Lista_Clientes({super.key});
 
@@ -14,51 +9,48 @@ class Lista_Clientes extends StatefulWidget {
 }
 
 class _Lista_ClientesState extends State<Lista_Clientes> {
-  ClienteNom? _character = ClienteNom.lafayette;
+  List<bool> isSelected = []; // Lista para el estado de los botones
+  List<Cliente> dataFromDatabase =
+      []; // Lista para los datos de la base de datos
+  int selectedId = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    // Simulando la recuperación de datos de la base de datos
+    dataFromDatabase = [
+      Cliente('Juana Perez', 1),
+      Cliente('Peter Parker', 2),
+      Cliente('Sofía Lopez', 3),
+      Cliente('Canela Solís', 4)
+    ];
+    isSelected = List.generate(dataFromDatabase.length, (index) => false);
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: <Widget>[
-          ListTile(
-            title: const Text('Juana Perez'), //nombre del cliente
-            leading: Radio<ClienteNom>(
+      body: ListView.builder(
+        itemCount: dataFromDatabase.length,
+        itemBuilder: (context, index) {
+          return ListTile(
+            title: Text(dataFromDatabase[index].name), //nombre del cliente
+            leading: Radio(
               //Para seleccionarlo
-              value: ClienteNom.Juana, //lo que vale la seleccion?
-              groupValue: _character, //se pueden agrupar?
-              onChanged: (ClienteNom? value) {
+              focusColor: Colors.amber,
+              value: dataFromDatabase[index].id, //lo que vale la seleccion?
+              groupValue: isSelected,
+              onChanged: (value) {
                 setState(() {
-                  _character = value; //asignación del grupo al valor
+                  //isSelected = dataFromDatabase[index]; //asignación del grupo al valor
+                  value = true;
+                  print(dataFromDatabase[index].name);
+                  selectedId = dataFromDatabase[index].id;
                 });
               },
             ),
-          ),
-          ListTile(
-            title: const Text('Thomas Jefferson'),
-            leading: Radio<ClienteNom>(
-              value: ClienteNom.jefferson,
-              groupValue: _character,
-              onChanged: (ClienteNom? value) {
-                setState(() {
-                  _character = value;
-                });
-              },
-            ),
-          ),
-          ListTile(
-            title: const Text('Peter Parker'),
-            leading: Radio<ClienteNom>(
-              value: ClienteNom.Peter,
-              groupValue: _character,
-              onChanged: (ClienteNom? value) {
-                setState(() {
-                  _character = value;
-                });
-              },
-            ),
-          ),
-        ],
+          );
+        },
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -74,4 +66,11 @@ class _Lista_ClientesState extends State<Lista_Clientes> {
       ),
     );
   }
+}
+
+class Cliente {
+  final String name;
+  final int id;
+
+  Cliente(this.name, this.id);
 }

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:gym_h/widget/interfaces/ejercicios.dart';
 import 'package:gym_h/widget/interfaces/widgets.dart';
 
 class DiasScrnU extends StatefulWidget {

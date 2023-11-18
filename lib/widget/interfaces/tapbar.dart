@@ -30,8 +30,8 @@ class _TabBarH extends State<TabBarH> {
 
   @override
   Widget build(BuildContext context) {
-    // if (rol != true) {
-    if (rol == true) {
+    if (rol != true) {
+      //if (rol == true) {
       final List<Widget> tabs0 = [
         const Tab(
             text: 'Asignación de rutina'), //Selección de rutina para un usuario
@@ -46,7 +46,7 @@ class _TabBarH extends State<TabBarH> {
             title: const Text('Inicio'),
             bottom: TabBar(tabs: tabs0),
           ),
-          body: const TabBarView(
+          body: TabBarView(
             children: [
               Center(child: Lista_Clientes()),
               Center(child: Lista()),
