@@ -38,7 +38,7 @@ class _MuscleScrnState extends State<MuscleScrn> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Selecciona tus músculos'),
+        title: const Text('Selecciona tus músculos'),
       ),
       body: Column(
         children: <Widget>[
@@ -52,7 +52,7 @@ class _MuscleScrnState extends State<MuscleScrn> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: handleFloatingActionButton,
-        child: Icon(Icons.arrow_forward),
+        child: const Icon(Icons.arrow_forward),
       ),
     );
   }
@@ -64,7 +64,7 @@ class _MuscleScrnState extends State<MuscleScrn> {
         onChanged: handleSearch,
         decoration: InputDecoration(
           labelText: 'Buscar Músculos',
-          prefixIcon: Icon(Icons.search),
+          prefixIcon: const Icon(Icons.search),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10.0),
           ),
@@ -84,8 +84,8 @@ class _MuscleScrnState extends State<MuscleScrn> {
       title: Text(muscle),
       onTap: () => handleMuscleSelection(muscle),
       trailing: selectedMusc.contains(muscle)
-          ? Icon(Icons.check_circle, color: Colors.green)
-          : Icon(Icons.check_circle_outline),
+          ? const Icon(Icons.check_circle, color: Colors.green)
+          : const Icon(Icons.check_circle_outline),
     );
   }
 
@@ -128,8 +128,7 @@ class _MuscleScrnState extends State<MuscleScrn> {
       context,
       MaterialPageRoute(
         builder: (context) => Ejercicios(
-          selectedMusc: selectedMusc,
-        ),
+            selectedMusc: selectedMusc, selectedDias: widget.selectedDias),
       ),
     );
   }

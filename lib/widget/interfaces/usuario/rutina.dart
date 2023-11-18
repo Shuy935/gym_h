@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(Rutinas());
+class Rutinas extends StatefulWidget {
+  const Rutinas({super.key});
+
+  @override
+  State<Rutinas> createState() => _RutinasState();
 }
 
-class Rutinas extends StatelessWidget {
+class _RutinasState extends State<Rutinas> {
   @override
   Widget build(BuildContext context) {
     int m1 = 0;
@@ -118,7 +121,8 @@ class _CardRState extends State<CardR> {
                     placeholder: AssetImage('assets/image/loading.gif'),
                     //En el siguiente comentario pon la linea que deberia jalar el link
                     //image: NetworkImage('https://drive.google.com/u/0/uc?id=1_OuXPGofaeKI_U3W3mrcUdw5wtyZykjt'),
-                    image: NetworkImage('https://drive.google.com/u/0/uc?id=1_OuXPGofaeKI_U3W3mrcUdw5wtyZykjt'),
+                    image: NetworkImage(
+                        'https://drive.google.com/u/0/uc?id=1_OuXPGofaeKI_U3W3mrcUdw5wtyZykjt'),
                   ),
                 ),
                 Container(

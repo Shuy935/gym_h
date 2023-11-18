@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:gym_h/widget/interfaces/ejercicios.dart';
 import 'package:gym_h/widget/interfaces/widgets.dart';
 
 class DiasScrn extends StatefulWidget {
@@ -32,7 +31,7 @@ class _DiasScrnState extends State<DiasScrn> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Selecciona el/los dia/s \n a asignar rutina'),
+        title: const Text('Selecciona el/los dia/s \n a asignar rutina'),
       ),
       body: Column(
         children: <Widget>[
@@ -54,7 +53,7 @@ class _DiasScrnState extends State<DiasScrn> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: handleFloatingActionButton,
-        child: Icon(Icons.arrow_forward),
+        child: const Icon(Icons.arrow_forward),
       ),
     );
   }
@@ -70,8 +69,8 @@ class _DiasScrnState extends State<DiasScrn> {
       title: Text(dia),
       onTap: () => handleDiasSelection(dia),
       trailing: selectedDias.contains(dia)
-          ? Icon(Icons.check_circle, color: Colors.green)
-          : Icon(Icons.check_circle_outline),
+          ? const Icon(Icons.check_circle, color: Colors.green)
+          : const Icon(Icons.check_circle_outline),
     );
   }
 
@@ -115,11 +114,11 @@ class _DiasScrnState extends State<DiasScrn> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: Text('Advertencia'),
+          title: const Text('Advertencia'),
           content: Text(errorMessage),
           actions: <Widget>[
             TextButton(
-              child: Text('Aceptar'),
+              child: const Text('Aceptar'),
               onPressed: () {
                 Navigator.of(context).pop();
               },

@@ -1,32 +1,73 @@
 import 'package:flutter/material.dart';
+import 'package:gym_h/models/exercise_model.dart';
+import 'package:gym_h/models/rutina_model.dart';
 import 'package:gym_h/widget/interfaces/widgets.dart';
-import 'package:provider/provider.dart';
+
+class Ejercicios extends StatefulWidget {
+  final List<String> selectedMusc;
+  final List<String> selectedDias;
+  const Ejercicios(
+      {super.key, required this.selectedMusc, required this.selectedDias});
+
+  @override
+  State<Ejercicios> createState() => _EjerciciosState();
+}
 
 List<String> ejerciciosSeleccionados = [];
 
-class Ejercicios extends StatelessWidget {
-  final List<String> selectedMusc;
-  Ejercicios({super.key, required this.selectedMusc});
+class _EjerciciosState extends State<Ejercicios> {
+  int count = 0;
+  List<ExerciseService>? data;
+  int cantidad = 0;
+  @override
+  void initState() {
+    super.initState();
+    ejerciciosSeleccionados = [];
+    // Llama a la función para recuperar los datos del usuario
+    if (widget.selectedMusc.length == 1) {
+      getExerciseData1();
+    } else if (widget.selectedMusc.length == 2) {
+      getExerciseData2();
+    } else {
+      getExerciseData3();
+    }
+  }
+
+  Future<void> getExerciseData1() async {
+    final exerciseData = await readOneExercise(widget.selectedMusc[0]);
+    if (exerciseData != null && exerciseData.isNotEmpty) {
+      data = exerciseData;
+      setState(() {
+        cantidad = data!.length;
+      });
+    }
+  }
+
+  Future<void> getExerciseData2() async {
+    final exerciseData =
+        await readTwoExercise(widget.selectedMusc[0], widget.selectedMusc[1]);
+    if (exerciseData != null && exerciseData.isNotEmpty) {
+      data = exerciseData;
+      setState(() {
+        cantidad = data!.length;
+      });
+    }
+  }
+
+  Future<void> getExerciseData3() async {
+    final exerciseData = await readThreeExercise(
+        widget.selectedMusc[0], widget.selectedMusc[1], widget.selectedMusc[2]);
+    if (exerciseData != null && exerciseData.isNotEmpty) {
+      // for in para meterlos posible(?)
+      data = exerciseData;
+      setState(() {
+        cantidad = data!.length;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    int m1 = 0;
-    int m2 = 0;
-    int m3 = 0;
-    //get de cada musculo DENTRO de los ifs
-    if (selectedMusc.length == 1) {
-      m1 = 1;
-    } else if (selectedMusc.length == 2) {
-      m1 = 1;
-      m2 = 2;
-    } else {
-      m1 = 1;
-      m2 = 1;
-      m3 = 3;
-    }
-    int cantidad = m1 + m2 + m3;
-    String miString = selectedMusc.join(" ");
-
     return MaterialApp(
       theme: ThemeData.dark().copyWith(),
       debugShowCheckedModeBanner: false,
@@ -38,7 +79,7 @@ class Ejercicios extends StatelessWidget {
               Navigator.of(context).pop();
             },
           ),
-          title: Text('Musculos: $selectedMusc'),
+          title: Text('Musculos: $widget.selectedMusc'),
         ),
         body: SingleChildScrollView(
             child: Column(
@@ -46,35 +87,44 @@ class Ejercicios extends StatelessWidget {
             const Buscador_uwu(),
             CardE(
               cantidad: cantidad,
+              data: data,
             ),
           ],
         )),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
+            addRutina(ejerciciosSeleccionados, widget.selectedDias);
             Navigator.push(
               context,
               MaterialPageRoute(
                 //mandar lista de ejercicios a las rutinas y mostrarlas
-                builder: (context) => Rutinas(),
+                builder: (context) => const Rutinas(),
               ),
             );
-            print('$ejerciciosSeleccionados');
           },
-          child: Icon(Icons.arrow_forward),
+          child: const Icon(Icons.arrow_forward),
         ),
       ),
     );
   }
 }
 
-class CardE extends StatelessWidget {
-  final int cantidad;
-  const CardE({super.key, required this.cantidad});
+class CardE extends StatefulWidget {
+  final int? cantidad;
+  final List<ExerciseService>? data;
 
+  const CardE({super.key, required this.cantidad, required this.data});
+
+  @override
+  State<CardE> createState() => _CardEState();
+}
+
+class _CardEState extends State<CardE> {
   @override
   Widget build(BuildContext context) {
     List<Widget> cards = [];
-    for (int index = 0; index < cantidad; index++) {
+    for (int index = 0; index < widget.cantidad!; index++) {
+      ExerciseService? exercise = widget.data?[index];
       Color color = const Color.fromARGB(255, 72, 72, 72);
       cards.add(Card(
         color: const Color.fromARGB(255, 58, 58, 59),
@@ -91,7 +141,7 @@ class CardE extends StatelessWidget {
                         width: 120,
                         child: const Text('Nombre: '),
                       ),
-                      const Expanded(child: Text('get del ejercicio')),
+                      Expanded(child: Text(exercise!.nombreEjercicio ?? '')),
                     ],
                   ),
                   Container(
@@ -104,13 +154,7 @@ class CardE extends StatelessWidget {
                         child: const Text('Repeticiones: '),
                       ),
                       const Expanded(
-                        child: Rep_Drop(),
-                        // TextFormField(
-                        //    se cambiará por un dropdown
-                        //   decoration: InputDecoration(
-                        //     hintText: 'Repeticiones',
-                        //   ),
-                        // ),
+                        child: RepDrop(),
                       ),
                     ],
                   ),
@@ -121,7 +165,7 @@ class CardE extends StatelessWidget {
                         child: const Text('Series: '),
                       ),
                       const Expanded(
-                        child: Series_Drop(),
+                        child: SeriesDrop(),
                       ),
                     ],
                   ),
@@ -146,7 +190,7 @@ class CardE extends StatelessWidget {
                       Container(
                         width: 10,
                       ),
-                      const Text('Get de eso'),
+                      Text(exercise.descanso ?? ''),
                       Container(
                         height: 15,
                       ),
@@ -156,60 +200,58 @@ class CardE extends StatelessWidget {
                           Container(
                             width: 10,
                           ),
-                          const Text('Get de eso'),
+                          Text(exercise.dificuldad ?? ''),
                         ],
                       ),
                       Container(
                         height: 25,
                       ),
                       Stack(
-                          //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: <Widget>[
-                            const SizedBox(
-                              //color: Colors.blue,
-                              width: 150,
-                              height: 70,
-                            ),
-                            const Center(
-                              child: Text('Musculo'),
-                            ),
-                            Positioned(
-                              left: 80,
-                              top: -5,
-                              child: ElevatedButton(
-                                style: ButtonStyle(backgroundColor:
-                                    MaterialStateProperty.resolveWith<Color?>(
-                                        (Set<MaterialState> states) {
-                                  // Cambiar el color en función del estado
-                                  if (states.contains(MaterialState.pressed)) {
-                                    // Estado cuando se presiona el botón por unos segundos
-                                    if (color == Color(0xff484848)) {
-                                      color = Colors.green;
-                                      ejerciciosSeleccionados
-                                          .add("get del ejercicio");
-                                      //logica de ejercicio añadido
-                                    } else {
-                                      color = Color(0xff484848);
-                                      ejerciciosSeleccionados
-                                          .remove("get del ejercicio");
-                                      //logica de ejercicio eliminado
-                                    }
-                                    return color;
-                                    //hacer que se quede de ese color cuando se seleccione
+                        //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: <Widget>[
+                          const SizedBox(
+                            //color: Colors.blue,
+                            width: 150,
+                            height: 70,
+                          ),
+                          Center(child: Text(exercise.nombreMusculo ?? '')),
+                          Positioned(
+                            left: 80,
+                            top: -5,
+                            child: ElevatedButton(
+                              style: ButtonStyle(backgroundColor:
+                                  MaterialStateProperty.resolveWith<Color?>(
+                                      (Set<MaterialState> states) {
+                                // Cambiar el color en función del estado
+                                if (states.contains(MaterialState.pressed)) {
+                                  // Estado cuando se presiona el botón por unos segundos
+                                  if (color == const Color(0xff484848)) {
+                                    color = Colors.green;
+                                    ejerciciosSeleccionados
+                                        .add(exercise.objectId.toString());
+                                    //logica de ejercicio añadido
+                                  } else {
+                                    color = const Color(0xff484848);
+                                    ejerciciosSeleccionados
+                                        .remove(exercise.objectId.toString());
+                                    //logica de ejercicio eliminado
                                   }
-                                  // Estado normal
                                   return color;
-                                })),
-                                onPressed: () {
-                                  // Acción selecciona el ejercicio
-                                  print('Botón presionado');
-                                  print(ejerciciosSeleccionados.length);
-                                  //Parece que se queda guardada la lista pero no las selecciones :c
-                                },
-                                child: const Icon(Icons.check_circle_outline),
-                              ),
-                            )
-                          ]),
+                                  //hacer que se quede de ese color cuando se seleccione
+                                }
+                                // Estado normal
+                                return color;
+                              })),
+                              onPressed: () {
+                                // Acción selecciona el ejercicio
+                                print(ejerciciosSeleccionados);
+                                //Parece que se queda guardada la lista pero no las selecciones :c
+                              },
+                              child: const Icon(Icons.check_circle_outline),
+                            ),
+                          )
+                        ],
+                      ),
                     ],
                   ),
                 ],
@@ -236,14 +278,14 @@ TextButton(
 List<String> rep = ['1', '2', '3', '5', '8', '10', '12', '15', '18', '20'];
 List<String> series = ['1', '2', '3', '4', '5'];
 
-class Rep_Drop extends StatefulWidget {
-  const Rep_Drop({super.key});
+class RepDrop extends StatefulWidget {
+  const RepDrop({super.key});
 
   @override
-  State<Rep_Drop> createState() => _Rep_DropState();
+  State<RepDrop> createState() => _RepDropState();
 }
 
-class _Rep_DropState extends State<Rep_Drop> {
+class _RepDropState extends State<RepDrop> {
   String dropdownValue = rep.first;
 
   @override
@@ -258,20 +300,21 @@ class _Rep_DropState extends State<Rep_Drop> {
         });
       },
       dropdownMenuEntries: rep.map<DropdownMenuEntry<String>>((String value) {
+        print(DropdownMenuEntry<String>(value: value, label: value));
         return DropdownMenuEntry<String>(value: value, label: value);
       }).toList(),
     );
   }
 }
 
-class Series_Drop extends StatefulWidget {
-  const Series_Drop({super.key});
+class SeriesDrop extends StatefulWidget {
+  const SeriesDrop({super.key});
 
   @override
-  State<Series_Drop> createState() => _Series_DropState();
+  State<SeriesDrop> createState() => _SeriesDropState();
 }
 
-class _Series_DropState extends State<Series_Drop> {
+class _SeriesDropState extends State<SeriesDrop> {
   String dropdownValue = series.first;
 
   @override
