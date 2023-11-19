@@ -82,7 +82,7 @@ class _EjerciciosState extends State<Ejercicios> {
               Navigator.of(context).pop();
             },
           ),
-          title: Text('Musculos: $widget.selectedMusc'),
+          title: Text('Musculos: ${widget.selectedMusc}', maxLines: 2),
         ),
         body: SingleChildScrollView(
             child: Column(
@@ -177,8 +177,9 @@ class _CardEState extends State<CardE> {
                   Container(
                     width: 150,
                     height: 150,
-                    child: const Image(
-                      image: AssetImage('assets/image/logo.png'),
+                    child: FadeInImage(
+                      placeholder: AssetImage('assets/image/loading.gif'),
+                      image: NetworkImage(exercise.linkImagen!),
                     ),
                   ),
                   Container(

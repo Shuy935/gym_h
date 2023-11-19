@@ -119,10 +119,7 @@ class _CardRState extends State<CardR> {
                   height: 150,
                   child: FadeInImage(
                     placeholder: AssetImage('assets/image/loading.gif'),
-                    //En el siguiente comentario pon la linea que deberia jalar el link
-                    //image: NetworkImage('https://drive.google.com/u/0/uc?id=1_OuXPGofaeKI_U3W3mrcUdw5wtyZykjt'),
-                    image: NetworkImage(
-                        'https://drive.google.com/u/0/uc?id=1_OuXPGofaeKI_U3W3mrcUdw5wtyZykjt'),
+                    image: NetworkImage('https://drive.google.com/u/0/uc?id=1M6K_g7X8BJeK8FNFxwbfsKla7FFEIYAb'),
                   ),
                 ),
                 Container(

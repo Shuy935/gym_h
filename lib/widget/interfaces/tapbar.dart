@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gym_h/models/users_model.dart';
+import 'package:gym_h/widget/interfaces/entrenador/ArchivoParaMeterEjerciciosMamalones.dart';
 import 'package:gym_h/widget/interfaces/usuario/rutina.dart';
 import 'package:gym_h/widget/interfaces/usuario/seleccion_diasU.dart';
 import 'package:gym_h/widget/interfaces/widgets.dart';
@@ -30,7 +31,7 @@ class _TabBarH extends State<TabBarH> {
 
   @override
   Widget build(BuildContext context) {
-    if (rol != true) {
+    if (rol == true) {
       //if (rol == true) {
       final List<Widget> tabs0 = [
         const Tab(
@@ -50,7 +51,7 @@ class _TabBarH extends State<TabBarH> {
             children: [
               Center(child: Lista_Clientes()),
               Center(child: Lista()),
-              Center(child: Text('Historial')),
+              Center(child: EjerciciosAdd()),
             ],
           ),
           drawer: const DrawerProfile(),

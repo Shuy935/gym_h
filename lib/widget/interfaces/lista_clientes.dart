@@ -45,26 +45,44 @@ class _Lista_ClientesState extends State<Lista_Clientes> {
           });
         },
         onSuggestionTap: (item) {
-          cliente = searchValue;
+          setState(() {
+            cliente = searchValue;
+            // Agrega el cliente seleccionado a dataFromDatabase si no existe
+            if (!dataFromDatabase.any((element) => element.name == cliente)) {
+              dataFromDatabase
+                  .add(Cliente(cliente, dataFromDatabase.length + 1));
+            }
+          });
         },
       ),
       body: ListView.builder(
         itemCount: dataFromDatabase.length,
         itemBuilder: (context, index) {
           return ListTile(
-            title: Text(dataFromDatabase[index].name), //nombre del cliente
-            leading: Radio(
-              value: dataFromDatabase[index].id,
-              groupValue: selectedId,
-              onChanged: (value) {
-                setState(() {
-                  selectedId =
-                      value as int; // Asigna el valor seleccionado a selectedId
-                  cliente = (dataFromDatabase[index].name);
-                  print(cliente);
-                });
-              },
-            ),
+            leading: GestureDetector(
+                onTap: () {
+                  setState(() {
+                    selectedId = dataFromDatabase[index].id;
+                    cliente = dataFromDatabase[index].name;
+                    print(cliente);
+                  });
+                },
+                child: Container(
+                  height: 40,
+                  width: 200,
+                  child: Row(
+                    children: [
+                      Radio(
+                        value: dataFromDatabase[index].id,
+                        groupValue: selectedId,
+                        onChanged: (value) {
+                          // No es necesario implementar onChanged aquí, ya que el GestureDetector manejará los toques.
+                        },
+                      ),
+                      Text(dataFromDatabase[index].name),
+                    ],
+                  ),
+                )),
           );
         },
       ),
