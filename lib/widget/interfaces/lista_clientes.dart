@@ -17,14 +17,13 @@ class _Lista_ClientesState extends State<Lista_Clientes> {
   @override
   void initState() {
     super.initState();
-    // Simulando la recuperación de datos de la base de datos
     dataFromDatabase = [
+      //Lista de los clientes (nombre)
       Cliente('Juana Perez', 1),
       Cliente('Peter Parker', 2),
       Cliente('Sofía Lopez', 3),
       Cliente('Canela Solís', 4)
     ];
-    isSelected = List.generate(dataFromDatabase.length, (index) => false);
   }
 
   @override
@@ -36,16 +35,13 @@ class _Lista_ClientesState extends State<Lista_Clientes> {
           return ListTile(
             title: Text(dataFromDatabase[index].name), //nombre del cliente
             leading: Radio(
-              //Para seleccionarlo
-              focusColor: Colors.amber,
-              value: dataFromDatabase[index].id, //lo que vale la seleccion?
-              groupValue: isSelected,
+              value: dataFromDatabase[index].id,
+              groupValue: selectedId,
               onChanged: (value) {
                 setState(() {
-                  //isSelected = dataFromDatabase[index]; //asignación del grupo al valor
-                  value = true;
+                  selectedId =
+                      value as int; // Asigna el valor seleccionado a selectedId
                   print(dataFromDatabase[index].name);
-                  selectedId = dataFromDatabase[index].id;
                 });
               },
             ),
@@ -69,6 +65,7 @@ class _Lista_ClientesState extends State<Lista_Clientes> {
 }
 
 class Cliente {
+  //modelo para la lista de los clientes
   final String name;
   final int id;
 
