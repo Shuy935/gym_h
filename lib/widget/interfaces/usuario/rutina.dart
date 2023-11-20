@@ -30,15 +30,15 @@ class _RutinasState extends State<Rutinas> {
       theme: ThemeData.dark().copyWith(),
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        appBar: AppBar(
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-          ),
-          title: Text('Rutina:'),
-        ),
+        // appBar: AppBar(
+        //   leading: IconButton(
+        //     icon: const Icon(Icons.arrow_back),
+        //     onPressed: () {
+        //       Navigator.of(context).pop();
+        //     },
+        //   ),
+        //   title: Text('Rutina:'),
+        // ),
         body: SingleChildScrollView(
           child: Column(
             children: <Widget>[
@@ -119,7 +119,8 @@ class _CardRState extends State<CardR> {
                   height: 150,
                   child: FadeInImage(
                     placeholder: AssetImage('assets/image/loading.gif'),
-                    image: NetworkImage('https://drive.google.com/u/0/uc?id=1M6K_g7X8BJeK8FNFxwbfsKla7FFEIYAb'),
+                    image: NetworkImage(
+                        'https://drive.google.com/u/0/uc?id=1M6K_g7X8BJeK8FNFxwbfsKla7FFEIYAb'),
                   ),
                 ),
                 Container(

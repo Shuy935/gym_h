@@ -19,13 +19,13 @@ String repe = '';
 String serie = '';
 
 class _EjerciciosState extends State<Ejercicios> {
-  int count = 0;
   List<ExerciseService>? data;
   int cantidad = 0;
   @override
   void initState() {
     super.initState();
     ejerciciosSeleccionados = [];
+
     // Llama a la función para recuperar los datos del usuario
     if (widget.selectedMusc.length == 1) {
       getExerciseData1();
@@ -99,11 +99,11 @@ class _EjerciciosState extends State<Ejercicios> {
             addRutina(ejerciciosSeleccionados, widget.selectedDias);
             Navigator.pushAndRemoveUntil(
               context,
-              MaterialPageRoute(builder: (context) => HomePage()),
+              MaterialPageRoute(builder: (context) => const HomePage()),
               (route) => false,
             );
           },
-          child: const Icon(Icons.arrow_forward),
+          child: const Icon(Icons.check),
         ),
       ),
     );
@@ -178,7 +178,7 @@ class _CardEState extends State<CardE> {
                     width: 150,
                     height: 150,
                     child: FadeInImage(
-                      placeholder: AssetImage('assets/image/loading.gif'),
+                      placeholder: const AssetImage('assets/image/loading.gif'),
                       image: NetworkImage(exercise.linkImagen!),
                     ),
                   ),
