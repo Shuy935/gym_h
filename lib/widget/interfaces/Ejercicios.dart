@@ -7,8 +7,12 @@ import 'package:gym_h/widget/interfaces/widgets.dart';
 class Ejercicios extends StatefulWidget {
   final List<String> selectedMusc;
   final List<String> selectedDias;
+  final String? cliente;
   const Ejercicios(
-      {super.key, required this.selectedMusc, required this.selectedDias});
+      {super.key,
+      required this.selectedMusc,
+      required this.selectedDias,
+      this.cliente});
 
   @override
   State<Ejercicios> createState() => _EjerciciosState();
@@ -24,6 +28,7 @@ class _EjerciciosState extends State<Ejercicios> {
   @override
   void initState() {
     super.initState();
+    print('El cliente ohhhhh: ${widget.cliente}');
     ejerciciosSeleccionados = [];
 
     // Llama a la función para recuperar los datos del usuario
@@ -96,7 +101,12 @@ class _EjerciciosState extends State<Ejercicios> {
         )),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-            addRutina(ejerciciosSeleccionados, widget.selectedDias);
+            if (widget.cliente!.isEmpty) {
+              addRutina(ejerciciosSeleccionados, widget.selectedDias);
+            } else {
+              addRutinaUsuario(
+                  ejerciciosSeleccionados, widget.selectedDias, widget.cliente);
+            }
             Navigator.pushAndRemoveUntil(
               context,
               MaterialPageRoute(builder: (context) => const HomePage()),

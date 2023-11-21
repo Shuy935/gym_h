@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:gym_h/widget/interfaces/widgets.dart';
 
 class DiasScrn extends StatefulWidget {
-  const DiasScrn({super.key});
+  final String? cliente;
+  const DiasScrn({super.key, this.cliente});
 
   @override
   State<DiasScrn> createState() => _DiasScrnState();
@@ -25,6 +26,7 @@ class _DiasScrnState extends State<DiasScrn> {
   void initState() {
     filtereDia = dias;
     super.initState();
+    print(widget.cliente);
   }
 
   @override
@@ -104,7 +106,8 @@ class _DiasScrnState extends State<DiasScrn> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => MuscleScrn(selectedDias: selectedDias),
+        builder: (context) =>
+            MuscleScrn(selectedDias: selectedDias, cliente: widget.cliente),
       ),
     );
   }

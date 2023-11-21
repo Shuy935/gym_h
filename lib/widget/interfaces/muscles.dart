@@ -3,7 +3,8 @@ import 'package:gym_h/widget/interfaces/ejercicios.dart';
 
 class MuscleScrn extends StatefulWidget {
   final List<String> selectedDias;
-  const MuscleScrn({super.key, required this.selectedDias});
+  final String? cliente;
+  const MuscleScrn({super.key, required this.selectedDias, this.cliente});
 
   @override
   State<MuscleScrn> createState() => _MuscleScrnState();
@@ -128,7 +129,9 @@ class _MuscleScrnState extends State<MuscleScrn> {
       context,
       MaterialPageRoute(
         builder: (context) => Ejercicios(
-            selectedMusc: selectedMusc, selectedDias: widget.selectedDias),
+            selectedMusc: selectedMusc,
+            selectedDias: widget.selectedDias,
+            cliente: widget.cliente),
       ),
     );
   }
@@ -138,11 +141,11 @@ class _MuscleScrnState extends State<MuscleScrn> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: Text('Advertencia'),
+          title: const Text('Advertencia'),
           content: Text(errorMessage),
           actions: <Widget>[
             TextButton(
-              child: Text('Aceptar'),
+              child: const Text('Aceptar'),
               onPressed: () {
                 Navigator.of(context).pop();
               },

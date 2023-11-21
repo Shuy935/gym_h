@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 class UserService {
   final String? objectId;
+  final String? firebaseUserId;
   final String? email;
   final String? fullname;
   final String? sex;
@@ -14,6 +15,7 @@ class UserService {
 
   UserService({
     this.objectId,
+    this.firebaseUserId,
     this.email,
     this.fullname,
     this.sex,
@@ -143,6 +145,31 @@ Future<String?> getObjectIdByFullname(String fullname) async {
         response.results!.isNotEmpty) {
       final ParseObject user = response.results![0];
       return user.objectId;
+    } else {
+      Utils.showSnackBar(
+          'No se encontró el usuario con el nombre completo: $fullname');
+    }
+  } catch (e) {
+    Utils.showSnackBar(e.toString());
+  }
+  return null;
+}
+
+Future<List<UserService>?> getUserIdByFullname(String fullname) async {
+  try {
+    final query = QueryBuilder<ParseObject>(ParseObject('users'))
+      ..whereEqualTo('fullname', fullname);
+
+    final response = await query.query();
+    if (response.success &&
+        response.results != null &&
+        response.results!.isNotEmpty) {
+      return response.results?.map((a) {
+        return UserService(
+          firebaseUserId: a.get('firebaseUserId') ?? '',
+          fullname: a.get('fullname') ?? '',
+        );
+      }).toList();
     } else {
       Utils.showSnackBar(
           'No se encontró el usuario con el nombre completo: $fullname');

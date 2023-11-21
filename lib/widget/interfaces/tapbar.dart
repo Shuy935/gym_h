@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:gym_h/models/users_model.dart';
-import 'package:gym_h/widget/interfaces/entrenador/ArchivoParaMeterEjerciciosMamalones.dart';
-import 'package:gym_h/widget/interfaces/usuario/rutina.dart';
-import 'package:gym_h/widget/interfaces/usuario/seleccion_diasU.dart';
 import 'package:gym_h/widget/interfaces/widgets.dart';
 
 class TabBarH extends StatefulWidget {
@@ -47,11 +44,11 @@ class _TabBarH extends State<TabBarH> {
             title: const Text('Inicio'),
             bottom: TabBar(tabs: tabs0),
           ),
-          body: TabBarView(
+          body: const TabBarView(
             children: [
               Center(child: Lista_Clientes()),
               Center(child: Lista()),
-              Center(child: EjerciciosAdd()),
+              Center(child: Text('Historial')),
             ],
           ),
           drawer: const DrawerProfile(),
@@ -73,7 +70,7 @@ class _TabBarH extends State<TabBarH> {
             title: const Text('Inicio'),
             bottom: TabBar(tabs: tabs),
           ),
-          body: TabBarView(
+          body: const TabBarView(
             children: [
               Center(child: Rutinas()),
               Center(child: DiasScrnU()), //Selección de rutina por un usuario

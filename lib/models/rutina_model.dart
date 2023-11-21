@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:gym_h/models/users_model.dart';
 import 'package:gym_h/utils/utils.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
 
@@ -60,10 +61,8 @@ Future<void> addRutina(
 }
 
 Future<void> addRutinaUsuario(List<String> ejerciciosSeleccionados,
-    List<String> selectedDias, String username) async {
-  // TODO: hacer esto ahorita que es la busqueda de usuario por nombre xs
-  final currentUser = FirebaseAuth.instance.currentUser;
-
+    List<String> selectedDias, String? username) async {
+  final userId = await getUserIdByFullname(username!);
   // Dividir la lista en conjuntos de tres
   for (int i = 0; i < ejerciciosSeleccionados.length; i += 3) {
     // Obtener el conjunto de tres elementos
@@ -73,9 +72,9 @@ Future<void> addRutinaUsuario(List<String> ejerciciosSeleccionados,
       ..set('repeticiones', conjunto[2])
       ..set('series', conjunto[1])
       ..set('fecha', selectedDias)
-      ..set('userId', currentUser?.uid)
+      ..set('userId', userId?[0].firebaseUserId)
       ..set(
-          'objetoIdExercise', ParseObject('exercise')..objectId = conjunto[0]);
+          'objectIdExercise', ParseObject('exercise')..objectId = conjunto[0]);
 
     try {
       await objeto.save();

@@ -128,12 +128,11 @@ class _Lista_ClientesState extends State<Lista_Clientes> {
                         // mandamos el cliente seleccionado
                         print(cliente);
                         Navigator.of(context).pop();
-                        cliente = '';
+                        // cliente = '';
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) =>
-                                  DiasScrn(/*Mandar el Cliente seleccionado */),
+                              builder: (context) => DiasScrn(cliente: cliente),
                             ));
                         // Cierra el AlertDialog
                       },
