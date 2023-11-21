@@ -24,10 +24,6 @@ class _Lista_ClientesState extends State<Lista_Clientes> {
     super.initState();
     dataFromDatabase = [
       //Lista de los clientes (nombre)
-      Cliente('Juana Perez', 1),
-      Cliente('Peter Parker', 2),
-      Cliente('Sofía Lopez', 3),
-      Cliente('Canela Solís', 4)
     ];
     _actualizarListaDeSugerencias();
   }

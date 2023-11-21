@@ -6,9 +6,6 @@ class RegistroHU extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final List<Registro> registros = [
-      Registro('Manolo', 19, 'Estudiante'),
-      Registro('Sofia', 35, 'Maestra'),
-      Registro('Canela', 3, 'Mascota'),
     ];
 
     return MaterialApp(
