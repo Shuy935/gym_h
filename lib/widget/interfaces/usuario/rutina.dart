@@ -21,7 +21,7 @@ class _RutinasState extends State<Rutinas> {
   }
 
   Future<void> getRutina() async {
-    final rutinaData = await readRutinaUsuario();
+    final rutinaData = await readRutina();
     if (rutinaData != null && rutinaData.isNotEmpty) {
       data = rutinaData;
       setState(() {
@@ -32,22 +32,7 @@ class _RutinasState extends State<Rutinas> {
 
   @override
   Widget build(BuildContext context) {
-    int m1 = 0;
-    int m2 = 0;
-    int m3 = 0;
-    //get de cada musculo DENTRO de los ifs
-    if (0 == 1) {
-      m1 = 1;
-    } else if (2 == 2) {
-      m1 = 1;
-      m2 = 2;
-    } else {
-      m1 = 1;
-      m2 = 1;
-      m3 = 3;
-    }
-    int cantidad = m1 + m2 + m3;
-    color = List<Color>.generate(cantidad, (index) => Color(0xff484848));
+    color = List<Color>.generate(cantidad, (index) => const Color(0xff484848));
 
     return MaterialApp(
       theme: ThemeData.dark().copyWith(),
@@ -79,19 +64,20 @@ class _RutinasState extends State<Rutinas> {
 
 class CardR extends StatefulWidget {
   final int cantidad;
-
-  const CardR({Key? key, required this.cantidad}) : super(key: key);
+  final List<RutinaService>? data;
+  const CardR({super.key, required this.cantidad, required this.data});
 
   @override
-  _CardRState createState() => _CardRState();
+  State<CardR> createState() => _CardRState();
 }
 
 class _CardRState extends State<CardR> {
   @override
   Widget build(BuildContext context) {
     List<Widget> cards = [];
-    for (int index = 0; index < widget.cantidad!; index++) {
-      color[index] = Color(0xff484848);
+    for (int index = 0; index < widget.cantidad; index++) {
+      RutinaService? rutina = widget.data?[index];
+      color[index] = const Color(0xff484848);
       cards.add(Card(
         child: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -106,7 +92,7 @@ class _CardRState extends State<CardR> {
                         width: 120,
                         child: const Text('Nombre: '),
                       ),
-                      const Expanded(child: Text('get del ejercicio')),
+                      Expanded(child: Text(rutina!.nombreEjercicio ?? '')),
                     ],
                   ),
                   Container(
@@ -118,9 +104,7 @@ class _CardRState extends State<CardR> {
                         width: 120,
                         child: const Text('Repeticiones: '),
                       ),
-                      const Expanded(
-                        child: Text('data'),
-                      ),
+                      Expanded(child: Text(rutina.repeticiones ?? '')),
                     ],
                   ),
                   Row(
@@ -129,9 +113,7 @@ class _CardRState extends State<CardR> {
                         width: 120,
                         child: const Text('Series: '),
                       ),
-                      const Expanded(
-                        child: Text('data'),
-                      ),
+                      Expanded(child: Text(rutina.series ?? '')),
                     ],
                   ),
                 ],
@@ -142,10 +124,9 @@ class _CardRState extends State<CardR> {
                     width: 150,
                     height: 150,
                     child: FadeInImage(
-                      placeholder: AssetImage('assets/image/loading.gif'),
-                      image: NetworkImage(
-                          'https://drive.google.com/u/0/uc?id=1M6K_g7X8BJeK8FNFxwbfsKla7FFEIYAb'),
-                    ),
+                        placeholder:
+                            const AssetImage('assets/image/loading.gif'),
+                        image: NetworkImage(rutina.linkImagen!)),
                   ),
                   Container(
                     width: 25,
@@ -157,7 +138,7 @@ class _CardRState extends State<CardR> {
                       Container(
                         width: 10,
                       ),
-                      const Text('Get de eso'),
+                      Text(rutina.descanso ?? ''),
                       Container(
                         height: 15,
                       ),
@@ -167,7 +148,7 @@ class _CardRState extends State<CardR> {
                           Container(
                             width: 10,
                           ),
-                          const Text('Get de eso'),
+                          Text(rutina.dificultad ?? ''),
                         ],
                       ),
                       Container(
@@ -179,9 +160,7 @@ class _CardRState extends State<CardR> {
                             width: 150,
                             height: 70,
                           ),
-                          const Center(
-                            child: Text('Musculo'),
-                          ),
+                          Center(child: Text(rutina.nombreMusculo ?? '')),
                           Positioned(
                             left: 80,
                             top: -5,

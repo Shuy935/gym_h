@@ -8,6 +8,11 @@ class RutinaService {
   final List<dynamic>? fecha;
   final String? objectIdExercise;
   final String? userId;
+  final String? linkImagen;
+  final String? nombreMusculo;
+  final String? dificultad;
+  final String? descanso;
+  final String? nombreEjercicio;
 
   RutinaService({
     this.repeticiones,
@@ -15,11 +20,16 @@ class RutinaService {
     this.fecha,
     this.objectIdExercise,
     this.userId,
+    this.descanso,
+    this.dificultad,
+    this.linkImagen,
+    this.nombreMusculo,
+    this.nombreEjercicio,
   });
   @override
   String toString() {
     // Devuelve una cadena que representa la información de la instancia
-    return '{objectIdExercise: $objectIdExercise, repeticiones: $repeticiones, series: $series, fecha: $fecha, userId: $userId}';
+    return '{objectIdExercise: $objectIdExercise, repeticiones: $repeticiones, series: $series, fecha: $fecha, userId: $userId, nombreEjercicio: $nombreEjercicio, descanso: $descanso, dificuldad: $dificultad, nombreMusculo: $nombreMusculo, linkImagen: $linkImagen}';
   }
 }
 
@@ -76,90 +86,30 @@ Future<void> addRutinaUsuario(List<String> ejerciciosSeleccionados,
   }
 }
 
-Future<List<RutinaService>> readRutina() async {
-  // final a = await readRutina();
+Future<List<RutinaService>?> readRutina() async {
+  final currentUser = FirebaseAuth.instance.currentUser;
 
+  // Se hace un for para agarrar todos los datos
   try {
     final query = QueryBuilder<ParseObject>(ParseObject('rutinas'))
-      ..whereEqualTo('objectIdExercise', {
-        '__type': 'Pointer',
-        'className': 'exercise',
-        // 'objectId': a![0].objectIdExercise
-      })
+      ..whereEqualTo('userId', currentUser?.uid)
       ..includeObject(['objectIdExercise']);
 
     final ParseResponse response = await query.query();
     if (response.success) {
       return response.results?.map((a) {
-            return RutinaService(
-              objectIdExercise:
-                  a.get<ParseObject>('objectIdExercise')?.objectId,
-              fecha: a.get('fecha'),
-              repeticiones: a.get('repeticiones'),
-              series: a.get('series'),
-              userId: a.get('userId'),
-            );
-          }).toList() ??
-          [];
-    } else {
-      Utils.showSnackBar(response.error?.message);
-    }
-  } catch (e) {
-    Utils.showSnackBar(e.toString());
-  }
-  return [];
-}
-
-// Future<List<RutinaService>> readAsistencias() async {
-//   String? a;
-
-//   final userData = await readCompleteUser();
-//   if (userData != null && userData.isNotEmpty) {
-//     final user = userData[0]; // Suponemos que solo hay un usuario
-//     a = user.objectId!;
-//   }
-//   try {
-//     final query = QueryBuilder<ParseObject>(ParseObject('asistencia'))
-//       ..whereEqualTo('usuarioID',
-//           {'__type': 'Pointer', 'className': 'users', 'objectId': a})
-//       ..includeObject(['usuarioID']);
-//     //..orderByAscending('fullname');
-
-//     final ParseResponse response = await query.query();
-//     //print(response.results);
-//     if (response.success) {
-//       return response.results?.map((a) {
-//             return RutinaService(
-//               objectIdExercise: a.get('objectIdExercise'),
-//               fecha: a.get('fecha'),
-//               repeticiones: a.get('repeticiones'),
-//               series: a.get('series'),
-//               userId: a.get('userId'),
-//             );
-//           }).toList() ??
-//           [];
-//     } else {
-//       Utils.showSnackBar(response.error?.message);
-//     }
-//   } catch (e) {
-//     Utils.showSnackBar(e.toString());
-//   }
-//   return [];
-// }
-Future<List<RutinaService>?> readRutinaUsuario() async {
-  final currentUser = FirebaseAuth.instance.currentUser;
-  try {
-    final query = QueryBuilder<ParseObject>(ParseObject('rutinas'))
-      ..whereEqualTo('userId', currentUser?.uid);
-    final response = await query.query();
-    if (response.success) {
-      return response.results?.map((a) {
+        final exerciseObject = a.get<ParseObject>('objectIdExercise');
         return RutinaService(
+          objectIdExercise: exerciseObject?.objectId,
           fecha: a.get('fecha'),
           repeticiones: a.get('repeticiones'),
           series: a.get('series'),
           userId: a.get('userId'),
-          objectIdExercise: a.get<ParseObject>('objectIdExercise')?.objectId,
+          nombreMusculo: exerciseObject?.get<String>('nombreMusculo'),
+          descanso: exerciseObject?.get<String>('descanso'),
+          dificultad: exerciseObject?.get<String>('dificultad'),
+          nombreEjercicio: exerciseObject?.get<String>('nombreEjercicio'),
+          linkImagen: exerciseObject?.get<String>('linkImagen'),
         );
       }).toList();
     } else {
