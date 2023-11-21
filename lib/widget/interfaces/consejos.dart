@@ -83,8 +83,8 @@ class _ConsejosBState extends State<ConsejosB> {
                 newTop = newTop.clamp(0.0, screenHeight - buttonSize);
                 newLeft = newLeft.clamp(0.0, screenWidth - buttonSize);
 
-                if (newTop > screenHeight - buttonSize - 50.0) {
-                  newTop = screenHeight - buttonSize - 50.0;
+                if (newTop > screenHeight - buttonSize ) {
+                  newTop = screenHeight - buttonSize;
                 }
 
                 setState(() {

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:gym_h/models/users_model.dart';
-import 'package:gym_h/widget/interfaces/Widgets.dart';
+import 'package:gym_h/widget/interfaces/entrenador/ArchivoParaMeterEjerciciosMamalones.dart';
+import 'package:gym_h/widget/interfaces/usuario/rutina.dart';
+import 'package:gym_h/widget/interfaces/usuario/seleccion_diasU.dart';
+import 'package:gym_h/widget/interfaces/widgets.dart';
 
 class TabBarH extends StatefulWidget {
   const TabBarH({Key? key}) : super(key: key);
@@ -29,9 +32,10 @@ class _TabBarH extends State<TabBarH> {
   @override
   Widget build(BuildContext context) {
     if (rol == true) {
+      //if (rol == true) {
       final List<Widget> tabs0 = [
-        const Tab(text: 'Rutina'),
-        const Tab(text: 'Musculos'),
+        const Tab(
+            text: 'Asignación de rutina'), //Selección de rutina para un usuario
         const Tab(text: 'Asistencia'),
         const Tab(text: 'Historial'),
       ];
@@ -43,12 +47,11 @@ class _TabBarH extends State<TabBarH> {
             title: const Text('Inicio'),
             bottom: TabBar(tabs: tabs0),
           ),
-          body: const TabBarView(
+          body: TabBarView(
             children: [
-              Center(child: Text('Rutina')),
-              Center(child: MuscleScrn()),
+              Center(child: Lista_Clientes()),
               Center(child: Lista()),
-              Center(child: Text('Historial')),
+              Center(child: EjerciciosAdd()),
             ],
           ),
           drawer: const DrawerProfile(),
@@ -57,7 +60,8 @@ class _TabBarH extends State<TabBarH> {
     } else {
       final List<Widget> tabs = [
         const Tab(text: 'Rutina'),
-        const Tab(text: 'Musculos'),
+        const Tab(
+            text: 'Seleccion de Rutina'), //Selección de rutina por un usuario
         const Tab(text: 'Asistencia'),
         const Tab(text: 'Historial'),
       ];
@@ -69,10 +73,10 @@ class _TabBarH extends State<TabBarH> {
             title: const Text('Inicio'),
             bottom: TabBar(tabs: tabs),
           ),
-          body: const TabBarView(
+          body: TabBarView(
             children: [
-              Center(child: Text('Rutina de hoy:')),
-              Center(child: MuscleScrn()),
+              Center(child: Rutinas()),
+              Center(child: DiasScrnU()), //Selección de rutina por un usuario
               Center(child: ListaU()),
               Center(child: Text('Historial')),
             ],

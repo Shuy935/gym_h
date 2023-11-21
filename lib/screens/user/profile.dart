@@ -14,6 +14,8 @@ class TheProfile extends StatelessWidget {
   }
 }
 
+String? _sexController;
+
 class Profile extends StatefulWidget {
   const Profile({super.key});
 
@@ -22,6 +24,12 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
+  final _formKey = GlobalKey<FormState>();
+  final _fullnameController = TextEditingController();
+  final _ageController = TextEditingController();
+  final _weightController = TextEditingController();
+  final _heightController = TextEditingController();
+  bool _boolController = false;
   @override
   void initState() {
     super.initState();
@@ -37,29 +45,27 @@ class _ProfileState extends State<Profile> {
       setState(() {
         _fullnameController.text = user.fullname!;
         _ageController.text = user.age!;
-        _sexController.text = user.sex!;
+        _sexController = user.sex!;
         _weightController.text = user.weight!;
         _heightController.text = user.height!;
       });
     }
+    if (_fullnameController.text.isNotEmpty) {
+      _boolController = true;
+    }
   }
 
-  final _formKey = GlobalKey<FormState>();
-  final _fullnameController = TextEditingController();
-  final _ageController = TextEditingController();
-  final _sexController = TextEditingController();
-  final _weightController = TextEditingController();
-  final _heightController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Form(
         key: _formKey,
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             const SizedBox(height: 20),
             TextFormField(
+              readOnly: _boolController,
               controller: _fullnameController,
               textInputAction: TextInputAction.next,
               decoration: const InputDecoration(labelText: 'Nombre Completo'),
@@ -76,7 +82,6 @@ class _ProfileState extends State<Profile> {
               textInputAction: TextInputAction.next,
               decoration: const InputDecoration(labelText: 'Edad'),
               keyboardType: TextInputType.number,
-              // maxLength: 2,
               validator: (value) {
                 if (value!.isEmpty ||
                     int.parse(value.toString()) < 15 ||
@@ -92,7 +97,6 @@ class _ProfileState extends State<Profile> {
               textInputAction: TextInputAction.next,
               decoration: const InputDecoration(labelText: 'Altura (cm)'),
               keyboardType: TextInputType.number,
-              // maxLength: 3,
               validator: (value) {
                 if (value!.isEmpty ||
                     int.parse(value.toString()) < 100 ||
@@ -108,7 +112,6 @@ class _ProfileState extends State<Profile> {
               textInputAction: TextInputAction.next,
               decoration: const InputDecoration(labelText: 'Peso (kg)'),
               keyboardType: TextInputType.number,
-              // maxLength: 3,
               validator: (value) {
                 if (value!.isEmpty ||
                     int.parse(value.toString()) < 30 ||
@@ -119,17 +122,7 @@ class _ProfileState extends State<Profile> {
               },
             ),
             const SizedBox(height: 20),
-            TextFormField(
-              controller: _sexController,
-              textInputAction: TextInputAction.next,
-              decoration: const InputDecoration(labelText: 'Sexo'),
-              validator: (value) {
-                if (value!.isEmpty) {
-                  return 'Porfavor de poner un sexo correcto';
-                }
-                return null;
-              },
-            ),
+            const DropdownMenuExample(),
             const SizedBox(height: 50),
             Material(
               elevation: 5.0,
@@ -143,7 +136,7 @@ class _ProfileState extends State<Profile> {
                     UserService userService = UserService(
                       fullname: _fullnameController.text,
                       age: _ageController.text,
-                      sex: _sexController.text,
+                      sex: _sexController,
                       weight: _weightController.text,
                       height: _heightController.text,
                     );
@@ -169,7 +162,41 @@ class _ProfileState extends State<Profile> {
     _ageController.dispose();
     _fullnameController.dispose();
     _heightController.dispose();
-    _sexController.dispose();
     _weightController.dispose();
+  }
+}
+
+/// Flutter code sample for [DropdownMenu].
+
+const List<String> list = <String>[
+  'Masculino',
+  'Femenino',
+  'Prefiero no responder'
+];
+
+class DropdownMenuExample extends StatefulWidget {
+  const DropdownMenuExample({super.key});
+
+  @override
+  State<DropdownMenuExample> createState() => _DropdownMenuExampleState();
+}
+
+class _DropdownMenuExampleState extends State<DropdownMenuExample> {
+  String dropdownValue = list.first;
+
+  @override
+  Widget build(BuildContext context) {
+    return DropdownMenu<String>(
+      initialSelection: _sexController ?? list.first,
+      onSelected: (String? value) {
+        // This is called when the user selects an item.
+        setState(() {
+          _sexController = value ?? '';
+        });
+      },
+      dropdownMenuEntries: list.map<DropdownMenuEntry<String>>((String value) {
+        return DropdownMenuEntry<String>(value: value, label: value);
+      }).toList(),
+    );
   }
 }
