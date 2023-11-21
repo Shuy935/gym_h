@@ -101,7 +101,7 @@ class _EjerciciosState extends State<Ejercicios> {
         )),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-            if (widget.cliente!.isEmpty) {
+            if (widget.cliente == null) {
               addRutina(ejerciciosSeleccionados, widget.selectedDias);
             } else {
               addRutinaUsuario(
