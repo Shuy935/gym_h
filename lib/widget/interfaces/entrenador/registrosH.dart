@@ -255,23 +255,26 @@ class _RegistroHState extends State<RegistroH> {
                                     child: const Text('Cancelar'),
                                   ),
                                   TextButton(
-                                    onPressed: () {
-                                      // Elimina la asistencia y realiza las acciones necesarias
-                                      deleteAsistencia(asistencia.fecha.toString(), asistencia.fullname.toString());
-                                      ScaffoldMessenger.of(context).showSnackBar(
-                                        const SnackBar(
-                                          content:  Text('Asistencia eliminada con éxito'),
-                                        ),
-                                      );
-                                      if (fullname != null) {
-                                        _getData();
-                                      } else {
-                                        _getDataGeneral();
-                                      }
-                                      Navigator.of(context).pop(); // Cierra el AlertDialog
-                                    },
-                                    child: const Text('Eliminar'),
-                                  ),
+                                        onPressed: () async {
+                                          // Elimina la asistencia y realiza las acciones necesarias
+                                          await deleteAsistencia(asistencia.fecha.toString(), asistencia.fullname.toString());
+
+                                          if (fullname != null) {
+                                            _getData();
+                                          } else {
+                                            _getDataGeneral();
+                                          }
+
+                                          ScaffoldMessenger.of(context).showSnackBar(
+                                            const SnackBar(
+                                              content: Text('Asistencia eliminada con éxito'),
+                                            ),
+                                          );
+
+                                          Navigator.of(context).pop(); // Cierra el AlertDialog
+                                        },
+                                        child: const Text('Eliminar'),
+                                      ),
                                 ],
                               );
                             },

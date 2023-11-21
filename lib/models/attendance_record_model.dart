@@ -142,10 +142,11 @@ Future<void> updateAsistencia(String originalFecha, AsistenciaService asistencia
 Future<void> deleteAsistencia(String fecha, String fullname) async {
   final objectId = await getObjectIdByFullname(fullname);
   final query = QueryBuilder<ParseObject>(ParseObject('asistencia'))
+    ..whereEqualTo('fecha',fecha)
     ..whereEqualTo('usuarioID',
           {'__type': 'Pointer', 'className': 'users', 'objectId': objectId})
           ..includeObject(['usuarioID']);
-
+     
   final response = await query.query();
 
   if (response.success && response.results != null) {
