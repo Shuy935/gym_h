@@ -251,7 +251,7 @@ class _CardEState extends State<CardE> {
                               })),
                               onPressed: () {
                                 // Acción selecciona el ejercicio
-                                print(ejerciciosSeleccionados);
+                                // print(ejerciciosSeleccionados);
                                 //Parece que se queda guardada la lista pero no las selecciones :c
                               },
                               child: const Icon(Icons.check_circle_outline),

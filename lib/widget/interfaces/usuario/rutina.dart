@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gym_h/models/rutina_model.dart';
 
 class Rutinas extends StatefulWidget {
   const Rutinas({super.key});
@@ -8,23 +9,42 @@ class Rutinas extends StatefulWidget {
 }
 
 class _RutinasState extends State<Rutinas> {
+  List<RutinaService>? data;
+  int cantidad = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    getRutina();
+  }
+
+  Future<void> getRutina() async {
+    final rutinaData = await readRutinaUsuario();
+    if (rutinaData != null && rutinaData.isNotEmpty) {
+      data = rutinaData;
+      setState(() {
+        cantidad = data!.length;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    int m1 = 0;
-    int m2 = 0;
-    int m3 = 0;
-    //get de cada musculo DENTRO de los ifs
-    if (0 == 1) {
-      m1 = 1;
-    } else if (2 == 2) {
-      m1 = 1;
-      m2 = 2;
-    } else {
-      m1 = 1;
-      m2 = 1;
-      m3 = 3;
-    }
-    int cantidad = m1 + m2 + m3;
+    // int m1 = 0;
+    // int m2 = 0;
+    // int m3 = 0;
+    // //get de cada musculo DENTRO de los ifs
+    // if (0 == 1) {
+    //   m1 = 1;
+    // } else if (2 == 2) {
+    //   m1 = 1;
+    //   m2 = 2;
+    // } else {
+    //   m1 = 1;
+    //   m2 = 1;
+    //   m3 = 3;
+    // }
+    // int cantidad = m1 + m2 + m3;
 
     return MaterialApp(
       theme: ThemeData.dark().copyWith(),
@@ -45,6 +65,7 @@ class _RutinasState extends State<Rutinas> {
               for (int index = 0; index < cantidad; index++)
                 CardR(
                   cardIndex: index,
+                  data: data,
                 ),
             ],
           ),
@@ -56,8 +77,8 @@ class _RutinasState extends State<Rutinas> {
 
 class CardR extends StatefulWidget {
   final int cardIndex;
-
-  const CardR({Key? key, required this.cardIndex}) : super(key: key);
+  final List<RutinaService>? data;
+  const CardR({super.key, required this.cardIndex, required this.data});
 
   @override
   _CardRState createState() => _CardRState();
