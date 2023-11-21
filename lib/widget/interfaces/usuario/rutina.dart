@@ -7,6 +7,8 @@ class Rutinas extends StatefulWidget {
   State<Rutinas> createState() => _RutinasState();
 }
 
+List<Color> color = [];
+
 class _RutinasState extends State<Rutinas> {
   @override
   Widget build(BuildContext context) {
@@ -25,6 +27,7 @@ class _RutinasState extends State<Rutinas> {
       m3 = 3;
     }
     int cantidad = m1 + m2 + m3;
+    color = List<Color>.generate(cantidad, (index) => Color(0xff484848));
 
     return MaterialApp(
       theme: ThemeData.dark().copyWith(),
@@ -42,10 +45,9 @@ class _RutinasState extends State<Rutinas> {
         body: SingleChildScrollView(
           child: Column(
             children: <Widget>[
-              for (int index = 0; index < cantidad; index++)
-                CardR(
-                  cardIndex: index,
-                ),
+              CardR(
+                cantidad: cantidad,
+              ),
             ],
           ),
         ),
@@ -55,167 +57,170 @@ class _RutinasState extends State<Rutinas> {
 }
 
 class CardR extends StatefulWidget {
-  final int cardIndex;
+  final int cantidad;
 
-  const CardR({Key? key, required this.cardIndex}) : super(key: key);
+  const CardR({Key? key, required this.cantidad}) : super(key: key);
 
   @override
   _CardRState createState() => _CardRState();
 }
 
 class _CardRState extends State<CardR> {
-  Color color = const Color.fromARGB(255, 72, 72, 72);
-
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          children: <Widget>[
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    Container(
-                      width: 120,
-                      child: const Text('Nombre: '),
-                    ),
-                    const Expanded(child: Text('get del ejercicio')),
-                  ],
-                ),
-                Container(
-                  height: 10,
-                ),
-                Row(
-                  children: [
-                    Container(
-                      width: 120,
-                      child: const Text('Repeticiones: '),
-                    ),
-                    const Expanded(
-                      child: Text('data'),
-                    ),
-                  ],
-                ),
-                Row(
-                  children: [
-                    Container(
-                      width: 120,
-                      child: const Text('Series: '),
-                    ),
-                    const Expanded(
-                      child: Text('data'),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-            Row(
-              children: [
-                Container(
-                  width: 150,
-                  height: 150,
-                  child: FadeInImage(
-                    placeholder: AssetImage('assets/image/loading.gif'),
-                    image: NetworkImage('https://drive.google.com/u/0/uc?id=1M6K_g7X8BJeK8FNFxwbfsKla7FFEIYAb'),
+    List<Widget> cards = [];
+    for (int index = 0; index < widget.cantidad!; index++) {
+      color[index] = Color(0xff484848);
+      cards.add(Card(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            children: <Widget>[
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Container(
+                        width: 120,
+                        child: const Text('Nombre: '),
+                      ),
+                      const Expanded(child: Text('get del ejercicio')),
+                    ],
                   ),
-                ),
-                Container(
-                  width: 25,
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text('Descanso recomendado:'),
-                    Container(
-                      width: 10,
+                  Container(
+                    height: 10,
+                  ),
+                  Row(
+                    children: [
+                      Container(
+                        width: 120,
+                        child: const Text('Repeticiones: '),
+                      ),
+                      const Expanded(
+                        child: Text('data'),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Container(
+                        width: 120,
+                        child: const Text('Series: '),
+                      ),
+                      const Expanded(
+                        child: Text('data'),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+              Row(
+                children: [
+                  Container(
+                    width: 150,
+                    height: 150,
+                    child: FadeInImage(
+                      placeholder: AssetImage('assets/image/loading.gif'),
+                      image: NetworkImage(
+                          'https://drive.google.com/u/0/uc?id=1M6K_g7X8BJeK8FNFxwbfsKla7FFEIYAb'),
                     ),
-                    const Text('Get de eso'),
-                    Container(
-                      height: 15,
-                    ),
-                    Row(
-                      children: [
-                        const Text('Dificultad:'),
-                        Container(
-                          width: 10,
-                        ),
-                        const Text('Get de eso'),
-                      ],
-                    ),
-                    Container(
-                      height: 25,
-                    ),
-                    Stack(
-                      children: <Widget>[
-                        const SizedBox(
-                          width: 150,
-                          height: 70,
-                        ),
-                        const Center(
-                          child: Text('Musculo'),
-                        ),
-                        Positioned(
-                          left: 80,
-                          top: -5,
-                          child: ElevatedButton(
-                            style: ButtonStyle(
-                              backgroundColor:
-                                  MaterialStateProperty.resolveWith<Color?>(
-                                (Set<MaterialState> states) {
-                                  if (states.contains(MaterialState.pressed)) {
-                                    Future.delayed(Duration.zero, () {});
-                                  }
-                                  return color;
-                                },
-                              ),
-                            ),
-                            onPressed: () {
-                              if (color == Color(0xff484848)) {
-                                _mostrarCuadroConfirmacion(context);
-                              } else {
-                                _mostrarCuadroCancelacion(context);
-                              }
-                            },
-                            child: const Icon(Icons.check_circle_outline),
+                  ),
+                  Container(
+                    width: 25,
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text('Descanso recomendado:'),
+                      Container(
+                        width: 10,
+                      ),
+                      const Text('Get de eso'),
+                      Container(
+                        height: 15,
+                      ),
+                      Row(
+                        children: [
+                          const Text('Dificultad:'),
+                          Container(
+                            width: 10,
                           ),
-                        )
-                      ],
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ],
+                          const Text('Get de eso'),
+                        ],
+                      ),
+                      Container(
+                        height: 25,
+                      ),
+                      Stack(
+                        children: <Widget>[
+                          const SizedBox(
+                            width: 150,
+                            height: 70,
+                          ),
+                          const Center(
+                            child: Text('Musculo'),
+                          ),
+                          Positioned(
+                            left: 80,
+                            top: -5,
+                            child: ElevatedButton(
+                              style: ButtonStyle(
+                                backgroundColor:
+                                    MaterialStateProperty.resolveWith<Color?>(
+                                  (Set<MaterialState> states) {
+                                    if (states
+                                        .contains(MaterialState.pressed)) {
+                                      if (color[index] == Color(0xff484848)) {
+                                        color[index] = Colors.green;
+                                      } else {
+                                        color[index] = Color(0xff484848);
+                                      }
+                                    }
+                                    return color[index];
+                                  },
+                                ),
+                              ),
+                              onPressed: () {
+                                if (color[index] != Color(0xff484848)) {
+                                  _mostrarCuadroConfirmacion(context);
+                                } else {
+                                  _mostrarCuadroCancelacion(context);
+                                }
+                              },
+                              child: const Icon(Icons.check_circle_outline),
+                            ),
+                          )
+                        ],
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
-      ),
+      ));
+    }
+    return Column(
+      children: cards,
     );
   }
 
-  Future<void> _mostrarCuadroConfirmacion(BuildContext context) async {
+  Future<void> _mostrarCuadroConfirmacion(
+      BuildContext context) async {
     return showDialog<void>(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Confirmación'),
-          content: Text('¿Ya realizó el ejercicio?'),
+          title: Text('Finalizado'),
+          content: Text('El ejercicio se ha marcado como realizado'),
           actions: <Widget>[
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text('Cancelar'),
-            ),
-            TextButton(
-              onPressed: () {
-                setState(() {
-                  color = Colors.green;
-                });
-                Navigator.of(context).pop();
-              },
-              child: Text('Aceptar'),
+              child: Text('Ok'),
             ),
           ],
         );
@@ -228,24 +233,14 @@ class _CardRState extends State<CardR> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Cancelacion'),
-          content: Text(
-              '¿Desea marcar el ejercicio seleccionado como no realizado?'),
+          title: Text('Reactivado'),
+          content: Text('El ejercicio se ha marcado como no realizado'),
           actions: <Widget>[
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text('Cancelar'),
-            ),
-            TextButton(
-              onPressed: () {
-                setState(() {
-                  color = Color(0xff484848);
-                });
-                Navigator.of(context).pop();
-              },
-              child: Text('Aceptar'),
+              child: Text('Ok'),
             ),
           ],
         );
