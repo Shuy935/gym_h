@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gym_h/models/users_model.dart';
+import 'package:gym_h/widget/interfaces/historial.dart';
 import 'package:gym_h/widget/interfaces/widgets.dart';
 
 class TabBarH extends StatefulWidget {
@@ -34,7 +35,6 @@ class _TabBarH extends State<TabBarH> {
         const Tab(
             text: 'Asignación de rutina'), //Selección de rutina para un usuario
         const Tab(text: 'Asistencia'),
-        const Tab(text: 'Historial'),
       ];
 
       return DefaultTabController(
@@ -48,7 +48,6 @@ class _TabBarH extends State<TabBarH> {
             children: [
               Center(child: Lista_Clientes()),
               Center(child: Lista()),
-              Center(child: Text('Historial')),
             ],
           ),
           drawer: const DrawerProfile(),
@@ -75,7 +74,7 @@ class _TabBarH extends State<TabBarH> {
               Center(child: Rutinas()),
               Center(child: DiasScrnU()), //Selección de rutina por un usuario
               Center(child: ListaU()),
-              Center(child: Text('Historial')),
+              Center(child: Historial()),
             ],
           ),
           drawer: const DrawerProfile(),

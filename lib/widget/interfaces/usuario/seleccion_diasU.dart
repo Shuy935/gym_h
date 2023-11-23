@@ -30,11 +30,10 @@ class _DiasScrnUState extends State<DiasScrnU> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Selecciona el/los dia/s \n a asignar rutina'),
-      ),
+      
       body: Column(
         children: <Widget>[
+          Container(height: 15,),
           const ListTile(
             title: Text(
               'Selecciona el/los dia/s \n a asignar rutina',
@@ -83,13 +82,14 @@ class _DiasScrnUState extends State<DiasScrnU> {
       setState(() {
         selectedDias.add(dia);
       });
-    } else if (selectedDias.length < 2) {
+    } else if (selectedDias.length == 1) {
       //Restricción de días
       setState(() {
+        selectedDias.clear();
         selectedDias.add(dia);
       });
     } else {
-      showSelectionError('Solo puedes seleccionar un máximo de 2 días.');
+      showSelectionError('Solo puedes seleccionar un máximo de 1 día.');
     }
   }
 

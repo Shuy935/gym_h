@@ -77,6 +77,9 @@ class _CardRState extends State<CardR> {
     List<Widget> cards = [];
     for (int index = 0; index < widget.cantidad; index++) {
       RutinaService? rutina = widget.data?[index];
+      String elpepe = rutina!.fecha!.toString();
+      
+      print(elpepe);
       color[index] = const Color(0xff484848);
       cards.add(Card(
         child: Padding(
@@ -160,7 +163,11 @@ class _CardRState extends State<CardR> {
                             width: 150,
                             height: 70,
                           ),
-                          Center(child: Text(rutina.nombreMusculo ?? '')),
+                          Center(
+                              child: Column(children: [
+                            Text(rutina.nombreMusculo ?? ''),
+                            Text(elpepe)
+                          ])),
                           Positioned(
                             left: 80,
                             top: -5,
