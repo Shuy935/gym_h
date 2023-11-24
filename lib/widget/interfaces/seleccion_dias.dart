@@ -37,17 +37,6 @@ class _DiasScrnState extends State<DiasScrn> {
       ),
       body: Column(
         children: <Widget>[
-          // const ListTile(
-          //   title: Text(
-          //     'Selecciona el/los dia/s \n a asignar rutina',
-          //     style: TextStyle(
-          //       fontSize: 25,
-          //       fontWeight: FontWeight.w900,
-          //       color: Color.fromARGB(255, 255, 255, 255),
-          //     ),
-          //     textAlign: TextAlign.center,
-          //   ),
-          // ),
           Expanded(
             child: buildDiasList(),
           ),
@@ -85,13 +74,13 @@ class _DiasScrnState extends State<DiasScrn> {
       setState(() {
         selectedDias.add(dia);
       });
-    } else if (selectedDias.length < 2) {
+    } else if (selectedDias.length < 1) {
       //Restricción de días
       setState(() {
         selectedDias.add(dia);
       });
     } else {
-      showSelectionError('Solo puedes seleccionar un máximo de 2 días.');
+      showSelectionError('Solo puedes seleccionar un máximo de 1 día.');
     }
   }
 

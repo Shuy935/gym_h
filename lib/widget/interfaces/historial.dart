@@ -19,7 +19,7 @@ class _HistorialState extends State<Historial> {
         controller: fechaController,
         decoration: const InputDecoration(
             labelText: 'Fecha', icon: Icon(Icons.calendar_today)),
-        readOnly: true, //set it true, so that user will not able to edit text
+        readOnly: true, 
         
         onTap: () async {
           DateTime? pickedDate = await showDatePicker(
@@ -28,7 +28,7 @@ class _HistorialState extends State<Historial> {
               initialDate: DateTime.now(),
               firstDate: DateTime(2022),
               lastDate: DateTime
-                  .now()); //la ultima fecha que puede escoger es la de hoy
+                  .now()); 
           if (pickedDate != null) {
             String formattedDate = DateFormat('yyyy-MM-dd').format(pickedDate);
 
@@ -36,14 +36,11 @@ class _HistorialState extends State<Historial> {
               fechaController.text = formattedDate;
               print(fechaController.text);
               print(pickedDate.weekday);
-              //set output date to TextField value.
-              //Mandarlo a la base de datos
             });
           } else {
             Utils.showSnackBar("La fecha no esta seleccionada");
           }
         },
-        //InputDecoration(labelText: 'Fecha (yyyy-MM-dd)'),
       ),
     ]);
   }
