@@ -6,7 +6,7 @@ import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
 class RutinaService {
   final String? repeticiones;
   final String? series;
-  final List<dynamic>? fecha;
+  final int? fecha;
   final String? objectIdExercise;
   final String? userId;
   final String? linkImagen;
@@ -42,11 +42,28 @@ Future<void> addRutina(
   for (int i = 0; i < ejerciciosSeleccionados.length; i += 3) {
     // Obtener el conjunto de tres elementos
     List<String> conjunto = ejerciciosSeleccionados.sublist(i, i + 3);
-
+    int numDia = 0;
+    String dia = selectedDias[0];
+    dia.replaceAll('[', '').replaceAll(']', '');
+    if (dia == 'Lunes') {
+      numDia = 1;
+    } else if (dia == 'Martes') {
+      numDia = 2;
+    } else if (dia == 'Miercoles') {
+      numDia = 3;
+    } else if (dia == 'Jueves') {
+      numDia = 4;
+    } else if (dia == 'Viernes') {
+      numDia = 5;
+    } else if (dia == 'Sabado') {
+      numDia = 6;
+    } else if (dia == 'Domingo') {
+      numDia = 7;
+    }
     final objeto = ParseObject('rutinas')
       ..set('repeticiones', conjunto[2])
       ..set('series', conjunto[1])
-      ..set('fecha', selectedDias)
+      ..set('fecha', numDia)
       ..set('userId', currentUser?.uid)
       ..set(
           'objectIdExercise', ParseObject('exercise')..objectId = conjunto[0]);
