@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:gym_h/models/users_model.dart';
+import 'package:gym_h/screens/configuraciones.dart';
 import 'package:gym_h/screens/user/profile.dart';
 
 class DrawerProfile extends StatefulWidget {
@@ -69,6 +70,12 @@ class _DrawerProfile extends State<DrawerProfile> {
             onTap: () {
               // final route = MaterialPageRoute(builder: (context) => Page2());
               // Navigator.push(context, route);
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const ConfiguracionesScreen(),
+                ),
+              );
             },
           ),
           ListTile(
