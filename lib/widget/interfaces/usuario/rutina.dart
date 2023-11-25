@@ -2,26 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:gym_h/models/rutina_model.dart';
 import 'package:intl/intl.dart';
 
-void main() {
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text('Rutinas'),
-        ),
-        body: Rutinas(),
-      ),
-    );
-  }
-}
-
 class Rutinas extends StatefulWidget {
-  const Rutinas({Key? key}) : super(key: key);
+  const Rutinas({super.key});
 
   @override
   State<Rutinas> createState() => _RutinasState();
@@ -126,7 +108,7 @@ class _RutinasState extends State<Rutinas> {
                     content: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: <Widget>[
-                        Text(
+                        const Text(
                             'En la rutina de hoy no se ha seleccionado ningun ejercicio como realizado'),
                         Container(
                           height: 10,
@@ -214,7 +196,7 @@ class _RutinasState extends State<Rutinas> {
         },
         child: Text(
           dayText,
-          style: TextStyle(
+          style: const TextStyle(
             fontSize: 24,
             fontWeight: FontWeight.bold,
             color: Colors.blue,
@@ -231,11 +213,11 @@ class CardR extends StatefulWidget {
   final int dia;
 
   const CardR({
-    Key? key,
+    super.key,
     required this.cantidad,
     required this.data,
     required this.dia,
-  }) : super(key: key);
+  });
 
   @override
   State<CardR> createState() => _CardRState();
@@ -267,9 +249,7 @@ class _CardRState extends State<CardR> {
                           Expanded(child: Text(rutina!.nombreEjercicio ?? '')),
                         ],
                       ),
-                      Container(
-                        height: 10,
-                      ),
+                      Container(height: 10),
                       Row(
                         children: [
                           Container(
@@ -301,38 +281,25 @@ class _CardRState extends State<CardR> {
                           image: NetworkImage(rutina.linkImagen!),
                         ),
                       ),
-                      Container(
-                        width: 25,
-                      ),
+                      Container(width: 25),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           const Text('Descanso recomendado:'),
-                          Container(
-                            width: 10,
-                          ),
+                          Container(width: 10),
                           Text(rutina.descanso ?? ''),
-                          Container(
-                            height: 15,
-                          ),
+                          Container(height: 15),
                           Row(
                             children: [
                               const Text('Dificultad:'),
-                              Container(
-                                width: 10,
-                              ),
+                              Container(width: 10),
                               Text(rutina.dificultad ?? ''),
                             ],
                           ),
-                          Container(
-                            height: 25,
-                          ),
+                          Container(height: 25),
                           Stack(
                             children: <Widget>[
-                              const SizedBox(
-                                width: 150,
-                                height: 70,
-                              ),
+                              const SizedBox(width: 150, height: 70),
                               Center(
                                 child: Column(
                                   children: [
@@ -352,22 +319,23 @@ class _CardRState extends State<CardR> {
                                             .contains(MaterialState.pressed)) {
                                           int dia = DateTime.now().weekday;
                                           if (rutina.fecha == dia) {
-                                          if (color[index] ==
-                                              Color(0xff484848)) {
-                                            color[index] = Colors.green;
-                                            _addToRutinaGlobal(rutina);
-                                            rutinaGlobal['nombreEjercicio'] =
-                                                rutina.nombreEjercicio ?? '';
-                                            rutinaGlobal['repeticiones'] =
-                                                rutina.repeticiones ?? '';
-                                            rutinaGlobal['series'] =
-                                                rutina.series ?? '';
-                                            rutinaGlobal['nombreMusculo'] =
-                                                rutina.nombreMusculo ?? '';
-                                          } else {
-                                            color[index] = Color(0xff484848);
-                                            _removeFromRutinaGlobal(rutina);
-                                          }
+                                            if (color[index] ==
+                                                const Color(0xff484848)) {
+                                              color[index] = Colors.green;
+                                              _addToRutinaGlobal(rutina);
+                                              rutinaGlobal['nombreEjercicio'] =
+                                                  rutina.nombreEjercicio ?? '';
+                                              rutinaGlobal['repeticiones'] =
+                                                  rutina.repeticiones ?? '';
+                                              rutinaGlobal['series'] =
+                                                  rutina.series ?? '';
+                                              rutinaGlobal['nombreMusculo'] =
+                                                  rutina.nombreMusculo ?? '';
+                                            } else {
+                                              color[index] =
+                                                  const Color(0xff484848);
+                                              _removeFromRutinaGlobal(rutina);
+                                            }
                                           }
                                         }
                                         return color[index];
@@ -377,12 +345,14 @@ class _CardRState extends State<CardR> {
                                   onPressed: () {
                                     int dia = DateTime.now().weekday;
                                     if (rutina.fecha == dia) {
-                                    if (color[index] != Color(0xff484848)) {
-                                      _mostrarCuadroConfirmacion(context);
-                                    } else {
-                                      _mostrarCuadroCancelacion(context);
+                                      if (color[index] !=
+                                          const Color(0xff484848)) {
+                                        _mostrarCuadroConfirmacion(context);
+                                      } else {
+                                        _mostrarCuadroCancelacion(context);
+                                      }
                                     }
-                                  }},
+                                  },
                                   child: const Icon(Icons.check_circle_outline),
                                 ),
                               )
@@ -399,9 +369,7 @@ class _CardRState extends State<CardR> {
         );
       }
     }
-    return Column(
-      children: cards,
-    );
+    return Column(children: cards);
   }
 
   Future<void> _mostrarCuadroConfirmacion(BuildContext context) async {
@@ -409,14 +377,14 @@ class _CardRState extends State<CardR> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Finalizado'),
-          content: Text('El ejercicio se ha marcado como realizado'),
+          title: const Text('Finalizado'),
+          content: const Text('El ejercicio se ha marcado como realizado'),
           actions: <Widget>[
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text('Ok'),
+              child: const Text('Ok'),
             ),
           ],
         );
@@ -429,14 +397,14 @@ class _CardRState extends State<CardR> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Reactivado'),
-          content: Text('El ejercicio se ha marcado como no realizado'),
+          title: const Text('Reactivado'),
+          content: const Text('El ejercicio se ha marcado como no realizado'),
           actions: <Widget>[
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text('Ok'),
+              child: const Text('Ok'),
             ),
           ],
         );
