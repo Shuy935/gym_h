@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gym_h/models/historial_model.dart';
 import 'package:gym_h/models/rutina_model.dart';
-import 'package:gym_h/utils/utils.dart';
+import 'package:intl/intl.dart';
 
 class Rutinas extends StatefulWidget {
   const Rutinas({super.key});
@@ -11,19 +11,17 @@ class Rutinas extends StatefulWidget {
 }
 
 List<Color> color = [];
+int selectedDay = 0;
 List<String> ejerciciosSelected = [];
- bool hayEjercicioCompletado = false;
+Map<String, String> rutinaGlobal = {};
 
 class _RutinasState extends State<Rutinas> {
   List<RutinaService>? data;
   int cantidad = 0;
- 
- 
 
   @override
   void initState() {
     super.initState();
-     ejerciciosSelected = [];
     getRutina();
   }
 
@@ -37,12 +35,9 @@ class _RutinasState extends State<Rutinas> {
     }
   }
   void handleFloatingActionButton() async {
-  if (hayEjercicioCompletado) {
     final ejerciciosRealizados = ejerciciosSelected;
    await addHistorial(ejerciciosRealizados);
-  } else {
-    Utils.showSnackBar('Ejercicios no selecionados') ;
-  }
+  
 }
 
   @override
@@ -53,41 +48,185 @@ class _RutinasState extends State<Rutinas> {
       theme: ThemeData.dark().copyWith(),
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        // appBar: AppBar(
-        //   leading: IconButton(
-        //     icon: const Icon(Icons.arrow_back),
-        //     onPressed: () {
-        //       Navigator.of(context).pop();
-        //     },
-        //   ),
-        //   title: Text('Rutina:'),
-        // ),
         body: SingleChildScrollView(
           child: Column(
             children: <Widget>[
-              CardR(
-                cantidad: cantidad,
-                data: data,
-              ),
+              _buildDayText(1, 'Lunes V'),
+              if (selectedDay == 1)
+                CardR(
+                  cantidad: cantidad,
+                  data: data,
+                  dia: selectedDay,
+                ),
+              _buildDayText(2, 'Martes V'),
+              if (selectedDay == 2)
+                CardR(
+                  cantidad: cantidad,
+                  data: data,
+                  dia: selectedDay,
+                ),
+              _buildDayText(3, 'Miercoles V'),
+              if (selectedDay == 3)
+                CardR(
+                  cantidad: cantidad,
+                  data: data,
+                  dia: selectedDay,
+                ),
+              _buildDayText(4, 'Jueves V'),
+              if (selectedDay == 4)
+                CardR(
+                  cantidad: cantidad,
+                  data: data,
+                  dia: selectedDay,
+                ),
+              _buildDayText(5, 'Viernes V'),
+              if (selectedDay == 5)
+                CardR(
+                  cantidad: cantidad,
+                  data: data,
+                  dia: selectedDay,
+                ),
+              _buildDayText(6, 'Sabado V'),
+              if (selectedDay == 6)
+                CardR(
+                  cantidad: cantidad,
+                  data: data,
+                  dia: selectedDay,
+                ),
+              _buildDayText(7, 'Domingo V'),
+              if (selectedDay == 7)
+                CardR(
+                  cantidad: cantidad,
+                  data: data,
+                  dia: selectedDay,
+                ),
             ],
           ),
         ),
         floatingActionButton: FloatingActionButton(
-        onPressed: handleFloatingActionButton,
-        child: Icon(Icons.arrow_forward),
+          onPressed: () {
+            print(rutinaGlobal);
+            if (rutinaGlobal.isEmpty) {
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: const Text('Ningun ejercicio realizado'),
+                    content: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        const Text(
+                            'En la rutina de hoy no se ha seleccionado ningun ejercicio como realizado'),
+                        Container(
+                          height: 10,
+                          alignment: Alignment.center,
+                        ),
+                      ],
+                    ),
+                    actions: <Widget>[
+                      TextButton(
+                        child: const Text('Ok'),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                    ],
+                  );
+                },
+              );
+            } else {
+              DateTime now = DateTime.now();
+              String dayOfWeek = DateFormat('EEEE').format(now);
+              Map<String, String> diaDeLaSemana = {
+                "Monday": "Lunes",
+                "Tuesday": "Martes",
+                "Wednesday": "Miércoles",
+                "Thursday": "Jueves",
+                "Friday": "Viernes",
+                "Saturday": "Sábado",
+                "Sunday": "Domingo",
+              };
+              String? diaTraducido = diaDeLaSemana.containsKey(dayOfWeek)
+                  ? diaDeLaSemana[dayOfWeek]
+                  : dayOfWeek;
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: const Text('Rutina terminada'),
+                    content: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        Text(
+                            '¿Desea dar por terminada la rutina de hoy ${diaTraducido?.toLowerCase()}?'),
+                        Container(
+                          height: 10,
+                          alignment: Alignment.center,
+                        ),
+                      ],
+                    ),
+                    actions: <Widget>[
+                      TextButton(
+                        child: const Text('Cancelar'),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                      TextButton(
+                        child: const Text('Agregar'),
+                        onPressed: () async {
+                          if (rutinaGlobal.isNotEmpty) {
+                           // print(
+                          //      "Datos de rutina agregados al mapa global: $rutinaGlobal");
+                                handleFloatingActionButton();
+                                Navigator.of(context).pop();
+                          }
+                        },
+                      ),
+                    ],
+                  );
+                },
+              );
+            }
+          },
+          child: const Icon(Icons.check),
+        ),
       ),
+    );
+  }
+
+  Widget _buildDayText(int day, String dayText) {
+    return Center(
+      child: GestureDetector(
+        onTap: () {
+          setState(() {
+            selectedDay = day;
+          });
+        },
+        child: Text(
+          dayText,
+          style: const TextStyle(
+            fontSize: 24,
+            fontWeight: FontWeight.bold,
+            color: Colors.blue,
+          ),
+        ),
       ),
     );
   }
 }
 
-
-
-
 class CardR extends StatefulWidget {
   final int cantidad;
   final List<RutinaService>? data;
-  const CardR({super.key, required this.cantidad, required this.data});
+  final int dia;
+
+  const CardR({
+    super.key,
+    required this.cantidad,
+    required this.data,
+    required this.dia,
+  });
 
   @override
   State<CardR> createState() => _CardRState();
@@ -99,158 +238,157 @@ class _CardRState extends State<CardR> {
     List<Widget> cards = [];
     for (int index = 0; index < widget.cantidad; index++) {
       RutinaService? rutina = widget.data?[index];
-      color[index] = const Color(0xff484848);
-      cards.add(Card(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            children: <Widget>[
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      Container(
-                        width: 120,
-                        child: const Text('Nombre: '),
-                      ),
-                      Expanded(child: Text(rutina!.nombreEjercicio ?? '')),
-                    ],
-                  ),
-                  Container(
-                    height: 10,
-                  ),
-                  Row(
-                    children: [
-                      Container(
-                        width: 120,
-                        child: const Text('Repeticiones: '),
-                      ),
-                      Expanded(child: Text(rutina.repeticiones ?? '')),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Container(
-                        width: 120,
-                        child: const Text('Series: '),
-                      ),
-                      Expanded(child: Text(rutina.series ?? '')),
-                    ],
-                  ),
-                ],
-              ),
-              Row(
-                children: [
-                  Container(
-                    width: 150,
-                    height: 150,
-                    child: FadeInImage(
-                        placeholder:
-                            const AssetImage('assets/image/loading.gif'),
-                        image: NetworkImage(rutina.linkImagen!)),
-                  ),
-                  Container(
-                    width: 25,
-                  ),
+      if (rutina?.fecha == widget.dia) {
+        color[index] = const Color(0xff484848);
+        cards.add(
+          Card(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                children: <Widget>[
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text('Descanso recomendado:'),
-                      Container(
-                        width: 10,
+                      Row(
+                        children: [
+                          Container(
+                            width: 120,
+                            child: const Text('Nombre: '),
+                          ),
+                          Expanded(child: Text(rutina!.nombreEjercicio ?? '')),
+                        ],
                       ),
-                      Text(rutina.descanso ?? ''),
-                      Container(
-                        height: 15,
+                      Container(height: 10),
+                      Row(
+                        children: [
+                          Container(
+                            width: 120,
+                            child: const Text('Repeticiones: '),
+                          ),
+                          Expanded(child: Text(rutina.repeticiones ?? '')),
+                        ],
                       ),
                       Row(
                         children: [
-                          const Text('Dificultad:'),
                           Container(
-                            width: 10,
+                            width: 120,
+                            child: const Text('Series: '),
                           ),
-                          Text(rutina.dificultad ?? ''),
+                          Expanded(child: Text(rutina.series ?? '')),
                         ],
                       ),
+                    ],
+                  ),
+                  Row(
+                    children: [
                       Container(
-                        height: 25,
+                        width: 150,
+                        height: 150,
+                        child: FadeInImage(
+                          placeholder:
+                              const AssetImage('assets/image/loading.gif'),
+                          image: NetworkImage(rutina.linkImagen!),
+                        ),
                       ),
-                      Stack(
-                        children: <Widget>[
-                          const SizedBox(
-                            width: 150,
-                            height: 70,
+                      Container(width: 25),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text('Descanso recomendado:'),
+                          Container(width: 10),
+                          Text(rutina.descanso ?? ''),
+                          Container(height: 15),
+                          Row(
+                            children: [
+                              const Text('Dificultad:'),
+                              Container(width: 10),
+                              Text(rutina.dificultad ?? ''),
+                            ],
                           ),
-                          Center(child: Column( children: [Text(rutina.nombreMusculo ?? ''),
-                          Text('${rutina.fecha}')])),
-                          Positioned(
-                            left: 80,
-                            top: -5,
-                            child: ElevatedButton(
-                                style: ButtonStyle(
-                                  backgroundColor: MaterialStateProperty.resolveWith<Color?>(
-                                    (Set<MaterialState> states) {
-                                      if (!canDoExercise(rutina?.fecha)) {
-                                        return Colors.grey; // Deshabilitar el botón si no se puede realizar el ejercicio
-                                      }
-
-                                      // Verificar si el botón está siendo presionado
-                                      final isPressed = states.contains(MaterialState.pressed);
-
-                                      // Cambiar el color del botón según el estado actual
-                                      return isPressed ? Colors.green : Color(0xff484848);
-                                    },
-                                  ),
+                          Container(height: 25),
+                          Stack(
+                            children: <Widget>[
+                              const SizedBox(width: 150, height: 70),
+                              Center(
+                                child: Column(
+                                  children: [
+                                    Text(rutina.nombreMusculo ?? ''),
+                                  ],
                                 ),
-                                onPressed: () {
-                                      if (canDoExercise(rutina?.fecha)) {
-                                        setState(() {
-                                          if (color[index] == Color(0xff484848)) {
-                                            color[index] = Colors.green; 
-                                            ejerciciosSelected.addAll({
-                                              rutina.objectIdExercise.toString(),
-                                              rutina.series.toString(),
-                                              rutina.repeticiones.toString(),
-                                            });
-                                            _mostrarCuadroConfirmacion(context);
-                                          } else {
-                                            color[index] = Color(0xff484848);
-                                            ejerciciosSelected.removeWhere((element) =>
-                                              element == rutina.objectIdExercise.toString() ||
-                                              element == rutina.series.toString() ||
-                                              element == rutina.repeticiones.toString(),
-                                            );
-                                            _mostrarCuadroCancelacion(context);
+                              ),
+                              Positioned(
+                                left: 80,
+                                top: -5,
+                                child: ElevatedButton(
+                                  style: ButtonStyle(
+                                    backgroundColor: MaterialStateProperty
+                                        .resolveWith<Color?>(
+                                      (Set<MaterialState> states) {
+                                        if (states
+                                            .contains(MaterialState.pressed)) {
+                                          int dia = DateTime.now().weekday;
+                                          if (rutina.fecha == dia) {
+                                            if (color[index] ==
+                                                const Color(0xff484848)) {
+                                              color[index] = Colors.green;
+                                              _addToRutinaGlobal(rutina);
+                                              rutinaGlobal['nombreEjercicio'] =
+                                                  rutina.nombreEjercicio ?? '';
+                                              rutinaGlobal['repeticiones'] =
+                                                  rutina.repeticiones ?? '';
+                                              rutinaGlobal['series'] =
+                                                  rutina.series ?? '';
+                                              rutinaGlobal['nombreMusculo'] =
+                                                  rutina.nombreMusculo ?? '';
+                                            } else {
+                                              color[index] =
+                                                  const Color(0xff484848);
+                                              _removeFromRutinaGlobal(rutina);
+                                            }
                                           }
-                                          print('Button color: ${color[index]}');
+                                        }
+                                        return color[index];
+                                      },
+                                    ),
+                                  ),
+                                  onPressed: () {
+                                    int dia = DateTime.now().weekday;
+                                    if (rutina.fecha == dia) {
+                                      if (color[index] !=
+                                          const Color(0xff484848)) {
+                                        _mostrarCuadroConfirmacion(context);
+                                        ejerciciosSelected.addAll({
+                                          rutina.objectIdExercise.toString(),
+                                          rutina.series.toString(),
+                                          rutina.repeticiones.toString(),
                                         });
                                       } else {
-                                        _mostrarMensaje(
-                                          context,
-                                          'Este día no te corresponde hacer este ejercicio',
+                                        _mostrarCuadroCancelacion(context);
+                                         ejerciciosSelected.removeWhere((element) =>
+                                          element == rutina.objectIdExercise.toString() ||
+                                          element == rutina.series.toString() ||
+                                          element == rutina.repeticiones.toString(),
                                         );
                                       }
-                                    },
-                                child: const Icon(Icons.check_circle_outline),
-                              ),
-                          )
+                                    }
+                                  },
+                                  child: const Icon(Icons.check_circle_outline),
+                                ),
+                              )
+                            ],
+                          ),
                         ],
                       ),
-                // Agregar la fecha después del ElevatedButton
-                Text(getFormattedDate(rutina?.fecha)),
                     ],
                   ),
                 ],
               ),
-            ],
+            ),
           ),
-        ),
-      ));
+        );
+      }
     }
-    return Column(
-      children: cards,
-    );
+    return Column(children: cards);
   }
 
   Future<void> _mostrarCuadroConfirmacion(BuildContext context) async {
@@ -258,14 +396,14 @@ class _CardRState extends State<CardR> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Finalizado'),
-          content: Text('El ejercicio se ha marcado como realizado'),
+          title: const Text('Finalizado'),
+          content: const Text('El ejercicio se ha marcado como realizado'),
           actions: <Widget>[
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text('Ok'),
+              child: const Text('Ok'),
             ),
           ],
         );
@@ -278,78 +416,34 @@ class _CardRState extends State<CardR> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Reactivado'),
-          content: Text('El ejercicio se ha marcado como no realizado'),
+          title: const Text('Reactivado'),
+          content: const Text('El ejercicio se ha marcado como no realizado'),
           actions: <Widget>[
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text('Ok'),
+              child: const Text('Ok'),
             ),
           ],
         );
       },
     );
   }
-  void _mostrarMensaje(BuildContext context, String mensaje) {
-  showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        title: Text('Mensaje'),
-        content: Text(mensaje),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-            child: Text('OK'),
-          ),
-        ],
-      );
-    },
-  );
-}
 
-
-  String getFormattedDate(int? dayOfWeek) {
-  // Mapear el número del día de la semana a su nombre correspondiente
-  String dayName = '';
-  if (dayOfWeek != null) {
-    switch (dayOfWeek) {
-      case 1:
-        dayName = 'Lunes';
-        break;
-      case 2:
-        dayName = 'Martes';
-        break;
-      case 3:
-        dayName = 'Miércoles';
-        break;
-      case 4:
-        dayName = 'Jueves';
-        break;
-      case 5:
-        dayName = 'Viernes';
-        break;
-      case 6:
-        dayName = 'Sábado';
-        break;
-      case 7:
-        dayName = 'Domingo';
-        break;
-    }
+  void _addToRutinaGlobal(RutinaService rutina) {
+    rutinaGlobal['nombreEjercicio'] = rutina.nombreEjercicio ?? '';
+    rutinaGlobal['repeticiones'] = rutina.repeticiones ?? '';
+    rutinaGlobal['series'] = rutina.series ?? '';
+    rutinaGlobal['nombreMusculo'] = rutina.nombreMusculo ?? '';
   }
 
-  // Puedes personalizar el formato de la fecha según tus necesidades
-  return 'Fecha del ejercicio: $dayName';
-}
-
-bool canDoExercise(int? dayOfWeek) {
-  if (dayOfWeek != null) {
-    return DateTime.now().weekday == dayOfWeek;
+  void _removeFromRutinaGlobal(RutinaService rutina) {
+    rutinaGlobal.removeWhere((key, value) => [
+          'nombreEjercicio',
+          'repeticiones',
+          'series',
+          'nombreMusculo',
+        ].contains(key));
   }
-  return false;
-}
 }
