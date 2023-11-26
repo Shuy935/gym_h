@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:gym_h/models/users_model.dart';
-import 'package:gym_h/widget/interfaces/historial.dart';
 import 'package:gym_h/widget/interfaces/widgets.dart';
 
 class TabBarH extends StatefulWidget {
-  const TabBarH({Key? key}) : super(key: key);
+  const TabBarH({super.key});
 
   @override
   State<TabBarH> createState() => _TabBarH();

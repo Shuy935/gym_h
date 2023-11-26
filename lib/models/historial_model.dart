@@ -10,10 +10,10 @@ class HistorialService {
   final String? fecha; // Cambiado a String
   final String? objectIdExercise;
   final String? userId;
-  final String? linkImagen;
+  // final String? linkImagen;
   final String? nombreMusculo;
-  final String? dificultad;
-  final String? descanso;
+  // final String? dificultad;
+  // final String? descanso;
   final String? nombreEjercicio;
 
   HistorialService({
@@ -22,9 +22,9 @@ class HistorialService {
     this.fecha,
     this.objectIdExercise,
     this.userId,
-    this.descanso,
-    this.dificultad,
-    this.linkImagen,
+    // this.descanso,
+    // this.dificultad,
+    // this.linkImagen,
     this.nombreMusculo,
     this.nombreEjercicio,
   });
@@ -32,7 +32,7 @@ class HistorialService {
   @override
   String toString() {
     // Devuelve una cadena que representa la información de la instancia
-    return '{objectIdExercise: $objectIdExercise, repeticiones: $repeticiones, series: $series, fecha: $fecha, userId: $userId, nombreEjercicio: $nombreEjercicio, descanso: $descanso, dificultad: $dificultad, nombreMusculo: $nombreMusculo, linkImagen: $linkImagen}';
+    return '{objectIdExercise: $objectIdExercise, repeticiones: $repeticiones, series: $series, fecha: $fecha, userId: $userId, nombreEjercicio: $nombreEjercicio, nombreMusculo: $nombreMusculo}';
   }
 }
 
@@ -45,7 +45,7 @@ Future<void> addHistorial(List<String> ejerciciosSeleccionados) async {
 
     // Obtener la fecha formateada (año, mes, día)
     final fechaF = dateFormat.format(DateTime.now());
-    
+
     final objeto = ParseObject('historial')
       ..set('repeticiones', conjunto[2])
       ..set('series', conjunto[1])
@@ -63,13 +63,14 @@ Future<void> addHistorial(List<String> ejerciciosSeleccionados) async {
   }
 }
 
-Future<List<HistorialService>?> readHistorial() async {
+Future<List<HistorialService>?> readHistorial(String fechaH) async {
   final currentUser = FirebaseAuth.instance.currentUser;
 
   try {
     final query = QueryBuilder<ParseObject>(ParseObject('historial'))
       ..whereEqualTo('userId', currentUser?.uid)
-      ..includeObject(['objectIdExercise']);
+      ..includeObject(['objectIdExercise'])
+      ..whereEqualTo('fecha', fechaH);
 
     final ParseResponse response = await query.query();
     if (response.success) {
@@ -82,10 +83,10 @@ Future<List<HistorialService>?> readHistorial() async {
           series: a.get('series'),
           userId: a.get('userId'),
           nombreMusculo: exerciseObject?.get<String>('nombreMusculo'),
-          descanso: exerciseObject?.get<String>('descanso'),
-          dificultad: exerciseObject?.get<String>('dificultad'),
+          // descanso: exerciseObject?.get<String>('descanso'),
+          // dificultad: exerciseObject?.get<String>('dificultad'),
           nombreEjercicio: exerciseObject?.get<String>('nombreEjercicio'),
-          linkImagen: exerciseObject?.get<String>('linkImagen'),
+          // linkImagen: exerciseObject?.get<String>('linkImagen'),
         );
       }).toList();
     } else {

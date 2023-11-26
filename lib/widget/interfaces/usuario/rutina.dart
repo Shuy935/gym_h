@@ -34,11 +34,11 @@ class _RutinasState extends State<Rutinas> {
       });
     }
   }
+
   void handleFloatingActionButton() async {
     final ejerciciosRealizados = ejerciciosSelected;
-   await addHistorial(ejerciciosRealizados);
-  
-}
+    await addHistorial(ejerciciosRealizados);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -176,10 +176,12 @@ class _RutinasState extends State<Rutinas> {
                         child: const Text('Agregar'),
                         onPressed: () async {
                           if (rutinaGlobal.isNotEmpty) {
-                           // print(
-                          //      "Datos de rutina agregados al mapa global: $rutinaGlobal");
-                                handleFloatingActionButton();
-                                Navigator.of(context).pop();
+                            // print(
+                            //      "Datos de rutina agregados al mapa global: $rutinaGlobal");
+                            handleFloatingActionButton();
+                            rutinaGlobal = {};
+                            ejerciciosSelected = [];
+                            Navigator.of(context).pop();
                           }
                         },
                       ),
@@ -332,14 +334,6 @@ class _CardRState extends State<CardR> {
                                                 const Color(0xff484848)) {
                                               color[index] = Colors.green;
                                               _addToRutinaGlobal(rutina);
-                                              rutinaGlobal['nombreEjercicio'] =
-                                                  rutina.nombreEjercicio ?? '';
-                                              rutinaGlobal['repeticiones'] =
-                                                  rutina.repeticiones ?? '';
-                                              rutinaGlobal['series'] =
-                                                  rutina.series ?? '';
-                                              rutinaGlobal['nombreMusculo'] =
-                                                  rutina.nombreMusculo ?? '';
                                             } else {
                                               color[index] =
                                                   const Color(0xff484848);
@@ -364,10 +358,16 @@ class _CardRState extends State<CardR> {
                                         });
                                       } else {
                                         _mostrarCuadroCancelacion(context);
-                                         ejerciciosSelected.removeWhere((element) =>
-                                          element == rutina.objectIdExercise.toString() ||
-                                          element == rutina.series.toString() ||
-                                          element == rutina.repeticiones.toString(),
+                                        ejerciciosSelected.removeWhere(
+                                          (element) =>
+                                              element ==
+                                                  rutina.objectIdExercise
+                                                      .toString() ||
+                                              element ==
+                                                  rutina.series.toString() ||
+                                              element ==
+                                                  rutina.repeticiones
+                                                      .toString(),
                                         );
                                       }
                                     }
