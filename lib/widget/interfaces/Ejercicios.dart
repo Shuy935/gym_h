@@ -28,7 +28,6 @@ class _EjerciciosState extends State<Ejercicios> {
   @override
   void initState() {
     super.initState();
-    print('El cliente ohhhhh: ${widget.cliente}');
     ejerciciosSeleccionados = [];
 
     // Llama a la función para recuperar los datos del usuario

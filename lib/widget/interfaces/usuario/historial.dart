@@ -17,8 +17,13 @@ class _HistorialState extends State<Historial> {
   Future<void> getHistorial(String fH) async {
     final data = await readHistorial(fH);
     if (data != null && data.isNotEmpty) {
-      historialData = data;
-      // setState(() {});
+      setState(() {
+        historialData = data;
+      });
+    } else {
+      setState(() {
+        historialData = [];
+      });
     }
   }
 
@@ -56,58 +61,71 @@ class _HistorialState extends State<Historial> {
           },
           //InputDecoration(labelText: 'Fecha (yyyy-MM-dd)'),
         ),
-        Center(
-          child: DataTable(
-            columnSpacing: 30,
-            dataRowMaxHeight: 70,
-            headingRowHeight: 50,
-            columns: const <DataColumn>[
-              DataColumn(
-                label: Expanded(
-                  child: Text(
-                    'Ejercicio',
-                    style: TextStyle(fontStyle: FontStyle.italic),
-                  ),
-                ),
-              ),
-              DataColumn(
-                label: Expanded(
-                  child: Text(
-                    'Serie',
-                    style: TextStyle(fontStyle: FontStyle.italic),
-                  ),
-                ),
-              ),
-              DataColumn(
-                label: Expanded(
-                  child: Text(
-                    'Repeticion',
-                    style: TextStyle(fontStyle: FontStyle.italic),
-                  ),
-                ),
-              ),
-              DataColumn(
-                label: Expanded(
-                  child: Text(
-                    'Musculo',
-                    style: TextStyle(fontStyle: FontStyle.italic),
-                  ),
-                ),
-              ),
-            ],
-            rows: historialData.map((historial) {
-              return DataRow(
-                cells: <DataCell>[
-                  DataCell(Text(historial.nombreEjercicio.toString())),
-                  DataCell(Text(historial.series.toString())),
-                  DataCell(Text(historial.repeticiones.toString())),
-                  DataCell(Text(historial.nombreMusculo.toString())),
-                ],
-              );
-            }).toList(),
-          ),
-        )
+        Center(child: TableHistory(historialData: historialData))
       ],
+    );
+  }
+}
+
+class TableHistory extends StatefulWidget {
+  final List<HistorialService> historialData;
+  const TableHistory({super.key, required this.historialData});
+
+  @override
+  State<TableHistory> createState() => _TableHistoryState();
+}
+
+class _TableHistoryState extends State<TableHistory> {
+  @override
+  Widget build(BuildContext context) {
+    return DataTable(
+      columnSpacing: 30,
+      dataRowMaxHeight: 70,
+      headingRowHeight: 50,
+      columns: const <DataColumn>[
+        DataColumn(
+          label: Expanded(
+            child: Text(
+              'Ejercicio',
+              style: TextStyle(fontStyle: FontStyle.italic),
+            ),
+          ),
+        ),
+        DataColumn(
+          label: Expanded(
+            child: Text(
+              'Serie',
+              style: TextStyle(fontStyle: FontStyle.italic),
+            ),
+          ),
+        ),
+        DataColumn(
+          label: Expanded(
+            child: Text(
+              'Repeticion',
+              style: TextStyle(fontStyle: FontStyle.italic),
+            ),
+          ),
+        ),
+        DataColumn(
+          label: Expanded(
+            child: Text(
+              'Musculo',
+              style: TextStyle(fontStyle: FontStyle.italic),
+            ),
+          ),
+        ),
+      ],
+      rows: widget.historialData.map((historial) {
+        return DataRow(
+          cells: <DataCell>[
+            DataCell(Text(historial.nombreEjercicio.toString())),
+            DataCell(Text(historial.series.toString())),
+            DataCell(Text(historial.repeticiones.toString())),
+            DataCell(Text(historial.nombreMusculo.toString())),
+          ],
+        );
+      }).toList(),
     );
   }
 }
