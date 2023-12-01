@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:gym_h/darkmode/theme_provider.dart';
 import 'package:gym_h/models/users_model.dart';
 import 'package:gym_h/widget/interfaces/widgets.dart';
+import 'package:provider/provider.dart';
 
 class TabBarH extends StatefulWidget {
   const TabBarH({super.key});
@@ -11,11 +13,14 @@ class TabBarH extends StatefulWidget {
 
 class _TabBarH extends State<TabBarH> {
   bool? rol;
+  late ThemeProvider themeProvider;
+
   @override
   void initState() {
     super.initState();
     // Obtén el nombre del usuario antes de construir el cajón de navegación
     getUserRole();
+    themeProvider = Provider.of<ThemeProvider>(context, listen: false);
   }
 
   Future<void> getUserRole() async {
@@ -31,8 +36,7 @@ class _TabBarH extends State<TabBarH> {
     if (rol == true) {
       //if (rol == true) {
       final List<Widget> tabs0 = [
-        const Tab(
-            text: 'Asignación de rutina'), //Selección de rutina para un usuario
+        const Tab(text: 'Asignación de rutina'), //Selección de rutina para un usuario
         const Tab(text: 'Asistencia'),
       ];
 
@@ -55,8 +59,7 @@ class _TabBarH extends State<TabBarH> {
     } else {
       final List<Widget> tabs = [
         const Tab(text: 'Rutina'),
-        const Tab(
-            text: 'Seleccion de Rutina'), //Selección de rutina por un usuario
+        const Tab(text: 'Seleccion de Rutina'), //Selección de rutina por un usuario
         const Tab(text: 'Asistencia'),
         const Tab(text: 'Historial'),
       ];
@@ -64,9 +67,9 @@ class _TabBarH extends State<TabBarH> {
       return DefaultTabController(
         length: tabs.length,
         child: Scaffold(
-          appBar: AppBar(
-            title: const Text('Inicio'),
-            bottom: TabBar(tabs: tabs),
+          appBar: PreferredSize(
+            preferredSize: const Size.fromHeight(110.0),
+            child: appbarcolors(tabs),
           ),
           body: const TabBarView(
             children: [
@@ -80,5 +83,44 @@ class _TabBarH extends State<TabBarH> {
         ),
       );
     }
+  }
+}
+
+class appbarcolors extends StatelessWidget {
+  final List<Widget> tabs;
+  appbarcolors(this.tabs);
+
+  @override
+  Widget build(BuildContext context){
+    final themeProvider = Provider.of<ThemeProvider>(context);
+
+    return AppBar(
+      title: Text('Inicio'),
+      flexibleSpace: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+              themeProvider.appBarColor1,
+              themeProvider.appBarColor2,
+            ],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          )
+        ),
+      ),
+      bottom: TabBar(
+        tabs: tabs,
+        indicator: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+              themeProvider.appBarColor1,
+              themeProvider.appBarColor2,
+            ],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
+        ),
+      ),
+    );
   }
 }

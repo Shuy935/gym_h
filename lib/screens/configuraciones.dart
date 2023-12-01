@@ -8,9 +8,23 @@ class ConfiguracionesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Configuraciones'),
+      flexibleSpace: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+              themeProvider.appBarColor1,
+              themeProvider.appBarColor2,
+            ],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          )
+        ),
+      ),
       ),
       body: Center(
         child: Column(
@@ -32,3 +46,4 @@ class ConfiguracionesScreen extends StatelessWidget {
     );
   }
 }
+
