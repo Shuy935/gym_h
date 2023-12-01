@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:gym_h/darkmode/theme_provider.dart';
 import 'package:gym_h/models/historial_model.dart';
 import 'package:gym_h/models/rutina_model.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 class Rutinas extends StatefulWidget {
   const Rutinas({super.key});
@@ -42,7 +44,7 @@ class _RutinasState extends State<Rutinas> {
 
   @override
   Widget build(BuildContext context) {
-    color = List<Color>.generate(cantidad, (index) => const Color(0xff484848));
+    final themeProvider = Provider.of<ThemeProvider>(context);
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -51,6 +53,7 @@ class _RutinasState extends State<Rutinas> {
         body: SingleChildScrollView(
           child: Column(
             children: <Widget>[
+              Container(margin: EdgeInsets.only(bottom: 40)),
               _buildDayText(1, 'Lunes V'),
               if (selectedDay == 1)
                 CardR(
@@ -58,6 +61,7 @@ class _RutinasState extends State<Rutinas> {
                   data: data,
                   dia: selectedDay,
                 ),
+              Container(margin: EdgeInsets.only(bottom: 22)),
               _buildDayText(2, 'Martes V'),
               if (selectedDay == 2)
                 CardR(
@@ -65,6 +69,7 @@ class _RutinasState extends State<Rutinas> {
                   data: data,
                   dia: selectedDay,
                 ),
+              Container(margin: EdgeInsets.only(bottom: 22)),
               _buildDayText(3, 'Miercoles V'),
               if (selectedDay == 3)
                 CardR(
@@ -72,6 +77,7 @@ class _RutinasState extends State<Rutinas> {
                   data: data,
                   dia: selectedDay,
                 ),
+              Container(margin: EdgeInsets.only(bottom: 22)),
               _buildDayText(4, 'Jueves V'),
               if (selectedDay == 4)
                 CardR(
@@ -79,6 +85,7 @@ class _RutinasState extends State<Rutinas> {
                   data: data,
                   dia: selectedDay,
                 ),
+              Container(margin: EdgeInsets.only(bottom: 22)),
               _buildDayText(5, 'Viernes V'),
               if (selectedDay == 5)
                 CardR(
@@ -86,6 +93,7 @@ class _RutinasState extends State<Rutinas> {
                   data: data,
                   dia: selectedDay,
                 ),
+              Container(margin: EdgeInsets.only(bottom: 22)),
               _buildDayText(6, 'Sabado V'),
               if (selectedDay == 6)
                 CardR(
@@ -93,6 +101,7 @@ class _RutinasState extends State<Rutinas> {
                   data: data,
                   dia: selectedDay,
                 ),
+              Container(margin: EdgeInsets.only(bottom: 22)),
               _buildDayText(7, 'Domingo V'),
               if (selectedDay == 7)
                 CardR(
@@ -111,12 +120,12 @@ class _RutinasState extends State<Rutinas> {
                 context: context,
                 builder: (BuildContext context) {
                   return AlertDialog(
-                    title: const Text('Ningun ejercicio realizado'),
+                    title: Text('No se ha realizado ningún ejercicio.'),
                     content: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: <Widget>[
                         const Text(
-                            'En la rutina de hoy no se ha seleccionado ningun ejercicio como realizado'),
+                            'Lo sentimos, en la rutina de hoy no existe ningún ejercicio realizado.'),
                         Container(
                           height: 10,
                           alignment: Alignment.center,
@@ -125,10 +134,37 @@ class _RutinasState extends State<Rutinas> {
                     ),
                     actions: <Widget>[
                       TextButton(
-                        child: const Text('Ok'),
                         onPressed: () {
                           Navigator.of(context).pop();
                         },
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.resolveWith<Color>(
+                            (Set<MaterialState> states) {
+                              return Colors.transparent;
+                            },
+                          ),
+                        ),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              colors: [
+                                themeProvider.buttonColor1,
+                                themeProvider.buttonColor2,
+                              ],
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
+                            ),
+                          ),
+                          padding: EdgeInsets.all(10),
+                          child: Text(
+                            'Aceptar',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
                       ),
                     ],
                   );
@@ -191,13 +227,37 @@ class _RutinasState extends State<Rutinas> {
               );
             }
           },
-          child: const Icon(Icons.check),
+          backgroundColor: Colors.transparent,
+            child: Container(
+              width: 56,
+              height: 56,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [
+                    themeProvider.buttonColor1,
+                    themeProvider.buttonColor2,
+                  ],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ),
+                borderRadius: BorderRadius.circular(50),
+              ),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Icon(
+                Icons.check,
+                color: themeProvider.iconsColor,
+              ),
+            ),
+          ),
         ),
       ),
     );
   }
 
   Widget _buildDayText(int day, String dayText) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
+
     return Center(
       child: GestureDetector(
         onTap: () {
@@ -207,10 +267,10 @@ class _RutinasState extends State<Rutinas> {
         },
         child: Text(
           dayText,
-          style: const TextStyle(
-            fontSize: 24,
+          style: TextStyle(
+            fontSize: 20,
             fontWeight: FontWeight.bold,
-            color: Colors.blue,
+            color: themeProvider.textColor,
           ),
         ),
       ),

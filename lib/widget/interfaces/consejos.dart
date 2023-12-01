@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:gym_h/darkmode/theme_provider.dart';
+import 'package:provider/provider.dart';
 
 class ConsejosBState {
   bool isVisible = true;
@@ -32,8 +34,8 @@ class _ConsejosBState extends State<ConsejosB> {
   double left = 200.0;
   List<String> consejos = [
     'Come pollito',
-    'Consumir arroz antes de el entrenamiento ayuda al bombeo',
-    'Asegurate de consumir las calorias necesarias segun tus propositos',
+    'Consumir arroz antes de el entrenamiento ayuda al bombeo.',
+    'Asegúrate de consumir las calorias necesarias segun tus propósitos.',
     'Este es otro consejo xd',
   ];
 
@@ -67,6 +69,8 @@ class _ConsejosBState extends State<ConsejosB> {
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
     double buttonSize = 45.0;
+
+    final themeProvider = Provider.of<ThemeProvider>(context);
 
     return Stack(
       children: <Widget>[
@@ -106,11 +110,24 @@ class _ConsejosBState extends State<ConsejosB> {
                 });
               },
               child: Container(
-                width: 45.0,
-                height: 45.0,
-                decoration: const BoxDecoration(
+                width: 50.0,
+                height: 50.0,
+                decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: Colors.blue,
+                  gradient: LinearGradient(
+                    colors: [
+                      themeProvider.buttonColor1,
+                      themeProvider.buttonColor2,
+                    ],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                ),
+                child: Center(
+                  child: Icon(
+                    Icons.flatware_outlined,
+                    color: Colors.white,
+                  ),
                 ),
               ),
             ),

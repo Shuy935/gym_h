@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:gym_h/darkmode/theme_provider.dart';
 import 'package:gym_h/models/exercise_model.dart';
 import 'package:gym_h/models/rutina_model.dart';
 import 'package:gym_h/screens/home_page.dart';
 import 'package:gym_h/widget/interfaces/widgets.dart';
+import 'package:provider/provider.dart';
 
 class Ejercicios extends StatefulWidget {
   final List<String> selectedMusc;
@@ -25,10 +27,12 @@ String serie = '';
 class _EjerciciosState extends State<Ejercicios> {
   List<ExerciseService>? data;
   int cantidad = 0;
+  late ThemeProvider themeProvider;
   @override
   void initState() {
     super.initState();
     ejerciciosSeleccionados = [];
+    themeProvider = Provider.of<ThemeProvider>(context, listen: false);
 
     // Llama a la función para recuperar los datos del usuario
     if (widget.selectedMusc.length == 1) {
@@ -74,6 +78,7 @@ class _EjerciciosState extends State<Ejercicios> {
   }
 
   @override
+  
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData.dark().copyWith(),
@@ -87,6 +92,18 @@ class _EjerciciosState extends State<Ejercicios> {
             },
           ),
           title: Text('Musculos: ${widget.selectedMusc}', maxLines: 2),
+          flexibleSpace: Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [
+                  themeProvider.appBarColor1,
+                  themeProvider.appBarColor2,
+                ],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              ),
+            ),
+          ),
         ),
         body: SingleChildScrollView(
             child: Column(
@@ -112,7 +129,29 @@ class _EjerciciosState extends State<Ejercicios> {
               (route) => false,
             );
           },
-          child: const Icon(Icons.check),
+          backgroundColor: Colors.transparent,
+            child: Container(
+              width: 56,
+              height: 56,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [
+                    themeProvider.buttonColor1,
+                    themeProvider.buttonColor2,
+                  ],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ),
+                borderRadius: BorderRadius.circular(50),
+              ),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Icon(
+                Icons.check,
+                color: themeProvider.iconsColor,
+              ),
+            ),
+          )
         ),
       ),
     );

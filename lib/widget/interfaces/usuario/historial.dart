@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:gym_h/darkmode/theme_provider.dart';
 import 'package:gym_h/models/historial_model.dart';
 import 'package:gym_h/utils/utils.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 class Historial extends StatefulWidget {
   const Historial({super.key});
@@ -29,36 +31,41 @@ class _HistorialState extends State<Historial> {
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
     return Column(
       children: [
+        Container(margin: EdgeInsets.only(bottom: 20)),
         TextField(
           controller: fechaController,
-          decoration: const InputDecoration(
-              labelText: 'Fecha', icon: Icon(Icons.calendar_today)),
-          readOnly: true, //set it true, so that user will not able to edit text
-
-          onTap: () async {
-            DateTime? pickedDate = await showDatePicker(
-                helpText: 'Seleccione el dia que desee consultar',
-                context: context,
-                initialDate: DateTime.now(),
-                firstDate: DateTime(2022),
-                lastDate: DateTime
+          decoration: InputDecoration(
+            labelText: 'Fecha:', 
+            labelStyle: TextStyle(fontSize: 16, color: themeProvider.textColor),
+              icon: Padding(
+                padding: const EdgeInsets.only(left: 8.0),
+                child: Icon(Icons.calendar_today, color: themeProvider.iconsColor2)),
+              ),
+              readOnly: true, //set it true, so that user will not able to edit text
+              onTap: () async {
+                DateTime? pickedDate = await showDatePicker(
+                  helpText: 'Seleccione el día que desee consultar:',
+                  context: context,
+                  initialDate: DateTime.now(),
+                  firstDate: DateTime(2022),
+                  lastDate: DateTime
                     .now()); //la ultima fecha que puede escoger es la de hoy
-            if (pickedDate != null) {
-              String formattedDate =
-                  DateFormat('yyyy-MM-dd').format(pickedDate);
-
-              setState(() {
-                fechaController.text = formattedDate;
-                getHistorial(fechaController.text);
-                //set output date to TextField value.
-                //Mandarlo a la base de datos
-              });
-            } else {
-              Utils.showSnackBar("La fecha no esta seleccionada");
-            }
-          },
+                  if (pickedDate != null) {
+                    String formattedDate =
+                      DateFormat('yyyy-MM-dd').format(pickedDate);
+                      setState(() {
+                        fechaController.text = formattedDate;
+                        getHistorial(fechaController.text);
+                        //set output date to TextField value.
+                        //Mandarlo a la base de datos
+                      });
+                    } else {
+                      Utils.showSnackBar("No hay fecha seleccionada.");
+                    }
+                  },
           //InputDecoration(labelText: 'Fecha (yyyy-MM-dd)'),
         ),
         Center(child: TableHistory(historialData: historialData))
@@ -102,7 +109,7 @@ class _TableHistoryState extends State<TableHistory> {
         DataColumn(
           label: Expanded(
             child: Text(
-              'Repeticion',
+              'Repetición',
               style: TextStyle(fontStyle: FontStyle.italic),
             ),
           ),
@@ -110,7 +117,7 @@ class _TableHistoryState extends State<TableHistory> {
         DataColumn(
           label: Expanded(
             child: Text(
-              'Musculo',
+              'Músculo',
               style: TextStyle(fontStyle: FontStyle.italic),
             ),
           ),

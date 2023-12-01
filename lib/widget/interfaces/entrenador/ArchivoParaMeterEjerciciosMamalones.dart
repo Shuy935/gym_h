@@ -33,7 +33,7 @@ class _EjerciciosAdd extends State<EjerciciosAdd> {
                 decoration: const InputDecoration(hintText: 'asd'),
                 validator: (value) {
                   if (value!.isEmpty) {
-                    return 'Porfavor de poner un nombre completo correcto';
+                    return 'Ingresa un nombre completo válido';
                   }
                   return null;
                 },
@@ -55,7 +55,7 @@ class _EjerciciosAdd extends State<EjerciciosAdd> {
                 decoration: const InputDecoration(hintText: 'asd'),
                 validator: (value) {
                   if (value!.isEmpty) {
-                    return 'Porfavor de poner un nombre completo correcto';
+                    return 'Ingresa un un nombre completo válido';
                   }
                   return null;
                 },
@@ -67,7 +67,7 @@ class _EjerciciosAdd extends State<EjerciciosAdd> {
           children: [
             Container(
               width: 120,
-              child: const Text('dificultad: '),
+              child: const Text('Dificultad: '),
             ),
             Expanded(
               child: TextFormField(
@@ -77,7 +77,7 @@ class _EjerciciosAdd extends State<EjerciciosAdd> {
                 decoration: const InputDecoration(hintText: 'asd'),
                 validator: (value) {
                   if (value!.isEmpty) {
-                    return 'Porfavor de poner un nombre completo correcto';
+                    return 'Ingresa un nombre completo válido';
                   }
                   return null;
                 },
@@ -89,7 +89,7 @@ class _EjerciciosAdd extends State<EjerciciosAdd> {
           children: [
             Container(
               width: 120,
-              child: const Text('nombre del musculo: '),
+              child: const Text('Nombre del músculo: '),
             ),
             Expanded(
               child: TextFormField(
@@ -99,7 +99,7 @@ class _EjerciciosAdd extends State<EjerciciosAdd> {
                 decoration: const InputDecoration(hintText: 'asd'),
                 validator: (value) {
                   if (value!.isEmpty) {
-                    return 'Porfavor de poner un nombre completo correcto';
+                    return 'Ingresa un nombre completo válido';
                   }
                   return null;
                 },
