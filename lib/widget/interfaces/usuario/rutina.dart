@@ -45,9 +45,9 @@ class _RutinasState extends State<Rutinas> {
     color = List<Color>.generate(cantidad, (index) => const Color(0xff484848));
 
     return MaterialApp(
-      theme: ThemeData.dark().copyWith(),
       debugShowCheckedModeBanner: false,
       home: Scaffold(
+        backgroundColor: Colors.transparent,
         body: SingleChildScrollView(
           child: Column(
             children: <Widget>[
