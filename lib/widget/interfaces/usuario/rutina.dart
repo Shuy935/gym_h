@@ -45,7 +45,7 @@ class _RutinasState extends State<Rutinas> {
   @override
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
-
+    color = List<Color>.generate(cantidad, (index) => const Color(0xff484848));
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
