@@ -25,19 +25,19 @@ class RegistroHU extends StatelessWidget {
           columns: const <DataColumn>[
             DataColumn(
               label: Text(
-                'Name',
+                'Name:',
                 style: TextStyle(fontStyle: FontStyle.italic),
               ),
             ),
             DataColumn(
               label: Text(
-                'Age',
+                'Age:',
                 style: TextStyle(fontStyle: FontStyle.italic),
               ),
             ),
             DataColumn(
               label: Text(
-                'Role',
+                'Role:',
                 style: TextStyle(fontStyle: FontStyle.italic),
               ),
             ),

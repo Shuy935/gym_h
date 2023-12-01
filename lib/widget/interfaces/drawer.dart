@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:gym_h/darkmode/theme_provider.dart';
 import 'package:gym_h/models/users_model.dart';
 import 'package:gym_h/screens/configuraciones.dart';
 import 'package:gym_h/screens/user/profile.dart';
+import 'package:provider/provider.dart';
 
 class DrawerProfile extends StatefulWidget {
   const DrawerProfile({super.key});
@@ -44,16 +46,30 @@ class _DrawerProfile extends State<DrawerProfile> {
 
   @override
   Widget build(BuildContext context) {
+  final themeProvider = Provider.of<ThemeProvider>(context);
     return Drawer(
       child: ListView(
         padding: EdgeInsets.zero,
         children: <Widget>[
           UserAccountsDrawerHeader(
-            decoration: const BoxDecoration(
-              color: Color.fromRGBO(215, 123, 255, 1),
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [
+                  themeProvider.appBarColor1,
+                  themeProvider.appBarColor2,
+                ],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              ),
             ),
-            accountName: Text(username ?? 'User Fullname'),
-            accountEmail: Text(email ?? 'Email'),
+            accountName: Text(
+              username ?? 'User Fullname',
+              style: TextStyle(fontSize: 19.0),
+            ),
+            accountEmail: Text(
+              email ?? 'Email',
+              style: TextStyle(fontSize: 15.0),
+            ),
           ),
           ListTile(
             leading: const Icon(Icons.person),

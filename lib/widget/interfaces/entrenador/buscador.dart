@@ -1,8 +1,10 @@
 import 'package:easy_search_bar/easy_search_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:gym_h/darkmode/theme_provider.dart';
 import 'package:gym_h/models/attendance_record_model.dart';
 import 'package:gym_h/models/users_model.dart';
 import 'package:gym_h/widget/interfaces/entrenador/registrosH.dart';
+import 'package:provider/provider.dart';
 
 class Lista extends StatefulWidget {
   const Lista({Key? key}) : super(key: key);
@@ -42,6 +44,7 @@ class _ListaState extends State<Lista> {
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
     return Scaffold(
       appBar: EasySearchBar(
         title: const Text('Registro'),
@@ -61,18 +64,42 @@ class _ListaState extends State<Lista> {
             children: [
               Container(height: 10),
               Text(
-                'Usuario a registrar:\n$usuario',
-                style: const TextStyle(fontSize: 25),
+                'Nombre de usuario:',
+                style: const TextStyle(fontSize: 16),
               ),
-              ElevatedButton.icon(
+              Container(height: 10),
+              Text(
+                '${usuario ?? 'usuario'}',
+                style: const TextStyle(fontSize: 20),
+              ),
+              Container(height: 45),
+              Container(
+                width: 360,
+                height: 50,
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [
+                      themeProvider.buttonColor1,
+                      themeProvider.buttonColor2,
+                    ],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                  borderRadius: BorderRadius.circular(30.0),
+                ),
+                child: ElevatedButton.icon(
                   style: ElevatedButton.styleFrom(
+                    elevation: 0.0,
                     backgroundColor: Colors.transparent,
                     minimumSize: const Size.fromHeight(50),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30.0),
+                    ),
                   ),
                   icon: const Icon(Icons.app_registration, size: 32),
                   label: const Text(
-                    'Registrar',
-                    style: TextStyle(fontSize: 24),
+                    'Registrar Asistencia',
+                    style: TextStyle(fontSize: 18),
                   ),
                   onPressed: () {
                     showDialog(
@@ -108,6 +135,7 @@ class _ListaState extends State<Lista> {
                     );
                   } //recordar registrar bajo el nombre de
                   ),
+              ),
             ],
           ),
           Positioned(

@@ -1,10 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:gym_h/darkmode/theme_provider.dart';
 import 'package:gym_h/main.dart';
 import 'package:gym_h/screens/login/forgot_password_page.dart';
 import 'package:gym_h/utils/utils.dart';
 import 'package:gym_h/models/users_model.dart';
+import 'package:provider/provider.dart';
 
 class LoginWidget extends StatefulWidget {
   final VoidCallback onClickedSignUp;
@@ -30,90 +32,98 @@ class _LoginWidgetState extends State<LoginWidget> {
   }
 
   @override
-  Widget build(BuildContext context) => SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const SizedBox(height: 100),
-            Image.asset('assets/image/logo.png'),
-            const SizedBox(height: 75),
-            const Text(
-              'Welcome Back',
-              textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+Widget build(BuildContext context) {
+  ThemeProvider themeProvider = Provider.of<ThemeProvider>(context, listen: false);
+
+  return SingleChildScrollView(
+    padding: const EdgeInsets.all(16),
+    child: Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        const SizedBox(height: 55),
+        Container(
+          width: 250,
+          height: 250,
+          child: Image.asset('assets/image/logo.png'),
+        ),
+        const SizedBox(height: 20),
+        const Text(
+          'Welcome Back',
+          textAlign: TextAlign.center,
+          style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+        ),
+        const SizedBox(height: 40),
+        TextField(
+          controller: emailController,
+          cursorColor: themeProvider.isDarkMode ? Colors.white : Colors.black, // Ejemplo de cambio basado en el tema
+          textInputAction: TextInputAction.next,
+          decoration: const InputDecoration(labelText: 'Email'),
+        ),
+        const SizedBox(height: 4),
+        TextField(
+          controller: passwordController,
+          textInputAction: TextInputAction.done,
+          decoration: const InputDecoration(labelText: 'Password'),
+          obscureText: true,
+        ),
+        const SizedBox(height: 30),
+        Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(colors: [
+              themeProvider.buttonColor1,
+              themeProvider.buttonColor2,
+            ]),
+          ),
+          child: ElevatedButton.icon(
+            style: ElevatedButton.styleFrom(
+              elevation: 0.0,
+              backgroundColor: Colors.transparent,
+              minimumSize: const Size.fromHeight(50),
             ),
-            const SizedBox(height: 40),
-            TextField(
-              controller: emailController,
-              cursorColor: Colors.white,
-              textInputAction: TextInputAction.next,
-              decoration: const InputDecoration(labelText: 'Email'),
+            icon: const Icon(Icons.lock_open, size: 32),
+            label: const Text(
+              'Sign In',
+              style: TextStyle(fontSize: 24),
             ),
-            const SizedBox(height: 4),
-            TextField(
-              controller: passwordController,
-              textInputAction: TextInputAction.done,
-              decoration: const InputDecoration(labelText: 'Password'),
-              obscureText: true,
+            onPressed: signIn,
+          ),
+        ),
+        const SizedBox(height: 24),
+        GestureDetector(
+          child: Text(
+            'Forgot Password?',
+            style: TextStyle(
+              decoration: TextDecoration.underline,
+              color: themeProvider.textColor2,
+              fontSize: 15,
             ),
-            const SizedBox(height: 20),
-            Container(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(colors: [
-                  Colors.orange.shade300,
-                  Colors.orange.shade100,
-                  Colors.white
-                ]),
-              ),
-              child: ElevatedButton.icon(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.transparent,
-                  minimumSize: const Size.fromHeight(50),
-                ),
-                icon: const Icon(Icons.lock_open, size: 32),
-                label: const Text(
-                  'Sign In',
-                  style: TextStyle(fontSize: 24),
-                ),
-                onPressed: signIn,
-              ),
-            ),
-            const SizedBox(height: 24),
-            GestureDetector(
-              child: Text(
-                'Forgot Password?',
+          ),
+          onTap: () => Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => const ForgotPasswordPage(),
+          )),
+        ),
+        const SizedBox(height: 16),
+        RichText(
+          text: TextSpan(
+            style: TextStyle(color: themeProvider.isDarkMode ? Colors.white : Colors.black, fontSize: 15),
+            text: 'No account?  ',
+            children: [
+              TextSpan(
+                recognizer: TapGestureRecognizer()
+                  ..onTap = widget.onClickedSignUp,
+                text: 'Sign Up',
                 style: TextStyle(
                   decoration: TextDecoration.underline,
-                  color: Colors.orange.shade300,
-                  fontSize: 15,
+                  color: themeProvider.textColor2,
                 ),
               ),
-              onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => const ForgotPasswordPage(),
-              )),
-            ),
-            const SizedBox(height: 16),
-            RichText(
-              text: TextSpan(
-                style: const TextStyle(color: Colors.white, fontSize: 15),
-                text: 'No account?  ',
-                children: [
-                  TextSpan(
-                    recognizer: TapGestureRecognizer()
-                      ..onTap = widget.onClickedSignUp,
-                    text: 'Sign Up',
-                    style: TextStyle(
-                      decoration: TextDecoration.underline,
-                      color: Colors.orange.shade300,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
-      );
+      ],
+    ),
+  );
+}
 
   Future signIn() async {
     showDialog(

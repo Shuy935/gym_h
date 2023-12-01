@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:gym_h/darkmode/theme_provider.dart';
 import 'package:gym_h/models/historial_model.dart';
 import 'package:gym_h/models/rutina_model.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 class Rutinas extends StatefulWidget {
   const Rutinas({super.key});
@@ -42,12 +44,12 @@ class _RutinasState extends State<Rutinas> {
 
   @override
   Widget build(BuildContext context) {
-    color = List<Color>.generate(cantidad, (index) => const Color(0xff484848));
+    final themeProvider = Provider.of<ThemeProvider>(context);
 
     return MaterialApp(
-      theme: ThemeData.dark().copyWith(),
       debugShowCheckedModeBanner: false,
       home: Scaffold(
+        backgroundColor: Colors.transparent,
         body: SingleChildScrollView(
           child: Column(
             children: <Widget>[
@@ -58,87 +60,117 @@ class _RutinasState extends State<Rutinas> {
             ],
           ),
         ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            print(rutinaGlobal);
+            if (rutinaGlobal.isEmpty) {
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: const Text('Ningun ejercicio realizado'),
+                    content: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        const Text(
+                            'En la rutina de hoy no se ha seleccionado ningun ejercicio como realizado'),
+                        Container(
+                          height: 10,
+                          alignment: Alignment.center,
+                        ),
+                      ],
+                    ),
+                    actions: <Widget>[
+                      TextButton(
+                        child: const Text('Ok'),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                    ],
+                  );
+                },
+              );
+            } else {
+              DateTime now = DateTime.now();
+              String dayOfWeek = DateFormat('EEEE').format(now);
+              Map<String, String> diaDeLaSemana = {
+                "Monday": "Lunes",
+                "Tuesday": "Martes",
+                "Wednesday": "Miércoles",
+                "Thursday": "Jueves",
+                "Friday": "Viernes",
+                "Saturday": "Sábado",
+                "Sunday": "Domingo",
+              };
+              String? diaTraducido = diaDeLaSemana.containsKey(dayOfWeek)
+                  ? diaDeLaSemana[dayOfWeek]
+                  : dayOfWeek;
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: const Text('Rutina terminada'),
+                    content: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        Text(
+                            '¿Desea dar por terminada la rutina de hoy ${diaTraducido?.toLowerCase()}?'),
+                        Container(
+                          height: 10,
+                          alignment: Alignment.center,
+                        ),
+                      ],
+                    ),
+                    actions: <Widget>[
+                      TextButton(
+                        child: const Text('Cancelar'),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                      TextButton(
+                        child: const Text('Agregar'),
+                        onPressed: () async {
+                          if (rutinaGlobal.isNotEmpty) {
+                            // print(
+                            //      "Datos de rutina agregados al mapa global: $rutinaGlobal");
+                            handleFloatingActionButton();
+                            rutinaGlobal = {};
+                            ejerciciosSelected = [];
+                            Navigator.of(context).pop();
+                          }
+                        },
+                      ),
+                    ],
+                  );
+                },
+              );
+            }
+          },
+          child: const Icon(Icons.check),
+        ),
       ),
     );
   }
 
-  void _mostrarDialogNingunEjercicioRealizado(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Ningun ejercicio realizado'),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: const <Widget>[
-              Text(
-                  'En la rutina de hoy no se ha seleccionado ningun ejercicio como realizado'),
-              SizedBox(height: 10),
-            ],
+  Widget _buildDayText(int day, String dayText) {
+    return Center(
+      child: GestureDetector(
+        onTap: () {
+          setState(() {
+            selectedDay = day;
+          });
+        },
+        child: Text(
+          dayText,
+          style: const TextStyle(
+            fontSize: 24,
+            fontWeight: FontWeight.bold,
+            color: Colors.blue,
           ),
-          actions: <Widget>[
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: const Text('Ok'),
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-  void _mostrarDialogRutinaTerminada(BuildContext context) {
-    DateTime now = DateTime.now();
-    String dayOfWeek = DateFormat('EEEE').format(now);
-    Map<String, String> diaDeLaSemana = {
-      "Monday": "Lunes",
-      "Tuesday": "Martes",
-      "Wednesday": "Miércoles",
-      "Thursday": "Jueves",
-      "Friday": "Viernes",
-      "Saturday": "Sábado",
-      "Sunday": "Domingo",
-    };
-    String? diaTraducido = diaDeLaSemana.containsKey(dayOfWeek)
-        ? diaDeLaSemana[dayOfWeek]
-        : dayOfWeek;
-
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Rutina terminada'),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              Text(
-                  '¿Desea dar por terminada la rutina de hoy ${diaTraducido?.toLowerCase()}?'),
-              SizedBox(height: 10),
-            ],
-          ),
-          actions: <Widget>[
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: const Text('Cancelar'),
-            ),
-            TextButton(
-              onPressed: () async {
-                if (rutinaGlobal.isNotEmpty) {
-                  handleFloatingActionButton();
-                  rutinaGlobal = {};
-                  ejerciciosSelected = [];
-                  Navigator.of(context).pop();
-                }
-              },
-              child: const Text('Agregar'),
-            ),
-          ],
-        );
-      },
+        ),
+      ),
     );
   }
 }

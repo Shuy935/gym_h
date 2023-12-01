@@ -1,13 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:gym_h/darkmode/theme_provider.dart';
 import 'package:gym_h/models/users_model.dart';
+import 'package:provider/provider.dart';
 
 class TheProfile extends StatelessWidget {
   const TheProfile({super.key});
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Profile'),
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                themeProvider.appBarColor1,
+                themeProvider.appBarColor2,
+              ],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            )
+          ),
+        ),
       ),
       body: const Profile(),
     );
@@ -57,6 +72,7 @@ class _ProfileState extends State<Profile> {
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
     return SingleChildScrollView(
       child: Form(
         key: _formKey,
@@ -71,7 +87,7 @@ class _ProfileState extends State<Profile> {
               decoration: const InputDecoration(labelText: 'Nombre Completo'),
               validator: (value) {
                 if (value!.isEmpty || value.length < 5) {
-                  return 'Porfavor de poner un nombre completo correcto';
+                  return 'Ingresa un nombre completo válido';
                 }
                 return null;
               },
@@ -86,7 +102,7 @@ class _ProfileState extends State<Profile> {
                 if (value!.isEmpty ||
                     int.parse(value.toString()) < 15 ||
                     int.parse(value.toString()) > 70) {
-                  return 'Porfavor de poner una edad correcta';
+                  return 'Ingresa una edad válida';
                 }
                 return null;
               },
@@ -101,7 +117,7 @@ class _ProfileState extends State<Profile> {
                 if (value!.isEmpty ||
                     int.parse(value.toString()) < 100 ||
                     int.parse(value.toString()) > 300) {
-                  return 'Porfavor de poner una altura correcta';
+                  return 'Ingresa una altura válida';
                 }
                 return null;
               },
@@ -116,21 +132,20 @@ class _ProfileState extends State<Profile> {
                 if (value!.isEmpty ||
                     int.parse(value.toString()) < 30 ||
                     int.parse(value.toString()) > 250) {
-                  return 'Porfavor de poner un peso correcto';
+                  return 'Ingresa un peso válido';
                 }
                 return null;
               },
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 35),
             const DropdownMenuExample(),
-            const SizedBox(height: 50),
+            const SizedBox(height: 80),
             Material(
-              elevation: 5.0,
-              borderRadius: BorderRadius.circular(30.0),
-              color: Theme.of(context).primaryColor,
+              elevation: 0.0,
+              borderRadius: BorderRadius.circular(0.0),
+              color: Colors.transparent,
               child: MaterialButton(
                 minWidth: MediaQuery.of(context).size.width,
-                padding: const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
                 onPressed: () async {
                   if (_formKey.currentState!.validate()) {
                     UserService userService = UserService(
@@ -143,10 +158,27 @@ class _ProfileState extends State<Profile> {
                     await updateUser(userService);
                   }
                 },
-                child: Text(
-                  "Save",
-                  style: TextStyle(color: Theme.of(context).primaryColorLight),
-                  textAlign: TextAlign.center,
+                child: Container(
+                  height: 50.0,
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [
+                          themeProvider.buttonColor1,
+                          themeProvider.buttonColor2,
+                      ],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                    ),
+                    borderRadius: BorderRadius.circular(20.0),  // Ajusta el radio de la esquina según tus necesidades
+                  ),
+                  
+                  child: Center(
+                    child: Text(
+                      "Save",
+                      style: TextStyle(fontSize: 18, color: themeProvider.iconsColor),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
                 ),
               ),
             )

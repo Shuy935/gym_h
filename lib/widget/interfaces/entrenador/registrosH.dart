@@ -81,7 +81,7 @@ class _RegistroHState extends State<RegistroH> {
                 DataColumn(
                   label: Expanded(
                     child: Text(
-                      'Nombre',
+                      'Nombre:',
                       style:
                           TextStyle(fontStyle: FontStyle.italic, fontSize: 25),
                     ),
@@ -91,7 +91,7 @@ class _RegistroHState extends State<RegistroH> {
                 DataColumn(
                   label: Expanded(
                     child: Text(
-                      'Fecha',
+                      'Fecha:',
                       style:
                           TextStyle(fontStyle: FontStyle.italic, fontSize: 25),
                     ),
@@ -134,14 +134,14 @@ class _RegistroHState extends State<RegistroH> {
                                     TextField(
                                       controller: nombreController,
                                       decoration: const InputDecoration(
-                                          labelText: 'Nombre'),
+                                          labelText: 'Nombre:'),
 
                                       //que solo deje poner los de la base de datos y que haga busquedas que coincidan con lo que se va escribiendo?
                                     ),
                                     TextField(
                                       controller: fechaController,
                                       decoration: const InputDecoration(
-                                          labelText: 'Fecha',
+                                          labelText: 'Fecha:',
                                           icon: Icon(Icons.calendar_today)),
                                       readOnly:
                                           true, //set it true, so that user will not able to edit text
@@ -224,7 +224,7 @@ class _RegistroHState extends State<RegistroH> {
                                         }
                                       } else {
                                         Utils.showSnackBar(
-                                            "Nombre y fecha son obligatorios");
+                                            "El nombre y la fecha son obligatorios");
                                       }
                                     },
                                   ),
@@ -321,7 +321,7 @@ class _RegistroHState extends State<RegistroH> {
                       TextField(
                         controller: nombreController,
                         decoration: const InputDecoration(
-                          labelText: 'Nombre',
+                          labelText: 'Nombre:',
                         ),
 
                         //que solo deje poner los de la base de datos y que haga busquedas que coincidan con lo que se va escribiendo?
@@ -329,7 +329,7 @@ class _RegistroHState extends State<RegistroH> {
                       TextField(
                         controller: fechaController,
                         decoration: const InputDecoration(
-                            labelText: 'Fecha',
+                            labelText: 'Fecha:',
                             icon: Icon(Icons.calendar_today)),
                         readOnly:
                             true, //set it true, so that user will not able to edit text
@@ -395,7 +395,7 @@ class _RegistroHState extends State<RegistroH> {
                             _getDataGeneral();
                           }
                         } else {
-                          Utils.showSnackBar("Nombre y fecha son obligatorios");
+                          Utils.showSnackBar("El nombre y la fecha son obligatorios");
                         }
                       },
                     ),

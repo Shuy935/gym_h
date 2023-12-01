@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:gym_h/darkmode/theme_provider.dart';
 import 'package:gym_h/widget/interfaces/ejercicios.dart';
+import 'package:provider/provider.dart';
 
 class MuscleScrn extends StatefulWidget {
   final List<String> selectedDias;
@@ -11,6 +13,7 @@ class MuscleScrn extends StatefulWidget {
 }
 
 class _MuscleScrnState extends State<MuscleScrn> {
+  late ThemeProvider themeProvider;
   final List<String> allMusc = [
     'Bíceps',
     'Tríceps',
@@ -33,13 +36,27 @@ class _MuscleScrnState extends State<MuscleScrn> {
   void initState() {
     filteredMusc = allMusc;
     super.initState();
+    themeProvider = Provider.of<ThemeProvider>(context, listen: false);
   }
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Selecciona tus músculos'),
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                themeProvider.appBarColor1,
+                themeProvider.appBarColor2,
+              ],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+          ),
+        ),
       ),
       body: Column(
         children: <Widget>[
@@ -53,7 +70,29 @@ class _MuscleScrnState extends State<MuscleScrn> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: handleFloatingActionButton,
-        child: const Icon(Icons.arrow_forward),
+        backgroundColor: Colors.transparent,
+        child: Container(
+          width: 56,
+          height: 56,
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                themeProvider.buttonColor1,
+                themeProvider.buttonColor2,
+              ],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+            borderRadius: BorderRadius.circular(50),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Icon(
+              Icons.arrow_forward,
+              color: themeProvider.iconsColor,
+            ),
+          ),
+        ),
       ),
     );
   }
@@ -85,8 +124,8 @@ class _MuscleScrnState extends State<MuscleScrn> {
       title: Text(muscle),
       onTap: () => handleMuscleSelection(muscle),
       trailing: selectedMusc.contains(muscle)
-          ? const Icon(Icons.check_circle, color: Colors.green)
-          : const Icon(Icons.check_circle_outline),
+          ? Icon(Icons.check_circle, color: themeProvider.checkBoxColor)
+          : Icon(Icons.check_circle_outline),
     );
   }
 
@@ -141,14 +180,41 @@ class _MuscleScrnState extends State<MuscleScrn> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: const Text('Advertencia'),
+          title: Text('Advertencia'),
           content: Text(errorMessage),
           actions: <Widget>[
             TextButton(
-              child: const Text('Aceptar'),
               onPressed: () {
                 Navigator.of(context).pop();
               },
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.resolveWith<Color>(
+                  (Set<MaterialState> states) {
+                    return Colors.transparent;
+                  },
+                ),
+              ),
+              child: Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [
+                      themeProvider.buttonColor1,
+                      themeProvider.buttonColor2,
+                    ],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                ),
+                padding: EdgeInsets.all(10),
+                child: Text(
+                  'Aceptar',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
             ),
           ],
         );
