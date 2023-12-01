@@ -43,9 +43,10 @@ class _TabBarH extends State<TabBarH> {
       return DefaultTabController(
         length: tabs0.length,
         child: Scaffold(
-          appBar: AppBar(
-            title: const Text('Inicio'),
-            bottom: TabBar(tabs: tabs0),
+          appBar: PreferredSize(
+            preferredSize: const Size.fromHeight(110.0),
+            child: appbarcolors(tabs0),
+            
           ),
           body: const TabBarView(
             children: [

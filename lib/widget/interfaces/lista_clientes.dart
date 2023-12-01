@@ -85,7 +85,7 @@ class _Lista_ClientesState extends State<Lista_Clientes> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           //Agregar una condicion para que esté uno seleccionado
-          print(cliente);
+        //  print(cliente);
           if (cliente == '') {
             showDialog(
                 context: context,
