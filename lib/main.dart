@@ -38,7 +38,7 @@ class MyApp extends StatelessWidget {
 
   const MyApp({super.key});
 
-   @override
+  @override
   Widget build(BuildContext context) {
     return Consumer<ThemeProvider>(
       builder: (context, themeProvider, child) {
@@ -51,13 +51,10 @@ class MyApp extends StatelessWidget {
             navigatorKey: navigatorKey,
             debugShowCheckedModeBanner: false,
             title: title,
-            theme: ThemeData.light().copyWith(
-            ),
-            darkTheme: ThemeData.dark().copyWith(
-            ),
-            themeMode: themeProvider.isDarkMode
-                ? ThemeMode.dark
-                : ThemeMode.light,
+            theme: ThemeData.light().copyWith(),
+            darkTheme: ThemeData.dark().copyWith(),
+            themeMode:
+                themeProvider.isDarkMode ? ThemeMode.dark : ThemeMode.light,
             home: const MainPage(),
           ),
         );
