@@ -295,11 +295,7 @@ class _CardEState extends State<CardE> {
                                 // Estado normal
                                 return color;
                               })),
-                              onPressed: () {
-                                // Acción selecciona el ejercicio
-                                // print(ejerciciosSeleccionados);
-                                //Parece que se queda guardada la lista pero no las selecciones :c
-                              },
+                              onPressed: () {},
                               child: const Icon(Icons.check_circle_outline),
                             ),
                           )

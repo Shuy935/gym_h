@@ -96,21 +96,21 @@ class _MuscleScrnState extends State<MuscleScrn> {
     );
   }
 
-  Widget buildSearchTextField() {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: TextField(
-        onChanged: handleSearch,
-        decoration: InputDecoration(
-          labelText: 'Buscar Músculos',
-          prefixIcon: const Icon(Icons.search),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10.0),
-          ),
-        ),
-      ),
-    );
-  }
+  // Widget buildSearchTextField() {
+  //   return Padding(
+  //     padding: const EdgeInsets.all(8.0),
+  //     child: TextField(
+  //       onChanged: handleSearch,
+  //       decoration: InputDecoration(
+  //         labelText: 'Buscar Músculos',
+  //         prefixIcon: const Icon(Icons.search),
+  //         border: OutlineInputBorder(
+  //           borderRadius: BorderRadius.circular(10.0),
+  //         ),
+  //       ),
+  //     ),
+  //   );
+  // }
 
   Widget buildMuscleList() {
     return ListView(

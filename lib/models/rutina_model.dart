@@ -49,13 +49,13 @@ Future<void> addRutina(
       numDia = 1;
     } else if (dia == 'Martes') {
       numDia = 2;
-    } else if (dia == 'Miercoles') {
+    } else if (dia == 'Miércoles') {
       numDia = 3;
     } else if (dia == 'Jueves') {
       numDia = 4;
     } else if (dia == 'Viernes') {
       numDia = 5;
-    } else if (dia == 'Sabado') {
+    } else if (dia == 'Sábado') {
       numDia = 6;
     } else if (dia == 'Domingo') {
       numDia = 7;
