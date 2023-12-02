@@ -80,7 +80,7 @@ class _EjerciciosState extends State<Ejercicios> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData.dark().copyWith(),
+      theme: Theme.of(context).copyWith(),
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
@@ -90,7 +90,9 @@ class _EjerciciosState extends State<Ejercicios> {
               Navigator.of(context).pop();
             },
           ),
-          title: Text('Musculos: ${widget.selectedMusc}', maxLines: 2),
+          title: Text(
+              'Musculos: ${widget.selectedMusc.toString().replaceAll('[', '').toString().replaceAll(']', '')}',
+              maxLines: 2),
           flexibleSpace: Container(
             decoration: BoxDecoration(
               gradient: LinearGradient(
@@ -107,7 +109,6 @@ class _EjerciciosState extends State<Ejercicios> {
         body: SingleChildScrollView(
             child: Column(
           children: <Widget>[
-            const Buscadoruwu(),
             CardE(
               cantidad: cantidad,
               data: data,
@@ -167,8 +168,10 @@ class CardE extends StatefulWidget {
 }
 
 class _CardEState extends State<CardE> {
+  late ThemeProvider themeProvider;
   @override
   Widget build(BuildContext context) {
+    themeProvider = Provider.of<ThemeProvider>(context, listen: false);
     List<Widget> cards = [];
     for (int index = 0; index < widget.cantidad!; index++) {
       ExerciseService? exercise = widget.data?[index];

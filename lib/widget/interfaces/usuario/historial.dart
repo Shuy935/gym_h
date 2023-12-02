@@ -48,6 +48,24 @@ class _HistorialState extends State<Historial> {
           readOnly: true, //set it true, so that user will not able to edit text
           onTap: () async {
             DateTime? pickedDate = await showDatePicker(
+                builder: (context, child) {
+                  return Theme(
+                    data: Theme.of(context).copyWith(
+                      colorScheme: ColorScheme.light(
+                        primary: themeProvider.appBarColor1, // <-- SEE HERE
+                        onPrimary: themeProvider.appBarColor2, // <-- SEE HERE
+                        onSurface: themeProvider.textColor2, // <-- SEE HERE
+                      ),
+                      textButtonTheme: TextButtonThemeData(
+                        style: TextButton.styleFrom(
+                          foregroundColor:
+                              themeProvider.textColor, // button text color
+                        ),
+                      ),
+                    ),
+                    child: child!,
+                  );
+                },
                 helpText: 'Seleccione el día que desee consultar:',
                 context: context,
                 initialDate: DateTime.now(),
