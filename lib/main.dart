@@ -1,10 +1,13 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:gym_h/screens/login/auth_page.dart';
 import 'package:gym_h/screens/login/verify_email_page.dart';
 import 'package:gym_h/utils/utils.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
+import 'package:provider/provider.dart';
+import 'darkmode/theme_provider.dart';
 import 'firebase_options.dart';
 
 Future<void> main() async {
@@ -20,7 +23,12 @@ Future<void> main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  runApp(const MyApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => ThemeProvider(),
+      child: const MyApp(),
+    ),
+  );
 }
 
 final navigatorKey = GlobalKey<NavigatorState>();
@@ -30,15 +38,32 @@ class MyApp extends StatelessWidget {
 
   const MyApp({super.key});
 
-  @override
-  Widget build(BuildContext context) => MaterialApp(
-        scaffoldMessengerKey: Utils.messengerKey,
-        navigatorKey: navigatorKey,
-        debugShowCheckedModeBanner: false,
-        title: title,
-        theme: ThemeData.dark().copyWith(),
-        home: const MainPage(),
-      );
+   @override
+  Widget build(BuildContext context) {
+    return Consumer<ThemeProvider>(
+      builder: (context, themeProvider, child) {
+        return AnnotatedRegion<SystemUiOverlayStyle>(
+          value: themeProvider.isDarkMode
+              ? SystemUiOverlayStyle.light
+              : SystemUiOverlayStyle.dark,
+          child: MaterialApp(
+            scaffoldMessengerKey: Utils.messengerKey,
+            navigatorKey: navigatorKey,
+            debugShowCheckedModeBanner: false,
+            title: title,
+            theme: ThemeData.light().copyWith(
+            ),
+            darkTheme: ThemeData.dark().copyWith(
+            ),
+            themeMode: themeProvider.isDarkMode
+                ? ThemeMode.dark
+                : ThemeMode.light,
+            home: const MainPage(),
+          ),
+        );
+      },
+    );
+  }
 }
 
 class MainPage extends StatelessWidget {

@@ -23,13 +23,11 @@ class _RegistroHState extends State<RegistroH> {
     super.initState();
     fullname = widget.usuario;
 
-    if(fullname!=null){
+    if (fullname != null) {
       _getData();
-    }else{
+    } else {
       _getDataGeneral();
     }
-
-    
   }
 
   Future<void> _getData() async {
@@ -45,12 +43,13 @@ class _RegistroHState extends State<RegistroH> {
       print('Error: $e');
     }
   }
+
   Future<void> _getDataGeneral() async {
     try {
-        final data = await readAsistenciasGeneral();
-        setState(() {
-          listaAsistencia = data;
-        });
+      final data = await readAsistenciasGeneral();
+      setState(() {
+        listaAsistencia = data;
+      });
     } catch (e) {
       print('Error: $e');
     }
@@ -82,7 +81,7 @@ class _RegistroHState extends State<RegistroH> {
                 DataColumn(
                   label: Expanded(
                     child: Text(
-                      'Nombre',
+                      'Nombre:',
                       style:
                           TextStyle(fontStyle: FontStyle.italic, fontSize: 25),
                     ),
@@ -92,7 +91,7 @@ class _RegistroHState extends State<RegistroH> {
                 DataColumn(
                   label: Expanded(
                     child: Text(
-                      'Fecha',
+                      'Fecha:',
                       style:
                           TextStyle(fontStyle: FontStyle.italic, fontSize: 25),
                     ),
@@ -108,7 +107,7 @@ class _RegistroHState extends State<RegistroH> {
                     DataCell(Text(asistencia.fullname.toString())),
                     DataCell(Container(
                       margin: EdgeInsets.only(right: size.width * 0.05),
-                      child: Text(''),
+                      child: const Text(''),
                     )),
                     DataCell(Text(
                       DateFormat('yyyy-MM-dd')
@@ -116,113 +115,124 @@ class _RegistroHState extends State<RegistroH> {
                     )),
                     DataCell(Container(
                       margin: EdgeInsets.only(right: size.width * 0.15),
-                      child: Text(''),
+                      child: const Text(''),
                     )),
                     DataCell(
                       IconButton(
                         icon: const Icon(Icons.edit),
                         onPressed: () {
-                          nombreController.text = asistencia.fullname.toString();
+                          nombreController.text =
+                              asistencia.fullname.toString();
                           showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return AlertDialog(
-                              title: const Text('Modificar Registro'),
-                              content: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: <Widget>[
-                                  TextField(
-                                    controller: nombreController,
-                                    decoration: const InputDecoration(labelText: 'Nombre'),
-                        
-                                  //que solo deje poner los de la base de datos y que haga busquedas que coincidan con lo que se va escribiendo?
-                              ),
-                              TextField(
-                                controller: fechaController,
-                                decoration: const InputDecoration(
-                                    labelText: 'Fecha',
-                                    icon: Icon(Icons.calendar_today)),
-                                readOnly:
-                                    true, //set it true, so that user will not able to edit text
-                                onTap: () async {
-                                  DateTime? pickedDate = await showDatePicker(
-                                      context: context,
-                                      initialDate: DateTime.now(),
-                                      firstDate: DateTime(
-                                          2023), //DateTime.now() - not to allow to choose before today.
-                                      lastDate: DateTime
-                                          .now()); //la ultima fecha que puede escoger es la de hoy
-                                  if (pickedDate != null) {
-                                    // print(pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
-                                    String formattedDate =
-                                        DateFormat('yyyy-MM-dd').format(pickedDate);
-                                    // print(formattedDate); //formatted date output using intl package =>  2021-03-16
-                                    //you can implement different kind of Date Format here according to your requirement
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title: const Text('Modificar Registro'),
+                                content: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: <Widget>[
+                                    TextField(
+                                      controller: nombreController,
+                                      decoration: const InputDecoration(
+                                          labelText: 'Nombre:'),
 
-                            setState(() {
-                              fechaController.text =
-                                  formattedDate; //set output date to TextField value.
-                              //Mandarlo a la base de datos
-                            });
-                              } else {
-                                Utils.showSnackBar("Date is not selected");
-                              }
-                              },
-                              //InputDecoration(labelText: 'Fecha (yyyy-MM-dd)'),
-                            ),
-                            Container(
-                              // color: Color.fromARGB(255, 128, 123, 155),
-                              height: 10,
-                              alignment: Alignment.center,
+                                      //que solo deje poner los de la base de datos y que haga busquedas que coincidan con lo que se va escribiendo?
+                                    ),
+                                    TextField(
+                                      controller: fechaController,
+                                      decoration: const InputDecoration(
+                                          labelText: 'Fecha:',
+                                          icon: Icon(Icons.calendar_today)),
+                                      readOnly:
+                                          true, //set it true, so that user will not able to edit text
+                                      onTap: () async {
+                                        DateTime? pickedDate =
+                                            await showDatePicker(
+                                                context: context,
+                                                initialDate: DateTime.now(),
+                                                firstDate: DateTime(
+                                                    2023), //DateTime.now() - not to allow to choose before today.
+                                                lastDate: DateTime
+                                                    .now()); //la ultima fecha que puede escoger es la de hoy
+                                        if (pickedDate != null) {
+                                          // print(pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
+                                          String formattedDate =
+                                              DateFormat('yyyy-MM-dd')
+                                                  .format(pickedDate);
+                                          // print(formattedDate); //formatted date output using intl package =>  2021-03-16
+                                          //you can implement different kind of Date Format here according to your requirement
 
-                        // child: const DatePickerApp(), //No funciona xd hay que modificar el DatePickerApp
-                        //Poner un boton que llame para escoger la fecha y llamar a DatePickerApp()
+                                          setState(() {
+                                            fechaController.text =
+                                                formattedDate; //set output date to TextField value.
+                                            //Mandarlo a la base de datos
+                                          });
+                                        } else {
+                                          Utils.showSnackBar(
+                                              "Date is not selected");
+                                        }
+                                      },
+                                      //InputDecoration(labelText: 'Fecha (yyyy-MM-dd)'),
+                                    ),
+                                    Container(
+                                      // color: Color.fromARGB(255, 128, 123, 155),
+                                      height: 10,
+                                      alignment: Alignment.center,
+
+                                      // child: const DatePickerApp(), //No funciona xd hay que modificar el DatePickerApp
+                                      //Poner un boton que llame para escoger la fecha y llamar a DatePickerApp()
+                                    ),
+                                  ],
                                 ),
-                              ],
-                            ),
-                            actions: <Widget>[
-                              TextButton(
-                                child: const Text('Cancelar'),
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                },
-                              ),
-                              TextButton(
-                                child: const Text('Guardar'),
-                                onPressed: () async {
-                                  final nombre = nombreController.text;
-                                  final fechaStr = fechaController.text;
-                                  // final fecha = '';
-                                  //     DateFormat('yyyy-MM-dd').parse(fechaStr, true);
-                                  if (nombre.isNotEmpty && fechaStr.isNotEmpty) {
-                                      // Crear un objeto AsistenciaService con los nuevos datos
-                                      final nuevaAsistencia = AsistenciaService(
-                                        fullname: nombre,
-                                        fecha: fechaStr,
-                                        // Agrega otros campos según la definición de AsistenciaService
-                                      );
-                                      // Llamar a la función de actualización
-                                      await updateAsistencia(asistencia.fecha.toString(), nuevaAsistencia,asistencia.fullname.toString());
-
-                                      // Limpiar controladores y cerrar el cuadro de diálogo
-                                      nombreController.clear();
-                                      fechaController.clear();
+                                actions: <Widget>[
+                                  TextButton(
+                                    child: const Text('Cancelar'),
+                                    onPressed: () {
                                       Navigator.of(context).pop();
-                                      if(fullname!=null){
-                                           _getData();
-                                        }else{
+                                    },
+                                  ),
+                                  TextButton(
+                                    child: const Text('Guardar'),
+                                    onPressed: () async {
+                                      final nombre = nombreController.text;
+                                      final fechaStr = fechaController.text;
+                                      // final fecha = '';
+                                      //     DateFormat('yyyy-MM-dd').parse(fechaStr, true);
+                                      if (nombre.isNotEmpty &&
+                                          fechaStr.isNotEmpty) {
+                                        // Crear un objeto AsistenciaService con los nuevos datos
+                                        final nuevaAsistencia =
+                                            AsistenciaService(
+                                          fullname: nombre,
+                                          fecha: fechaStr,
+                                          // Agrega otros campos según la definición de AsistenciaService
+                                        );
+                                        // Llamar a la función de actualización
+                                        await updateAsistencia(
+                                            asistencia.fecha.toString(),
+                                            nuevaAsistencia,
+                                            asistencia.fullname.toString());
+
+                                        // Limpiar controladores y cerrar el cuadro de diálogo
+                                        nombreController.clear();
+                                        fechaController.clear();
+                                        Navigator.of(context).pop();
+                                        if (fullname != null) {
+                                          _getData();
+                                        } else {
                                           _getDataGeneral();
                                         }
-                                    } else {
-                                      Utils.showSnackBar("Nombre y fecha son obligatorios");
-                                    }
-                                },
-                              ),
-                            ],
+                                      } else {
+                                        Utils.showSnackBar(
+                                            "El nombre y la fecha son obligatorios");
+                                      }
+                                    },
+                                  ),
+                                ],
+                              );
+                            },
                           );
-                          },
-                        );   
-                        //editar registro
+                          //editar registro
                         },
                       ),
                     ),
@@ -240,10 +250,12 @@ class _RegistroHState extends State<RegistroH> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
-                                    const Text('¿Estás seguro de eliminar esta asistencia?'),
+                                    const Text(
+                                        '¿Estás seguro de eliminar esta asistencia?'),
                                     const SizedBox(height: 10),
                                     Text('Nombre: ${asistencia.fullname}'),
-                                    Text('Fecha: ${DateFormat('yyyy-MM-dd').format(DateTime.parse(asistencia.fecha.toString()))}'),
+                                    Text(
+                                        'Fecha: ${DateFormat('yyyy-MM-dd').format(DateTime.parse(asistencia.fecha.toString()))}'),
                                   ],
                                 ),
                                 actions: <Widget>[
@@ -255,26 +267,31 @@ class _RegistroHState extends State<RegistroH> {
                                     child: const Text('Cancelar'),
                                   ),
                                   TextButton(
-                                        onPressed: () async {
-                                          // Elimina la asistencia y realiza las acciones necesarias
-                                          await deleteAsistencia(asistencia.fecha.toString(), asistencia.fullname.toString());
+                                    onPressed: () async {
+                                      // Elimina la asistencia y realiza las acciones necesarias
+                                      await deleteAsistencia(
+                                          asistencia.fecha.toString(),
+                                          asistencia.fullname.toString());
 
-                                          if (fullname != null) {
-                                            _getData();
-                                          } else {
-                                            _getDataGeneral();
-                                          }
+                                      if (fullname != null) {
+                                        _getData();
+                                      } else {
+                                        _getDataGeneral();
+                                      }
 
-                                          ScaffoldMessenger.of(context).showSnackBar(
-                                            const SnackBar(
-                                              content: Text('Asistencia eliminada con éxito'),
-                                            ),
-                                          );
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        const SnackBar(
+                                          content: Text(
+                                              'Asistencia eliminada con éxito'),
+                                        ),
+                                      );
 
-                                          Navigator.of(context).pop(); // Cierra el AlertDialog
-                                        },
-                                        child: const Text('Eliminar'),
-                                      ),
+                                      Navigator.of(context)
+                                          .pop(); // Cierra el AlertDialog
+                                    },
+                                    child: const Text('Eliminar'),
+                                  ),
                                 ],
                               );
                             },
@@ -303,14 +320,16 @@ class _RegistroHState extends State<RegistroH> {
                     children: <Widget>[
                       TextField(
                         controller: nombreController,
-                        decoration: InputDecoration(labelText: 'Nombre',),
-                        
+                        decoration: const InputDecoration(
+                          labelText: 'Nombre:',
+                        ),
+
                         //que solo deje poner los de la base de datos y que haga busquedas que coincidan con lo que se va escribiendo?
                       ),
                       TextField(
                         controller: fechaController,
                         decoration: const InputDecoration(
-                            labelText: 'Fecha',
+                            labelText: 'Fecha:',
                             icon: Icon(Icons.calendar_today)),
                         readOnly:
                             true, //set it true, so that user will not able to edit text
@@ -363,21 +382,21 @@ class _RegistroHState extends State<RegistroH> {
                         final nombre = nombreController.text;
                         final fechaStr = fechaController.text;
                         if (nombre.isNotEmpty && fechaStr.isNotEmpty) {
-                        // Llamada al método addAsistenciaUsuario con nombre y fecha
+                          // Llamada al método addAsistenciaUsuario con nombre y fecha
                           await addAsistenciaUsuarioFecha(nombre, fechaStr);
 
-                            // Limpiar controladores y cerrar el cuadro de diálogo
-                            nombreController.clear();
-                            fechaController.clear();
-                            Navigator.of(context).pop();
-                            if(fullname!=null){
-                                  _getData();
-                              }else{
-                                _getDataGeneral();
-                              }
+                          // Limpiar controladores y cerrar el cuadro de diálogo
+                          nombreController.clear();
+                          fechaController.clear();
+                          Navigator.of(context).pop();
+                          if (fullname != null) {
+                            _getData();
                           } else {
-                            Utils.showSnackBar("Nombre y fecha son obligatorios");
+                            _getDataGeneral();
                           }
+                        } else {
+                          Utils.showSnackBar("El nombre y la fecha son obligatorios");
+                        }
                       },
                     ),
                   ],

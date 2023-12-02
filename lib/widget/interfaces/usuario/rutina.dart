@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:gym_h/darkmode/theme_provider.dart';
+import 'package:gym_h/models/historial_model.dart';
 import 'package:gym_h/models/rutina_model.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 class Rutinas extends StatefulWidget {
   const Rutinas({super.key});
@@ -11,6 +14,7 @@ class Rutinas extends StatefulWidget {
 
 List<Color> color = [];
 int selectedDay = 0;
+List<String> ejerciciosSelected = [];
 Map<String, String> rutinaGlobal = {};
 
 class _RutinasState extends State<Rutinas> {
@@ -26,73 +30,33 @@ class _RutinasState extends State<Rutinas> {
   Future<void> getRutina() async {
     final rutinaData = await readRutina();
     if (rutinaData != null && rutinaData.isNotEmpty) {
-      data = rutinaData;
       setState(() {
+        data = rutinaData;
         cantidad = data!.length;
       });
     }
   }
 
+  void handleFloatingActionButton() async {
+    final ejerciciosRealizados = ejerciciosSelected;
+    await addHistorial(ejerciciosRealizados);
+  }
+
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
     color = List<Color>.generate(cantidad, (index) => const Color(0xff484848));
-
     return MaterialApp(
-      theme: ThemeData.dark().copyWith(),
       debugShowCheckedModeBanner: false,
       home: Scaffold(
+        backgroundColor: Colors.transparent,
         body: SingleChildScrollView(
           child: Column(
             children: <Widget>[
-              _buildDayText(1, 'Lunes V'),
-              if (selectedDay == 1)
-                CardR(
-                  cantidad: cantidad,
-                  data: data,
-                  dia: selectedDay,
-                ),
-              _buildDayText(2, 'Martes V'),
-              if (selectedDay == 2)
-                CardR(
-                  cantidad: cantidad,
-                  data: data,
-                  dia: selectedDay,
-                ),
-              _buildDayText(3, 'Miercoles V'),
-              if (selectedDay == 3)
-                CardR(
-                  cantidad: cantidad,
-                  data: data,
-                  dia: selectedDay,
-                ),
-              _buildDayText(4, 'Jueves V'),
-              if (selectedDay == 4)
-                CardR(
-                  cantidad: cantidad,
-                  data: data,
-                  dia: selectedDay,
-                ),
-              _buildDayText(5, 'Viernes V'),
-              if (selectedDay == 5)
-                CardR(
-                  cantidad: cantidad,
-                  data: data,
-                  dia: selectedDay,
-                ),
-              _buildDayText(6, 'Sabado V'),
-              if (selectedDay == 6)
-                CardR(
-                  cantidad: cantidad,
-                  data: data,
-                  dia: selectedDay,
-                ),
-              _buildDayText(7, 'Domingo V'),
-              if (selectedDay == 7)
-                CardR(
-                  cantidad: cantidad,
-                  data: data,
-                  dia: selectedDay,
-                ),
+              CardR(
+                cantidad: cantidad,
+                data: data,
+              ),
             ],
           ),
         ),
@@ -169,8 +133,12 @@ class _RutinasState extends State<Rutinas> {
                         child: const Text('Agregar'),
                         onPressed: () async {
                           if (rutinaGlobal.isNotEmpty) {
-                            print(
-                                "Datos de rutina agregados al mapa global: $rutinaGlobal");
+                            // print(
+                            //      "Datos de rutina agregados al mapa global: $rutinaGlobal");
+                            handleFloatingActionButton();
+                            rutinaGlobal = {};
+                            ejerciciosSelected = [];
+                            Navigator.of(context).pop();
                           }
                         },
                       ),
@@ -210,14 +178,7 @@ class _RutinasState extends State<Rutinas> {
 class CardR extends StatefulWidget {
   final int cantidad;
   final List<RutinaService>? data;
-  final int dia;
-
-  const CardR({
-    super.key,
-    required this.cantidad,
-    required this.data,
-    required this.dia,
-  });
+  const CardR({super.key, required this.cantidad, required this.data});
 
   @override
   State<CardR> createState() => _CardRState();
@@ -229,147 +190,135 @@ class _CardRState extends State<CardR> {
     List<Widget> cards = [];
     for (int index = 0; index < widget.cantidad; index++) {
       RutinaService? rutina = widget.data?[index];
-      if (rutina?.fecha == widget.dia) {
-        color[index] = const Color(0xff484848);
-        cards.add(
-          Card(
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                children: <Widget>[
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+      color[index] = const Color(0xff484848);
+      cards.add(Card(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            children: <Widget>[
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
                     children: [
-                      Row(
-                        children: [
-                          Container(
-                            width: 120,
-                            child: const Text('Nombre: '),
-                          ),
-                          Expanded(child: Text(rutina!.nombreEjercicio ?? '')),
-                        ],
+                      Container(
+                        width: 120,
+                        child: const Text('Nombre: '),
                       ),
-                      Container(height: 10),
-                      Row(
-                        children: [
-                          Container(
-                            width: 120,
-                            child: const Text('Repeticiones: '),
-                          ),
-                          Expanded(child: Text(rutina.repeticiones ?? '')),
-                        ],
+                      Expanded(child: Text(rutina!.nombreEjercicio ?? '')),
+                    ],
+                  ),
+                  Container(
+                    height: 10,
+                  ),
+                  Row(
+                    children: [
+                      Container(
+                        width: 120,
+                        child: const Text('Repeticiones: '),
                       ),
-                      Row(
-                        children: [
-                          Container(
-                            width: 120,
-                            child: const Text('Series: '),
-                          ),
-                          Expanded(child: Text(rutina.series ?? '')),
-                        ],
-                      ),
+                      Expanded(child: Text(rutina.repeticiones ?? '')),
                     ],
                   ),
                   Row(
                     children: [
                       Container(
-                        width: 150,
-                        height: 150,
-                        child: FadeInImage(
-                          placeholder:
-                              const AssetImage('assets/image/loading.gif'),
-                          image: NetworkImage(rutina.linkImagen!),
-                        ),
+                        width: 120,
+                        child: const Text('Series: '),
                       ),
-                      Container(width: 25),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                      Expanded(child: Text(rutina.series ?? '')),
+                    ],
+                  ),
+                ],
+              ),
+              Row(
+                children: [
+                  Container(
+                    width: 150,
+                    height: 150,
+                    child: FadeInImage(
+                        placeholder:
+                            const AssetImage('assets/image/loading.gif'),
+                        image: NetworkImage(rutina.linkImagen!)),
+                  ),
+                  Container(
+                    width: 25,
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text('Descanso recomendado:'),
+                      Container(
+                        width: 10,
+                      ),
+                      Text(rutina.descanso ?? ''),
+                      Container(
+                        height: 15,
+                      ),
+                      Row(
                         children: [
-                          const Text('Descanso recomendado:'),
-                          Container(width: 10),
-                          Text(rutina.descanso ?? ''),
-                          Container(height: 15),
-                          Row(
-                            children: [
-                              const Text('Dificultad:'),
-                              Container(width: 10),
-                              Text(rutina.dificultad ?? ''),
-                            ],
+                          const Text('Dificultad:'),
+                          Container(
+                            width: 10,
                           ),
-                          Container(height: 25),
-                          Stack(
-                            children: <Widget>[
-                              const SizedBox(width: 150, height: 70),
-                              Center(
-                                child: Column(
-                                  children: [
-                                    Text(rutina.nombreMusculo ?? ''),
-                                  ],
-                                ),
-                              ),
-                              Positioned(
-                                left: 80,
-                                top: -5,
-                                child: ElevatedButton(
-                                  style: ButtonStyle(
-                                    backgroundColor: MaterialStateProperty
-                                        .resolveWith<Color?>(
-                                      (Set<MaterialState> states) {
-                                        if (states
-                                            .contains(MaterialState.pressed)) {
-                                          int dia = DateTime.now().weekday;
-                                          if (rutina.fecha == dia) {
-                                            if (color[index] ==
-                                                const Color(0xff484848)) {
-                                              color[index] = Colors.green;
-                                              _addToRutinaGlobal(rutina);
-                                              rutinaGlobal['nombreEjercicio'] =
-                                                  rutina.nombreEjercicio ?? '';
-                                              rutinaGlobal['repeticiones'] =
-                                                  rutina.repeticiones ?? '';
-                                              rutinaGlobal['series'] =
-                                                  rutina.series ?? '';
-                                              rutinaGlobal['nombreMusculo'] =
-                                                  rutina.nombreMusculo ?? '';
-                                            } else {
-                                              color[index] =
-                                                  const Color(0xff484848);
-                                              _removeFromRutinaGlobal(rutina);
-                                            }
-                                          }
-                                        }
-                                        return color[index];
-                                      },
-                                    ),
-                                  ),
-                                  onPressed: () {
-                                    int dia = DateTime.now().weekday;
-                                    if (rutina.fecha == dia) {
-                                      if (color[index] !=
-                                          const Color(0xff484848)) {
-                                        _mostrarCuadroConfirmacion(context);
+                          Text(rutina.dificultad ?? ''),
+                        ],
+                      ),
+                      Container(
+                        height: 25,
+                      ),
+                      Stack(
+                        children: <Widget>[
+                          const SizedBox(
+                            width: 150,
+                            height: 70,
+                          ),
+                          Center(child: Column( children: [Text(rutina.nombreMusculo ?? ''),
+                          Text('${rutina.fecha}')])),
+                          Positioned(
+                            left: 80,
+                            top: -5,
+                            child: ElevatedButton(
+                              style: ButtonStyle(
+                                backgroundColor:
+                                    MaterialStateProperty.resolveWith<Color?>(
+                                  (Set<MaterialState> states) {
+                                    if (states
+                                        .contains(MaterialState.pressed)) {
+                                      if (color[index] == Color(0xff484848)) {
+                                        color[index] = Colors.green;
                                       } else {
-                                        _mostrarCuadroCancelacion(context);
+                                        color[index] = Color(0xff484848);
                                       }
                                     }
+                                    return color[index];
                                   },
-                                  child: const Icon(Icons.check_circle_outline),
                                 ),
-                              )
-                            ],
-                          ),
+                              ),
+                              onPressed: () {
+                                if (color[index] != Color(0xff484848)) {
+                                  _mostrarCuadroConfirmacion(context);
+                                } else {
+                                  _mostrarCuadroCancelacion(context);
+                                }
+                              },
+                              child: const Icon(Icons.check_circle_outline),
+                            ),
+                          )
                         ],
                       ),
                     ],
                   ),
                 ],
               ),
-            ),
+            ],
           ),
-        );
-      }
+        ),
+      ));
     }
-    return Column(children: cards);
+    return Column(
+      children: cards,
+    );
   }
 
   Future<void> _mostrarCuadroConfirmacion(BuildContext context) async {
@@ -410,21 +359,5 @@ class _CardRState extends State<CardR> {
         );
       },
     );
-  }
-
-  void _addToRutinaGlobal(RutinaService rutina) {
-    rutinaGlobal['nombreEjercicio'] = rutina.nombreEjercicio ?? '';
-    rutinaGlobal['repeticiones'] = rutina.repeticiones ?? '';
-    rutinaGlobal['series'] = rutina.series ?? '';
-    rutinaGlobal['nombreMusculo'] = rutina.nombreMusculo ?? '';
-  }
-
-  void _removeFromRutinaGlobal(RutinaService rutina) {
-    rutinaGlobal.removeWhere((key, value) => [
-          'nombreEjercicio',
-          'repeticiones',
-          'series',
-          'nombreMusculo',
-        ].contains(key));
   }
 }

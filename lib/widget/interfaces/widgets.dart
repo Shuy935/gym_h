@@ -12,3 +12,4 @@ export 'package:gym_h/widget/interfaces/buscadoruwu.dart';
 export 'package:gym_h/widget/interfaces/usuario/rutina.dart';
 export 'package:gym_h/widget/interfaces/entrenador/registrosH.dart';
 export 'package:gym_h/widget/interfaces/usuario/seleccion_diasU.dart';
+export 'package:gym_h/widget/interfaces/usuario/historial.dart';
