@@ -1,0 +1,15 @@
+export 'package:gym_h/widget/interfaces/entrenador/buscador.dart';
+export 'package:gym_h/widget/interfaces/usuario/buscadorU.dart';
+export 'package:gym_h/widget/interfaces/consejos.dart';
+export 'package:gym_h/widget/interfaces/tapbar.dart';
+export 'package:gym_h/widget/interfaces/drawer.dart';
+export 'package:gym_h/widget/interfaces/muscles.dart';
+export 'package:gym_h/widget/interfaces/date_picker_widget.dart';
+export 'package:gym_h/widget/interfaces/ejercicios.dart';
+export 'package:gym_h/widget/interfaces/seleccion_dias.dart';
+export 'package:gym_h/widget/interfaces/lista_clientes.dart';
+export 'package:gym_h/widget/interfaces/buscadoruwu.dart';
+export 'package:gym_h/widget/interfaces/usuario/rutina.dart';
+export 'package:gym_h/widget/interfaces/entrenador/registrosH.dart';
+export 'package:gym_h/widget/interfaces/usuario/seleccion_diasU.dart';
+export 'package:gym_h/widget/interfaces/usuario/historial.dart';

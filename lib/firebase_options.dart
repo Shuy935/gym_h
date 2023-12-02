@@ -50,19 +50,21 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyCSS-vYdlMw7HXT06b-ChH27TZ5gvvh2sk',
-    appId: '1:462400479446:android:f5fe499487b444248e2977',
-    messagingSenderId: '462400479446',
-    projectId: 'gym-h-a93dc',
-    storageBucket: 'gym-h-a93dc.appspot.com',
+    apiKey: 'AIzaSyAebxtgOBjancX9O5i_e_wnDhfz4elH5I8',
+    appId: '1:144232808813:android:4d0fa9d5ce163b0fc39a64',
+    messagingSenderId: '144232808813',
+    projectId: 'ahhhhhhh-c76c1',
+    databaseURL: 'https://ahhhhhhh-c76c1-default-rtdb.firebaseio.com',
+    storageBucket: 'ahhhhhhh-c76c1.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyAS7yaYfbHBwLrx32xHBCPdbrXEmdDciBM',
-    appId: '1:462400479446:ios:4f62f4aae3a6e2d08e2977',
-    messagingSenderId: '462400479446',
-    projectId: 'gym-h-a93dc',
-    storageBucket: 'gym-h-a93dc.appspot.com',
+    apiKey: 'AIzaSyDvFkLv_zZQB_1iAm6YXo_f4GA5-KuTD7k',
+    appId: '1:144232808813:ios:987bc36f4f79c1bbc39a64',
+    messagingSenderId: '144232808813',
+    projectId: 'ahhhhhhh-c76c1',
+    databaseURL: 'https://ahhhhhhh-c76c1-default-rtdb.firebaseio.com',
+    storageBucket: 'ahhhhhhh-c76c1.appspot.com',
     iosBundleId: 'com.example.gymh',
   );
 }
