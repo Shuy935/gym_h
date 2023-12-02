@@ -48,6 +48,7 @@ class _RutinasState extends State<Rutinas> {
       theme: ThemeData.dark().copyWith(),
       debugShowCheckedModeBanner: false,
       home: Scaffold(
+        backgroundColor: Colors.transparent,
         body: SingleChildScrollView(
           child: Column(
             children: <Widget>[
@@ -241,6 +242,7 @@ class _CardRState extends State<CardR> {
 
   Widget _buildCard(RutinaService rutina, int index) {
     return Card(
+      color: Colors.transparent,
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
