@@ -10,7 +10,7 @@ class Interfaces extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<ThemeProvider>(
       builder: (context, themeProvider, child) {
-        return Scaffold(
+        return const Scaffold(
           body: Stack(
             children: [
               TabBarH(),

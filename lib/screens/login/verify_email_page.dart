@@ -58,7 +58,8 @@ class _VerifyEmailPage extends State<VerifyEmailPage> {
 
   @override
   Widget build(BuildContext context) => isEmailVerified
-      ? HomePage()
+      // Poner validacion del perfil
+      ? const HomePage()
       : Scaffold(
           appBar: AppBar(
             title: const Text('VerifyEmail'),

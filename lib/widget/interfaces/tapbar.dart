@@ -36,7 +36,8 @@ class _TabBarH extends State<TabBarH> {
     if (rol == true) {
       //if (rol == true) {
       final List<Widget> tabs0 = [
-        const Tab(text: 'Asignación de rutina'), //Selección de rutina para un usuario
+        const Tab(
+            text: 'Asignación de rutina'), //Selección de rutina para un usuario
         const Tab(text: 'Asistencia'),
       ];
 
@@ -45,12 +46,11 @@ class _TabBarH extends State<TabBarH> {
         child: Scaffold(
           appBar: PreferredSize(
             preferredSize: const Size.fromHeight(110.0),
-            child: appbarcolors(tabs0),
-            
+            child: Appbarcolors(tabs0),
           ),
           body: const TabBarView(
             children: [
-              Center(child: Lista_Clientes()),
+              Center(child: ListaClientes()),
               Center(child: Lista()),
             ],
           ),
@@ -60,7 +60,8 @@ class _TabBarH extends State<TabBarH> {
     } else {
       final List<Widget> tabs = [
         const Tab(text: 'Rutina'),
-        const Tab(text: 'Seleccion de Rutina'), //Selección de rutina por un usuario
+        const Tab(
+            text: 'Seleccion de Rutina'), //Selección de rutina por un usuario
         const Tab(text: 'Asistencia'),
         const Tab(text: 'Historial'),
       ];
@@ -70,7 +71,7 @@ class _TabBarH extends State<TabBarH> {
         child: Scaffold(
           appBar: PreferredSize(
             preferredSize: const Size.fromHeight(110.0),
-            child: appbarcolors(tabs),
+            child: Appbarcolors(tabs),
           ),
           body: const TabBarView(
             children: [
@@ -87,27 +88,26 @@ class _TabBarH extends State<TabBarH> {
   }
 }
 
-class appbarcolors extends StatelessWidget {
+class Appbarcolors extends StatelessWidget {
   final List<Widget> tabs;
-  appbarcolors(this.tabs);
+  const Appbarcolors(this.tabs, {super.key});
 
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
 
     return AppBar(
-      title: Text('Inicio'),
+      title: const Text('Inicio'),
       flexibleSpace: Container(
         decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [
-              themeProvider.appBarColor1,
-              themeProvider.appBarColor2,
-            ],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-          )
-        ),
+            gradient: LinearGradient(
+          colors: [
+            themeProvider.appBarColor1,
+            themeProvider.appBarColor2,
+          ],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        )),
       ),
       bottom: TabBar(
         tabs: tabs,

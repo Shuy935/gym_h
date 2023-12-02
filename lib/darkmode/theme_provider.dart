@@ -4,13 +4,13 @@ class ThemeProvider with ChangeNotifier {
   bool _isDarkMode = false;
   bool _isCheckBoxChecked = false;
 
-  Color _appBarColor1 = Color(0xFFF5CB45);
-  Color _appBarColor2 = Color(0xFFF54927);
-  Color _buttonGradientColor1 = Color(0xFFF5CB45);
-  Color _buttonGradientColor2 = Color(0xFFF54927);
-  Color _checkBoxColor = Color.fromARGB(255, 222, 70, 40);
+  Color _appBarColor1 = const Color(0xFFF5CB45);
+  Color _appBarColor2 = const Color(0xFFF54927);
+  Color _buttonGradientColor1 = const Color(0xFFF5CB45);
+  Color _buttonGradientColor2 = const Color(0xFFF54927);
+  Color _checkBoxColor = const Color.fromARGB(255, 222, 70, 40);
   Color _textColor = Colors.black;
-  Color _textColor2 = Color(0xFFF54927);
+  Color _textColor2 = const Color(0xFFF54927);
   Color _iconsColor = Colors.white;
   Color _iconsColor2 = Colors.black;
 
@@ -28,20 +28,32 @@ class ThemeProvider with ChangeNotifier {
 
   void toggleTheme() {
     _isDarkMode = !_isDarkMode;
-    _appBarColor1 = _isDarkMode ? Color.fromARGB(255, 121, 68, 165) : Color.fromARGB(255, 218, 181, 61);
-    _appBarColor2 = _isDarkMode ? Color.fromARGB(255, 22, 184, 165) : Color.fromARGB(255, 222, 70, 40);
-    _buttonGradientColor1 = _isDarkMode ? Color.fromARGB(255, 121, 68, 165) : Color.fromARGB(255, 218, 181, 61);
-    _buttonGradientColor2 = _isDarkMode ? Color.fromARGB(255, 22, 184, 165) : Color.fromARGB(255, 222, 70, 40);
-    _checkBoxColor = _isDarkMode ? Color.fromARGB(255, 121, 68, 165) : Color.fromARGB(255, 222, 70, 40);
+    _appBarColor1 = _isDarkMode
+        ? const Color.fromARGB(255, 121, 68, 165)
+        : const Color.fromARGB(255, 218, 181, 61);
+    _appBarColor2 = _isDarkMode
+        ? const Color.fromARGB(255, 22, 184, 165)
+        : const Color.fromARGB(255, 222, 70, 40);
+    _buttonGradientColor1 = _isDarkMode
+        ? const Color.fromARGB(255, 121, 68, 165)
+        : const Color.fromARGB(255, 218, 181, 61);
+    _buttonGradientColor2 = _isDarkMode
+        ? const Color.fromARGB(255, 22, 184, 165)
+        : const Color.fromARGB(255, 222, 70, 40);
+    _checkBoxColor = _isDarkMode
+        ? const Color.fromARGB(255, 121, 68, 165)
+        : const Color.fromARGB(255, 222, 70, 40);
     _textColor = _isDarkMode ? Colors.white : Colors.black;
-    _textColor2 = _isDarkMode ? Color.fromARGB(255, 22, 184, 165) : Color(0xFFF54927);
+    _textColor2 = _isDarkMode
+        ? const Color.fromARGB(255, 22, 184, 165)
+        : const Color(0xFFF54927);
     _iconsColor = isDarkMode ? Colors.white : Colors.white;
     _iconsColor2 = isDarkMode ? Colors.white : Colors.black;
     notifyListeners();
   }
 
   void toggleCheckBox() {
-    _isCheckBoxChecked =! _isCheckBoxChecked;
+    _isCheckBoxChecked = !_isCheckBoxChecked;
     notifyListeners();
   }
 }

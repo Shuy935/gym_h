@@ -26,7 +26,6 @@ class _DiasScrnState extends State<DiasScrn> {
   void initState() {
     filtereDia = dias;
     super.initState();
-    print(widget.cliente);
   }
 
   @override
@@ -74,7 +73,7 @@ class _DiasScrnState extends State<DiasScrn> {
       setState(() {
         selectedDias.add(dia);
       });
-    } else if (selectedDias.length < 1) {
+    } else if (selectedDias.isEmpty) {
       //Restricción de días
       setState(() {
         selectedDias.add(dia);

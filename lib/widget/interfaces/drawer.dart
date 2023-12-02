@@ -46,7 +46,7 @@ class _DrawerProfile extends State<DrawerProfile> {
 
   @override
   Widget build(BuildContext context) {
-  final themeProvider = Provider.of<ThemeProvider>(context);
+    final themeProvider = Provider.of<ThemeProvider>(context);
     return Drawer(
       child: ListView(
         padding: EdgeInsets.zero,
@@ -64,11 +64,11 @@ class _DrawerProfile extends State<DrawerProfile> {
             ),
             accountName: Text(
               username ?? 'User Fullname',
-              style: TextStyle(fontSize: 19.0),
+              style: const TextStyle(fontSize: 19.0),
             ),
             accountEmail: Text(
               email ?? 'Email',
-              style: TextStyle(fontSize: 15.0),
+              style: const TextStyle(fontSize: 15.0),
             ),
           ),
           ListTile(

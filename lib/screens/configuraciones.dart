@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import '../darkmode/theme_provider.dart';
 
 class ConfiguracionesScreen extends StatelessWidget {
-  const ConfiguracionesScreen({Key? key});
+  const ConfiguracionesScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +16,7 @@ class ConfiguracionesScreen extends StatelessWidget {
               : SystemUiOverlayStyle.dark,
           child: Scaffold(
             appBar: AppBar(
-              title: Text('Configuraciones'),
+              title: const Text('Configuraciones'),
               flexibleSpace: Container(
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
@@ -42,8 +42,8 @@ class ConfiguracionesScreen extends StatelessWidget {
                       ),
                     ),
                     ListTile(
-                      leading: Icon(Icons.dark_mode),
-                      title: Text('Dark Mode'),
+                      leading: const Icon(Icons.dark_mode),
+                      title: const Text('Dark Mode'),
                       trailing: Switch(
                         value: themeProvider.isDarkMode,
                         onChanged: (value) {
@@ -51,7 +51,7 @@ class ConfiguracionesScreen extends StatelessWidget {
                         },
                       ),
                     ),
-                    ListTile(
+                    const ListTile(
                       title: SizedBox(width: 50),
                     ),
                   ],

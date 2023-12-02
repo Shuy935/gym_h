@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:gym_h/darkmode/theme_provider.dart';
 import 'package:gym_h/models/attendance_record_model.dart';
 import 'package:gym_h/models/users_model.dart';
-import 'package:gym_h/widget/interfaces/usuario/registrosHU.dart';
 import 'package:provider/provider.dart';
 
 class ListaU extends StatefulWidget {
@@ -39,13 +38,13 @@ class _ListaUState extends State<ListaU> {
       body: Column(
         children: [
           Container(height: 45),
-          Text(
+          const Text(
             'Nombre de usuario:',
-            style: const TextStyle(fontSize: 16),
+            style: TextStyle(fontSize: 16),
           ),
           Container(height: 10),
           Text(
-            '${usuario ?? 'usuario'}',
+            usuario ?? 'usuario',
             style: const TextStyle(fontSize: 20),
           ),
           Container(height: 45),
@@ -83,7 +82,6 @@ class _ListaUState extends State<ListaU> {
               //aqui ira el registro de asistencia del usuario actual
             ),
           ),
-          
         ],
       ),
     );

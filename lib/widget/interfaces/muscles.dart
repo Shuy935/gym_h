@@ -41,7 +41,6 @@ class _MuscleScrnState extends State<MuscleScrn> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('Selecciona tus músculos'),
@@ -125,7 +124,7 @@ class _MuscleScrnState extends State<MuscleScrn> {
       onTap: () => handleMuscleSelection(muscle),
       trailing: selectedMusc.contains(muscle)
           ? Icon(Icons.check_circle, color: themeProvider.checkBoxColor)
-          : Icon(Icons.check_circle_outline),
+          : const Icon(Icons.check_circle_outline),
     );
   }
 
@@ -180,7 +179,7 @@ class _MuscleScrnState extends State<MuscleScrn> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: Text('Advertencia'),
+          title: const Text('Advertencia'),
           content: Text(errorMessage),
           actions: <Widget>[
             TextButton(
@@ -205,8 +204,8 @@ class _MuscleScrnState extends State<MuscleScrn> {
                     end: Alignment.bottomRight,
                   ),
                 ),
-                padding: EdgeInsets.all(10),
-                child: Text(
+                padding: const EdgeInsets.all(10),
+                child: const Text(
                   'Aceptar',
                   style: TextStyle(
                     color: Colors.white,

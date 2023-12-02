@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:gym_h/utils/utils.dart';
 import 'package:gym_h/widget/interfaces/widgets.dart';
 import 'package:easy_search_bar/easy_search_bar.dart';
 import 'package:gym_h/models/users_model.dart';
 
-class Lista_Clientes extends StatefulWidget {
-  const Lista_Clientes({super.key});
+class ListaClientes extends StatefulWidget {
+  const ListaClientes({super.key});
 
   @override
-  State<Lista_Clientes> createState() => _Lista_ClientesState();
+  State<ListaClientes> createState() => _ListaClientesState();
 }
 
-class _Lista_ClientesState extends State<Lista_Clientes> {
+class _ListaClientesState extends State<ListaClientes> {
   List<bool> isSelected = []; // Lista para el estado de los botones
   List<Cliente> dataFromDatabase =
       []; // Lista para los datos de la base de datos
@@ -60,7 +61,6 @@ class _Lista_ClientesState extends State<Lista_Clientes> {
                   setState(() {
                     selectedId = dataFromDatabase[index].id;
                     cliente = dataFromDatabase[index].name;
-                    print(cliente);
                   });
                 },
                 child: Container(
@@ -85,7 +85,7 @@ class _Lista_ClientesState extends State<Lista_Clientes> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           //Agregar una condicion para que esté uno seleccionado
-        //  print(cliente);
+          //  print(cliente);
           if (cliente == '') {
             showDialog(
                 context: context,
@@ -122,7 +122,6 @@ class _Lista_ClientesState extends State<Lista_Clientes> {
                       child: const Text('Aceptar'),
                       onPressed: () {
                         // mandamos el cliente seleccionado
-                        print(cliente);
                         Navigator.of(context).pop();
                         // cliente = '';
                         Navigator.push(
@@ -139,7 +138,7 @@ class _Lista_ClientesState extends State<Lista_Clientes> {
             );
           }
         },
-        child: Icon(Icons.arrow_forward),
+        child: const Icon(Icons.arrow_forward),
       ),
     );
   }
@@ -155,7 +154,7 @@ class _Lista_ClientesState extends State<Lista_Clientes> {
         });
       }
     } catch (searchValue) {
-      print('Error al obtener usuarios: $searchValue');
+      Utils.showSnackBar('Error al obtener usuarios: $searchValue');
     }
   }
 }
@@ -168,7 +167,7 @@ class Cliente {
   Cliente(this.name, this.id);
 }
 
-//todo
+// todo
 /*class Lista extends StatefulWidget {
   const Lista({Key? key}) : super(key: key);
 

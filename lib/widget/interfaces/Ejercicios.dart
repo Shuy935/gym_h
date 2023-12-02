@@ -78,7 +78,6 @@ class _EjerciciosState extends State<Ejercicios> {
   }
 
   @override
-  
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData.dark().copyWith(),
@@ -108,7 +107,7 @@ class _EjerciciosState extends State<Ejercicios> {
         body: SingleChildScrollView(
             child: Column(
           children: <Widget>[
-            const Buscador_uwu(),
+            const Buscadoruwu(),
             CardE(
               cantidad: cantidad,
               data: data,
@@ -116,20 +115,20 @@ class _EjerciciosState extends State<Ejercicios> {
           ],
         )),
         floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            if (widget.cliente == null) {
-              addRutina(ejerciciosSeleccionados, widget.selectedDias);
-            } else {
-              addRutinaUsuario(
-                  ejerciciosSeleccionados, widget.selectedDias, widget.cliente);
-            }
-            Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(builder: (context) => const HomePage()),
-              (route) => false,
-            );
-          },
-          backgroundColor: Colors.transparent,
+            onPressed: () {
+              if (widget.cliente == null) {
+                addRutina(ejerciciosSeleccionados, widget.selectedDias);
+              } else {
+                addRutinaUsuario(ejerciciosSeleccionados, widget.selectedDias,
+                    widget.cliente);
+              }
+              Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(builder: (context) => const HomePage()),
+                (route) => false,
+              );
+            },
+            backgroundColor: Colors.transparent,
             child: Container(
               width: 56,
               height: 56,
@@ -144,15 +143,14 @@ class _EjerciciosState extends State<Ejercicios> {
                 ),
                 borderRadius: BorderRadius.circular(50),
               ),
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Icon(
-                Icons.check,
-                color: themeProvider.iconsColor,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Icon(
+                  Icons.check,
+                  color: themeProvider.iconsColor,
+                ),
               ),
-            ),
-          )
-        ),
+            )),
       ),
     );
   }

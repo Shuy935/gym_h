@@ -123,7 +123,7 @@ class _ConsejosBState extends State<ConsejosB> {
                     end: Alignment.bottomRight,
                   ),
                 ),
-                child: Center(
+                child: const Center(
                   child: Icon(
                     Icons.flatware_outlined,
                     color: Colors.white,

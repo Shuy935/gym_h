@@ -33,14 +33,14 @@ class _DiasScrnUState extends State<DiasScrnU> {
 
   @override
   Widget build(BuildContext context) {
-
     final themeProvider = Provider.of<ThemeProvider>(context);
-    
+
     return Scaffold(
-      
       body: Column(
         children: <Widget>[
-          Container(height: 27,),
+          Container(
+            height: 27,
+          ),
           ListTile(
             title: Text(
               'Selecciona los días \n  en que deseas asignar tus rutinas:',
@@ -51,7 +51,7 @@ class _DiasScrnUState extends State<DiasScrnU> {
               textAlign: TextAlign.center,
             ),
           ),
-          Container(margin: EdgeInsets.only(bottom: 30)),
+          Container(margin: const EdgeInsets.only(bottom: 30)),
           Expanded(
             child: buildDiasList(),
           ),
@@ -99,7 +99,7 @@ class _DiasScrnUState extends State<DiasScrnU> {
       onTap: () => handleDiasSelection(dia),
       trailing: selectedDias.contains(dia)
           ? Icon(Icons.check_circle, color: themeProvider.checkBoxColor)
-          : Icon(Icons.check_circle_outline),
+          : const Icon(Icons.check_circle_outline),
     );
   }
 
@@ -144,7 +144,7 @@ class _DiasScrnUState extends State<DiasScrnU> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: Text('Advertencia'),
+          title: const Text('Advertencia'),
           content: Text(errorMessage),
           actions: <Widget>[
             TextButton(
@@ -169,8 +169,8 @@ class _DiasScrnUState extends State<DiasScrnU> {
                     end: Alignment.bottomRight,
                   ),
                 ),
-                padding: EdgeInsets.all(10),
-                child: Text(
+                padding: const EdgeInsets.all(10),
+                child: const Text(
                   'Aceptar',
                   style: TextStyle(
                     color: Colors.white,

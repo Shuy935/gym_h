@@ -34,38 +34,39 @@ class _HistorialState extends State<Historial> {
     final themeProvider = Provider.of<ThemeProvider>(context);
     return Column(
       children: [
-        Container(margin: EdgeInsets.only(bottom: 20)),
+        Container(margin: const EdgeInsets.only(bottom: 20)),
         TextField(
           controller: fechaController,
           decoration: InputDecoration(
-            labelText: 'Fecha:', 
+            labelText: 'Fecha:',
             labelStyle: TextStyle(fontSize: 16, color: themeProvider.textColor),
-              icon: Padding(
+            icon: Padding(
                 padding: const EdgeInsets.only(left: 8.0),
-                child: Icon(Icons.calendar_today, color: themeProvider.iconsColor2)),
-              ),
-              readOnly: true, //set it true, so that user will not able to edit text
-              onTap: () async {
-                DateTime? pickedDate = await showDatePicker(
-                  helpText: 'Seleccione el día que desee consultar:',
-                  context: context,
-                  initialDate: DateTime.now(),
-                  firstDate: DateTime(2022),
-                  lastDate: DateTime
+                child: Icon(Icons.calendar_today,
+                    color: themeProvider.iconsColor2)),
+          ),
+          readOnly: true, //set it true, so that user will not able to edit text
+          onTap: () async {
+            DateTime? pickedDate = await showDatePicker(
+                helpText: 'Seleccione el día que desee consultar:',
+                context: context,
+                initialDate: DateTime.now(),
+                firstDate: DateTime(2022),
+                lastDate: DateTime
                     .now()); //la ultima fecha que puede escoger es la de hoy
-                  if (pickedDate != null) {
-                    String formattedDate =
-                      DateFormat('yyyy-MM-dd').format(pickedDate);
-                      setState(() {
-                        fechaController.text = formattedDate;
-                        getHistorial(fechaController.text);
-                        //set output date to TextField value.
-                        //Mandarlo a la base de datos
-                      });
-                    } else {
-                      Utils.showSnackBar("No hay fecha seleccionada.");
-                    }
-                  },
+            if (pickedDate != null) {
+              String formattedDate =
+                  DateFormat('yyyy-MM-dd').format(pickedDate);
+              setState(() {
+                fechaController.text = formattedDate;
+                getHistorial(fechaController.text);
+                //set output date to TextField value.
+                //Mandarlo a la base de datos
+              });
+            } else {
+              Utils.showSnackBar("No hay fecha seleccionada.");
+            }
+          },
           //InputDecoration(labelText: 'Fecha (yyyy-MM-dd)'),
         ),
         Center(child: TableHistory(historialData: historialData))

@@ -3,11 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:gym_h/darkmode/theme_provider.dart';
 import 'package:gym_h/models/attendance_record_model.dart';
 import 'package:gym_h/models/users_model.dart';
+import 'package:gym_h/utils/utils.dart';
 import 'package:gym_h/widget/interfaces/entrenador/registrosH.dart';
 import 'package:provider/provider.dart';
 
 class Lista extends StatefulWidget {
-  const Lista({Key? key}) : super(key: key);
+  const Lista({super.key});
 
   @override
   State<Lista> createState() => _ListaState();
@@ -35,7 +36,7 @@ class _ListaState extends State<Lista> {
         });
       }
     } catch (e) {
-      print('Error al obtener usuarios: $e');
+      Utils.showSnackBar('Error al obtener usuarios: $e');
     }
   }
 
@@ -63,13 +64,13 @@ class _ListaState extends State<Lista> {
           Column(
             children: [
               Container(height: 10),
-              Text(
+              const Text(
                 'Nombre de usuario:',
-                style: const TextStyle(fontSize: 16),
+                style: TextStyle(fontSize: 16),
               ),
               Container(height: 10),
               Text(
-                '${usuario ?? 'usuario'}',
+                usuario ?? 'usuario',
                 style: const TextStyle(fontSize: 20),
               ),
               Container(height: 45),
@@ -88,53 +89,52 @@ class _ListaState extends State<Lista> {
                   borderRadius: BorderRadius.circular(30.0),
                 ),
                 child: ElevatedButton.icon(
-                  style: ElevatedButton.styleFrom(
-                    elevation: 0.0,
-                    backgroundColor: Colors.transparent,
-                    minimumSize: const Size.fromHeight(50),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30.0),
+                    style: ElevatedButton.styleFrom(
+                      elevation: 0.0,
+                      backgroundColor: Colors.transparent,
+                      minimumSize: const Size.fromHeight(50),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30.0),
+                      ),
                     ),
-                  ),
-                  icon: const Icon(Icons.app_registration, size: 32),
-                  label: const Text(
-                    'Registrar Asistencia',
-                    style: TextStyle(fontSize: 18),
-                  ),
-                  onPressed: () {
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return AlertDialog(
-                          title: const Text('Confirmación de Registro'),
-                          content: Text(
-                              '¿Estás seguro de que deseas registrar a $usuario?'),
-                          actions: <Widget>[
-                            TextButton(
-                              child: const Text('Cancelar'),
-                              onPressed: () {
-                                Navigator.of(context)
-                                    .pop(); // Cierra el AlertDialog
-                              },
-                            ),
-                            TextButton(
-                              child: const Text('Aceptar'),
-                              onPressed: () {
-                                // Realiza la lógica de registro aquí
-                                addAsistenciaUsuario(usuario!);
-                                // Puedes agregar código para manejar el registro
-                                Navigator.of(context)
-                                    .pop(); 
-                                usuario=null;    
-                                // Cierra el AlertDialog
-                              },
-                            ),
-                          ],
-                        );
-                      },
-                    );
-                  } //recordar registrar bajo el nombre de
-                  ),
+                    icon: const Icon(Icons.app_registration, size: 32),
+                    label: const Text(
+                      'Registrar Asistencia',
+                      style: TextStyle(fontSize: 18),
+                    ),
+                    onPressed: () {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: const Text('Confirmación de Registro'),
+                            content: Text(
+                                '¿Estás seguro de que deseas registrar a $usuario?'),
+                            actions: <Widget>[
+                              TextButton(
+                                child: const Text('Cancelar'),
+                                onPressed: () {
+                                  Navigator.of(context)
+                                      .pop(); // Cierra el AlertDialog
+                                },
+                              ),
+                              TextButton(
+                                child: const Text('Aceptar'),
+                                onPressed: () {
+                                  // Realiza la lógica de registro aquí
+                                  addAsistenciaUsuario(usuario!);
+                                  // Puedes agregar código para manejar el registro
+                                  Navigator.of(context).pop();
+                                  usuario = null;
+                                  // Cierra el AlertDialog
+                                },
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    } //recordar registrar bajo el nombre de
+                    ),
               ),
             ],
           ),
@@ -152,14 +152,14 @@ class _ListaState extends State<Lista> {
                   builder: (context) => RegistroH(usuario: usuario),
                 );
                 // Espera a que la ruta se complete y recibe el valor devuelto por la pantalla RegistroH
-                    final result = await Navigator.push(context, route);
+                final result = await Navigator.push(context, route);
 
-                    // Verifica si el valor de result es null y actualiza usuario en consecuencia
-                    if (result == null) {
-                      setState(() {
-                        usuario = null;
-                      });
-                    }
+                // Verifica si el valor de result es null y actualiza usuario en consecuencia
+                if (result == null) {
+                  setState(() {
+                    usuario = null;
+                  });
+                }
               },
               child: const Icon(Icons.history),
             ),

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class Buscador_uwu extends StatefulWidget {
-  const Buscador_uwu({super.key});
+class Buscadoruwu extends StatefulWidget {
+  const Buscadoruwu({super.key});
 
   @override
-  State<Buscador_uwu> createState() => _Buscador_uwuState();
+  State<Buscadoruwu> createState() => _BuscadoruwuState();
 }
 
-class _Buscador_uwuState extends State<Buscador_uwu> {
+class _BuscadoruwuState extends State<Buscadoruwu> {
   String searching = '';
   List<String> filteredEjercicio = [];
   final List<String> allEjercicios = [
@@ -30,7 +30,7 @@ class _Buscador_uwuState extends State<Buscador_uwu> {
         onChanged: handleSearch,
         decoration: InputDecoration(
           labelText: 'Buscar Ejercicio',
-          prefixIcon: Icon(Icons.search),
+          prefixIcon: const Icon(Icons.search),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8.0),
           ),
