@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:gym_h/darkmode/theme_provider.dart';
 import 'package:gym_h/widget/interfaces/widgets.dart';
+import 'package:provider/provider.dart';
 
 class DiasScrn extends StatefulWidget {
   final String? cliente;
@@ -10,29 +12,45 @@ class DiasScrn extends StatefulWidget {
 }
 
 class _DiasScrnState extends State<DiasScrn> {
+  late ThemeProvider themeProvider;
   List<String> selectedDias = [];
   final List<String> dias = [
     'Lunes',
     'Martes',
-    'Miercoles',
+    'Miércoles',
     'Jueves',
     'Viernes',
-    'Sabado',
+    'Sábado',
     'Domingo',
   ];
   List<String> filtereDia = [];
+  late BuildContext dialogContext;
 
   @override
   void initState() {
     filtereDia = dias;
     super.initState();
+    themeProvider = Provider.of<ThemeProvider>(context, listen: false);
   }
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Selecciona el/los dia/s \n a asignar rutina'),
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [
+                themeProvider.appBarColor1,
+                themeProvider.appBarColor2,
+              ],
+            ),
+          ),
+        ),
+        title: const Text('Selecciona los días en que \ndeseas asignar tus rutinas:'),
       ),
       body: Column(
         children: <Widget>[
@@ -43,7 +61,29 @@ class _DiasScrnState extends State<DiasScrn> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: handleFloatingActionButton,
-        child: const Icon(Icons.arrow_forward),
+        backgroundColor: Colors.transparent,
+        child: Container(
+          width: 56,
+          height: 56,
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                themeProvider.buttonColor1,
+                themeProvider.buttonColor2,
+              ],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+            borderRadius: BorderRadius.circular(50),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Icon(
+              Icons.arrow_forward,
+              color: themeProvider.iconsColor,
+            ),
+          ),
+        ),
       ),
     );
   }
@@ -55,11 +95,12 @@ class _DiasScrnState extends State<DiasScrn> {
   }
 
   Widget buildDiasItem(String dia) {
+
     return ListTile(
       title: Text(dia),
       onTap: () => handleDiasSelection(dia),
       trailing: selectedDias.contains(dia)
-          ? const Icon(Icons.check_circle, color: Colors.green)
+          ? Icon(Icons.check_circle, color: themeProvider.checkBoxColor)
           : const Icon(Icons.check_circle_outline),
     );
   }
@@ -103,16 +144,43 @@ class _DiasScrnState extends State<DiasScrn> {
   void showSelectionError(String errorMessage) {
     showDialog(
       context: context,
-      builder: (context) {
+      builder: (BuildContext context) {
+        dialogContext = context;
         return AlertDialog(
           title: const Text('Advertencia'),
           content: Text(errorMessage),
           actions: <Widget>[
             TextButton(
-              child: const Text('Aceptar'),
               onPressed: () {
-                Navigator.of(context).pop();
+                Navigator.of(dialogContext).pop();
               },
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.resolveWith<Color>(
+                  (Set<MaterialState> states){
+                    return Colors.transparent;
+                  }
+                ),
+              ),
+              child: Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [
+                      themeProvider.buttonColor1,
+                      themeProvider.buttonColor2,
+                    ],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                ),
+                padding: const EdgeInsets.all(10),
+                child: const Text(
+                  'Aceptar',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 16,
+                  ),
+                )
+              )
             ),
           ],
         );

@@ -91,7 +91,7 @@ class _EjerciciosState extends State<Ejercicios> {
             },
           ),
           title: Text(
-              'Musculos: ${widget.selectedMusc.toString().replaceAll('[', '').toString().replaceAll(']', '')}',
+              'Músculos: ${widget.selectedMusc.toString().replaceAll('[', '').toString().replaceAll(']', '')}',
               maxLines: 2),
           flexibleSpace: Container(
             decoration: BoxDecoration(

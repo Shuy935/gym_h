@@ -23,6 +23,9 @@ Future<void> main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
+  var themeProvider = ThemeProvider();
+  await themeProvider.loadTheme();
+
   runApp(
     ChangeNotifierProvider(
       create: (context) => ThemeProvider(),

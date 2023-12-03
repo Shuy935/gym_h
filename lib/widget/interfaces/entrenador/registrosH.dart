@@ -4,6 +4,7 @@ import 'package:gym_h/models/users_model.dart';
 import 'package:gym_h/utils/utils.dart';
 import 'package:intl/intl.dart';
 
+//TODO: agregarle los colores
 class RegistroH extends StatefulWidget {
   final String? usuario;
 

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ThemeProvider with ChangeNotifier {
   bool _isDarkMode = false;
@@ -26,8 +27,20 @@ class ThemeProvider with ChangeNotifier {
   Color get iconsColor => _iconsColor;
   Color get iconsColor2 => _iconsColor2;
 
+  Future<void> loadTheme() async {
+    SharedPreferences prefs = await await SharedPreferences.getInstance();
+    _isDarkMode = prefs.getBool('isDarkMode') ?? false;
+    notifyListeners();
+  }
+
+  Future<void> saveTheme() async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setBool('isDarkMode', _isDarkMode);
+  }
+
   void toggleTheme() {
     _isDarkMode = !_isDarkMode;
+    saveTheme();
     _appBarColor1 = _isDarkMode
         ? const Color.fromARGB(255, 121, 68, 165)
         : const Color.fromARGB(255, 218, 181, 61);

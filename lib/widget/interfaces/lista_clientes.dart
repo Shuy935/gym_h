@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:gym_h/darkmode/theme_provider.dart';
 import 'package:gym_h/utils/utils.dart';
 import 'package:gym_h/widget/interfaces/widgets.dart';
 import 'package:easy_search_bar/easy_search_bar.dart';
 import 'package:gym_h/models/users_model.dart';
+import 'package:provider/provider.dart';
 
 class ListaClientes extends StatefulWidget {
   const ListaClientes({super.key});
@@ -32,30 +34,59 @@ class _ListaClientesState extends State<ListaClientes> {
   //construye la lista de clientes
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
     return Scaffold(
-      appBar: EasySearchBar(
-        title: const Text('Cliente'),
-        suggestions: _suggestions,
-        onSearch: (value) {
-          setState(() {
-            searchValue = value;
-          });
-        },
-        onSuggestionTap: (item) {
-          setState(() {
-            cliente = searchValue;
-            // Agrega el cliente seleccionado a dataFromDatabase si no existe
-            if (!dataFromDatabase.any((element) => element.name == cliente)) {
-              dataFromDatabase
-                  .add(Cliente(cliente, dataFromDatabase.length + 1));
-            }
-          });
-        },
+      appBar: AppBar(
+        elevation: 0.0,
+        title: null,
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [
+                themeProvider.appBarColor1,
+                themeProvider.appBarColor2,
+              ],
+            ),
+          ),
+          child: EasySearchBar(
+            title: const Text(
+              'Buscar cliente',
+              style: TextStyle(
+                fontSize: 20,
+                color: Colors.white,
+              ),
+            ),
+            elevation: 0.0,
+            suggestions: _suggestions,
+            iconTheme: IconThemeData(
+              color: themeProvider.iconsColor2
+            ),
+            backgroundColor: Colors.transparent,
+            onSearch: (value) {
+              setState(() {
+                searchValue = value;
+              });
+            },
+            onSuggestionTap: (item) {
+              setState(() {
+                cliente = searchValue;
+                // Agrega el cliente seleccionado a dataFromDatabase si no existe
+                if (!dataFromDatabase.any((element) => element.name == cliente)) {
+                  dataFromDatabase
+                      .add(Cliente(cliente, dataFromDatabase.length + 1));
+                }
+              });
+            },
+          ),
+        ),
       ),
       body: ListView.builder(
         itemCount: dataFromDatabase.length,
         itemBuilder: (context, index) {
           return ListTile(
+            //TODO: cambiar color y modificar la selección
             leading: GestureDetector(
                 onTap: () {
                   setState(() {
@@ -92,13 +123,39 @@ class _ListaClientesState extends State<ListaClientes> {
                 builder: (BuildContext context) {
                   return AlertDialog(
                     title: const Text('Error'),
-                    content: const Text('Por favor escoja un cliente'),
+                    content: const Text('No se ha seleccionado ningún cliente.'),
                     actions: <Widget>[
                       TextButton(
-                        child: const Text('Aceptar'),
                         onPressed: () {
                           Navigator.of(context).pop(); // Cierra el AlertDialog
                         },
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.resolveWith<Color>(
+                            (Set<MaterialState> states) {
+                              return Colors.transparent;
+                            },
+                          ),
+                        ),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              colors: [
+                                themeProvider.buttonColor1,
+                                themeProvider.buttonColor2,
+                              ],
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
+                            ),
+                          ),
+                          padding: const EdgeInsets.all(10),
+                          child: const Text(
+                            'Aceptar',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                            ),
+                          ),
+                        ),
                       ),
                     ],
                   );
@@ -108,18 +165,43 @@ class _ListaClientesState extends State<ListaClientes> {
               context: context,
               builder: (BuildContext context) {
                 return AlertDialog(
-                  title: const Text('Confirmación de Selección'),
+                  title: const Text('Confirmar Selección'),
                   content: Text(
                       '¿Estás seguro de que deseas asignar rutina a $cliente?'),
                   actions: <Widget>[
                     TextButton(
-                      child: const Text('Cancelar'),
                       onPressed: () {
                         Navigator.of(context).pop(); // Cierra el AlertDialog
                       },
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.resolveWith<Color>(
+                          (Set<MaterialState> states) {
+                            return Colors.transparent;
+                          },
+                        ),
+                      ),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            colors: [
+                              themeProvider.buttonColor1,
+                              themeProvider.buttonColor2,
+                            ],
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                          ),
+                        ),
+                        padding: const EdgeInsets.all(10),
+                        child: const Text(
+                          'Cancelar',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 16,
+                          ),
+                        ),
+                      ),
                     ),
                     TextButton(
-                      child: const Text('Aceptar'),
                       onPressed: () {
                         // mandamos el cliente seleccionado
                         Navigator.of(context).pop();
@@ -131,6 +213,33 @@ class _ListaClientesState extends State<ListaClientes> {
                             ));
                         // Cierra el AlertDialog
                       },
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.resolveWith<Color>(
+                          (Set<MaterialState> states) {
+                            return Colors.transparent;
+                          },
+                        ),
+                      ),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            colors: [
+                              themeProvider.buttonColor1,
+                              themeProvider.buttonColor2,
+                            ],
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                          ),
+                        ),
+                        padding: const EdgeInsets.all(10),
+                        child: const Text(
+                          'Aceptar',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 16,
+                          ),
+                        ),
+                      ),
                     ),
                   ],
                 );
@@ -138,7 +247,29 @@ class _ListaClientesState extends State<ListaClientes> {
             );
           }
         },
-        child: const Icon(Icons.arrow_forward),
+        backgroundColor: Colors.transparent,
+        child: Container(
+          width: 56,
+          height: 56,
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                themeProvider.buttonColor1,
+                themeProvider.buttonColor2,
+              ],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+            borderRadius: BorderRadius.circular(50),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Icon(
+              Icons.arrow_forward,
+              color: themeProvider.iconsColor,
+            ),
+          ),
+        ),
       ),
     );
   }

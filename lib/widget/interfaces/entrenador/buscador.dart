@@ -47,23 +47,50 @@ class _ListaState extends State<Lista> {
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
     return Scaffold(
-      appBar: EasySearchBar(
-        title: const Text('Registro'),
-        suggestions: _suggestions,
-        onSearch: (value) {
-          setState(() {
-            searchValue = value;
-          });
-        },
-        onSuggestionTap: (item) {
-          usuario = searchValue;
-        },
+      appBar: AppBar(
+        elevation: 0.0,
+        title: null,
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [
+                themeProvider.appBarColor1,
+                themeProvider.appBarColor2,
+              ],
+            ),
+          ),
+          child: EasySearchBar(
+            title: const Text(
+              'Registro',
+              style: TextStyle(
+                fontSize: 20,
+                color: Colors.white,
+              ),
+            ),
+            elevation: 0.0,
+            suggestions: _suggestions,
+            iconTheme: IconThemeData(
+              color: themeProvider.iconsColor2
+            ),
+            backgroundColor: Colors.transparent,
+            onSearch: (value) {
+              setState(() {
+                searchValue = value;
+              });
+            },
+            onSuggestionTap: (item) {
+              usuario = searchValue;
+            },
+          ),
+        ),
       ),
       body: Stack(
         children: [
           Column(
             children: [
-              Container(height: 10),
+              Container(height: 45),
               const Text(
                 'Nombre de usuario:',
                 style: TextStyle(fontSize: 16),
@@ -71,7 +98,7 @@ class _ListaState extends State<Lista> {
               Container(height: 10),
               Text(
                 usuario ?? 'usuario',
-                style: const TextStyle(fontSize: 20),
+                style: const TextStyle(fontSize: 20, color: Colors.grey),
               ),
               Container(height: 45),
               Container(
@@ -112,14 +139,39 @@ class _ListaState extends State<Lista> {
                                 '¿Estás seguro de que deseas registrar a $usuario?'),
                             actions: <Widget>[
                               TextButton(
-                                child: const Text('Cancelar'),
                                 onPressed: () {
                                   Navigator.of(context)
                                       .pop(); // Cierra el AlertDialog
                                 },
+                                style: ButtonStyle(
+                                  backgroundColor: MaterialStateProperty.resolveWith<Color>(
+                                    (Set<MaterialState> states) {
+                                      return Colors.transparent;
+                                    },
+                                  ),
+                                ),
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    gradient: LinearGradient(
+                                      colors: [
+                                        themeProvider.buttonColor1,
+                                        themeProvider.buttonColor2,
+                                      ],
+                                      begin: Alignment.topLeft,
+                                      end: Alignment.bottomRight,
+                                    ),
+                                  ),
+                                  padding: const EdgeInsets.all(10),
+                                  child: const Text(
+                                    'Cancelar',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 16,
+                                    ),
+                                  ),
+                                ),
                               ),
                               TextButton(
-                                child: const Text('Aceptar'),
                                 onPressed: () {
                                   // Realiza la lógica de registro aquí
                                   addAsistenciaUsuario(usuario!);
@@ -128,6 +180,33 @@ class _ListaState extends State<Lista> {
                                   usuario = null;
                                   // Cierra el AlertDialog
                                 },
+                                style: ButtonStyle(
+                                  backgroundColor: MaterialStateProperty.resolveWith<Color>(
+                                    (Set<MaterialState> states) {
+                                      return Colors.transparent;
+                                    },
+                                  ),
+                                ),
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    gradient: LinearGradient(
+                                      colors: [
+                                        themeProvider.buttonColor1,
+                                        themeProvider.buttonColor2,
+                                      ],
+                                      begin: Alignment.topLeft,
+                                      end: Alignment.bottomRight,
+                                    ),
+                                  ),
+                                  padding: const EdgeInsets.all(10),
+                                  child: const Text(
+                                    'Aceptar',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 16,
+                                    ),
+                                  ),
+                                ),
                               ),
                             ],
                           );
@@ -142,11 +221,6 @@ class _ListaState extends State<Lista> {
             left: 16,
             bottom: 16,
             child: FloatingActionButton(
-              foregroundColor: Colors.black,
-              elevation: 20,
-              backgroundColor: Colors.amber,
-              shape: const CircleBorder(),
-              splashColor: Colors.white,
               onPressed: () async {
                 final route = MaterialPageRoute(
                   builder: (context) => RegistroH(usuario: usuario),
@@ -161,7 +235,29 @@ class _ListaState extends State<Lista> {
                   });
                 }
               },
-              child: const Icon(Icons.history),
+              backgroundColor: Colors.transparent,
+              child: Container(
+                width: 56,
+                height: 56,
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [
+                      themeProvider.buttonColor1,
+                      themeProvider.buttonColor2,
+                    ],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                  borderRadius: BorderRadius.circular(50),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Icon(
+                    Icons.history,
+                    color: themeProvider.iconsColor,
+                  ),
+                ),
+              ),
             ),
           ),
         ],

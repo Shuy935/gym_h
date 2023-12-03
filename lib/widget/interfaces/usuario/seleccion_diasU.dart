@@ -34,7 +34,6 @@ class _DiasScrnUState extends State<DiasScrnU> {
   @override
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
-
     return Scaffold(
       body: Column(
         children: <Widget>[
