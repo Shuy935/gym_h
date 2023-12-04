@@ -33,10 +33,17 @@ class _ConsejosBState extends State<ConsejosB> {
   double top = 200.0;
   double left = 200.0;
   List<String> consejos = [
-    'Come pollito',
-    'Consumir arroz antes de el entrenamiento ayuda al bombeo.',
-    'Asegúrate de consumir las calorias necesarias segun tus propósitos.',
-    'Este es otro consejo xd',
+    'Suplementos: \nSi consideras tomar suplementos, asegúrate de que se alineen con tus necesidades y objetivos. Consulta con un profesional de la salud o un nutricionista antes de tomar cualquier suplemento',
+    'Consume suficientes proteínas: \nSon esenciales para la reparación y el crecimiento muscular. Fuentes: carne, pescado, huevos, lácteos, legumbres, tofu, etc.',
+    'Incluye carbohidratos en tu dieta: \nSon la principal fuente de energía para el ejercicio. Fuentes: arroz, pasta, pan, patatas, frutas, verduras, etc.',
+    'No descuides las grasas saludables: \nAyudan en la absorción de vitaminas y en la producción de hormonas. Fuentes: aguacate, frutos secos, aceite de oliva, pescado graso, etc.',
+    'Hidrátate adecuadamente: \nBebe suficiente agua antes, durante y después del ejercicio para mantener un buen rendimiento y recuperación.',
+    'Planifica tus comidas: \nCome cada 3-4 horas para mantener un flujo constante de nutrientes y energía.',
+    'Consume alimentos ricos en antioxidantes: \nAyudan a reducir el daño muscular y la inflamación. Fuentes: frutas, verduras, frutos secos, especias, etc.',
+    'Evita los alimentos procesados y azucarados: \nOpta por alimentos naturales y evita el exceso de azúcares añadidos.',
+    'No te saltes el desayuno: \nEs una comida importante que te proporciona energía para el día y para tu entrenamiento.',
+    'Cuida la alimentación pre y post-entrenamiento: \nConsume carbohidratos y proteínas antes y después del ejercicio para optimizar el rendimiento y la recuperación.',
+    'Consulta a un profesional: \nUn nutricionista o dietista puede ayudarte a planificar una dieta personalizada según tus objetivos y necesidades',
   ];
 
 //Este es el Show Dialog donde van a ir los consejos so... editar aquí
