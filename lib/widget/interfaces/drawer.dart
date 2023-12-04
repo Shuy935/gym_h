@@ -63,7 +63,7 @@ class _DrawerProfile extends State<DrawerProfile> {
               ),
             ),
             accountName: Text(
-              username ?? 'User Fullname',
+              username ?? 'Nombre de usuario',
               style: const TextStyle(fontSize: 19.0),
             ),
             accountEmail: Text(
@@ -73,7 +73,7 @@ class _DrawerProfile extends State<DrawerProfile> {
           ),
           ListTile(
             leading: const Icon(Icons.person),
-            title: const Text('Porfile'),
+            title: const Text('Perfil'),
             onTap: () {
               final route =
                   MaterialPageRoute(builder: (context) => const TheProfile());
@@ -82,7 +82,7 @@ class _DrawerProfile extends State<DrawerProfile> {
           ),
           ListTile(
             leading: const Icon(Icons.settings),
-            title: const Text('Configurations'),
+            title: const Text('Configuraciones'),
             onTap: () {
               // final route = MaterialPageRoute(builder: (context) => Page2());
               // Navigator.push(context, route);
@@ -96,7 +96,7 @@ class _DrawerProfile extends State<DrawerProfile> {
           ),
           ListTile(
             leading: const Icon(Icons.exit_to_app),
-            title: const Text('Sing out'),
+            title: const Text('Cerrar sesión'),
             onTap: () => FirebaseAuth.instance.signOut(),
           ),
         ],

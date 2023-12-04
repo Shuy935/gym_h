@@ -176,7 +176,7 @@ class _CardEState extends State<CardE> {
       ExerciseService? exercise = widget.data?[index];
       Color color = const Color.fromARGB(255, 72, 72, 72);
       cards.add(Card(
-        color: const Color.fromARGB(255, 58, 58, 59),
+        color: Colors.transparent,
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(

@@ -43,7 +43,7 @@ class ConfiguracionesScreen extends StatelessWidget {
                     ),
                     ListTile(
                       leading: const Icon(Icons.dark_mode),
-                      title: const Text('Dark Mode'),
+                      title: const Text('Modo oscuro'),
                       trailing: Switch(
                         value: themeProvider.isDarkMode,
                         onChanged: (value) {
