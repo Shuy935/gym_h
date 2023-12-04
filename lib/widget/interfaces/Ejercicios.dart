@@ -3,7 +3,6 @@ import 'package:gym_h/darkmode/theme_provider.dart';
 import 'package:gym_h/models/exercise_model.dart';
 import 'package:gym_h/models/rutina_model.dart';
 import 'package:gym_h/screens/home_page.dart';
-import 'package:gym_h/widget/interfaces/widgets.dart';
 import 'package:provider/provider.dart';
 
 class Ejercicios extends StatefulWidget {
@@ -187,9 +186,9 @@ class _CardEState extends State<CardE> {
                 children: [
                   Row(
                     children: [
-                      Container(
+                      const SizedBox(
                         width: 120,
-                        child: const Text('Nombre: '),
+                        child: Text('Nombre: '),
                       ),
                       Expanded(child: Text(exercise!.nombreEjercicio ?? '')),
                     ],
@@ -197,24 +196,24 @@ class _CardEState extends State<CardE> {
                   Container(
                     height: 10,
                   ),
-                  Row(
+                  const Row(
                     children: [
-                      Container(
+                      SizedBox(
                         width: 120,
-                        child: const Text('Repeticiones: '),
+                        child: Text('Repeticiones: '),
                       ),
-                      const Expanded(
+                      Expanded(
                         child: RepDrop(),
                       ),
                     ],
                   ),
-                  Row(
+                  const Row(
                     children: [
-                      Container(
+                      SizedBox(
                         width: 120,
-                        child: const Text('Series: '),
+                        child: Text('Series: '),
                       ),
-                      const Expanded(
+                      Expanded(
                         child: SeriesDrop(),
                       ),
                     ],
@@ -223,7 +222,7 @@ class _CardEState extends State<CardE> {
               ),
               Row(
                 children: [
-                  Container(
+                  SizedBox(
                     width: 150,
                     height: 150,
                     child: FadeInImage(

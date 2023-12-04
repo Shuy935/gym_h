@@ -14,12 +14,12 @@ class ListaClientes extends StatefulWidget {
 }
 
 class _ListaClientesState extends State<ListaClientes> {
+  Set<int> selectedIds = {}; // Para seleccionar varios radio buttons
   List<bool> isSelected = []; // Lista para el estado de los botones
   List<Cliente> dataFromDatabase =
       []; // Lista para los datos de la base de datos
   List<String> _suggestions = [];
   String cliente = '';
-  int selectedId = 0;
   String searchValue = '';
 
   @override
@@ -86,26 +86,41 @@ class _ListaClientesState extends State<ListaClientes> {
         itemCount: dataFromDatabase.length,
         itemBuilder: (context, index) {
           return ListTile(
-            //TODO: cambiar color y modificar la selección
             leading: GestureDetector(
                 onTap: () {
                   setState(() {
-                    selectedId = dataFromDatabase[index].id;
+                    if (selectedIds.contains(dataFromDatabase[index].id)) {
+                    // Desmarcar
+                      selectedIds.remove(dataFromDatabase[index].id);
+                    } else {
+                    // Marcar
+                      selectedIds.add(dataFromDatabase[index].id);
+                    }
                     cliente = dataFromDatabase[index].name;
                   });
                 },
-                child: Container(
+                child: SizedBox(
                   height: 40,
                   width: 200,
                   child: Row(
                     children: [
-                      Radio(
-                        value: dataFromDatabase[index].id,
-                        groupValue: selectedId,
-                        onChanged: (value) {
-                          // No es necesario implementar onChanged aquí, ya que el GestureDetector manejará los toques.
-                        },
+                      Container(
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: selectedIds.contains(dataFromDatabase[index].id)
+                              ? themeProvider.checkBoxColor //S
+                              : Colors.grey, //NS
+                        ),
+                        child: const Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: Icon(
+                            Icons.check,
+                            color: Colors.white,
+                            size: 10,
+                          ),
+                        ),
                       ),
+                      SizedBox(width: 10),
                       Text(dataFromDatabase[index].name),
                     ],
                   ),
@@ -117,7 +132,7 @@ class _ListaClientesState extends State<ListaClientes> {
         onPressed: () {
           //Agregar una condicion para que esté uno seleccionado
           //  print(cliente);
-          if (cliente == '') {
+          if (selectedIds.isEmpty) {
             showDialog(
                 context: context,
                 builder: (BuildContext context) {

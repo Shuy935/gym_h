@@ -21,9 +21,9 @@ class _EjerciciosAdd extends State<EjerciciosAdd> {
       children: [
         Row(
           children: [
-            Container(
+            const SizedBox(
               width: 120,
-              child: const Text('Nombre del ejercicio: '),
+              child: Text('Nombre del ejercicio: '),
             ),
             Expanded(
               child: TextFormField(
@@ -43,9 +43,9 @@ class _EjerciciosAdd extends State<EjerciciosAdd> {
         ),
         Row(
           children: [
-            Container(
+            const SizedBox(
               width: 120,
-              child: const Text('Descanso recomendado: '),
+              child: Text('Descanso recomendado: '),
             ),
             Expanded(
               child: TextFormField(
@@ -65,9 +65,9 @@ class _EjerciciosAdd extends State<EjerciciosAdd> {
         ),
         Row(
           children: [
-            Container(
+            const SizedBox(
               width: 120,
-              child: const Text('Dificultad: '),
+              child: Text('Dificultad: '),
             ),
             Expanded(
               child: TextFormField(
@@ -87,9 +87,9 @@ class _EjerciciosAdd extends State<EjerciciosAdd> {
         ),
         Row(
           children: [
-            Container(
+            const SizedBox(
               width: 120,
-              child: const Text('Nombre del músculo: '),
+              child: Text('Nombre del músculo: '),
             ),
             Expanded(
               child: TextFormField(

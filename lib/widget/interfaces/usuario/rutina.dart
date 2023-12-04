@@ -378,9 +378,9 @@ class _CardRState extends State<CardR> {
               children: [
                 Row(
                   children: [
-                    Container(
+                    const SizedBox(
                       width: 120,
-                      child: const Text('Nombre: '),
+                      child: Text('Nombre: '),
                     ),
                     Expanded(child: Text(rutina.nombreEjercicio ?? '')),
                   ],
@@ -388,18 +388,18 @@ class _CardRState extends State<CardR> {
                 Container(height: 10),
                 Row(
                   children: [
-                    Container(
+                    const SizedBox(
                       width: 120,
-                      child: const Text('Repeticiones: '),
+                      child: Text('Repeticiones: '),
                     ),
                     Expanded(child: Text(rutina.repeticiones ?? '')),
                   ],
                 ),
                 Row(
                   children: [
-                    Container(
+                    const SizedBox(
                       width: 120,
-                      child: const Text('Series: '),
+                      child: Text('Series: '),
                     ),
                     Expanded(child: Text(rutina.series ?? '')),
                   ],
@@ -408,7 +408,7 @@ class _CardRState extends State<CardR> {
             ),
             Row(
               children: [
-                Container(
+                SizedBox(
                   width: 150,
                   height: 150,
                   child: FadeInImage(
